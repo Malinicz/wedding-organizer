@@ -1,43 +1,38 @@
 import React, { Component } from 'react';
+import { Router as BrowserRouter, Switch, Route } from 'react-router';
+import createBrowserHistory from 'history/createBrowserHistory';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
-import styled from 'styled-components';
+
+import { defaults, resolvers } from 'store';
 
 import GlobalStyles from './globalStyles';
 
-import { LoginForm } from 'components';
+import { GuestScene, AuthScene, PageNotFoundScene } from 'scenes';
+import { PrivateRoute } from 'components';
 
-const Main = styled.main`
-  display: flex;
-  justify-content: center;
-  margin-top: 100px;
-`;
+const history = createBrowserHistory();
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_ENDPOINT,
+  clientState: {
+    defaults,
+    resolvers,
+  },
 });
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLogged: false,
-    };
-  }
-
-  setIsLogged = isLogged => {
-    this.setState({ isLogged });
-  };
-
   render() {
-    const { isLogged } = this.state;
-
     return (
       <ApolloProvider client={client}>
-        <Main>
-          <LoginForm setIsLogged={this.setIsLogged} isLogged={isLogged} />
-          <GlobalStyles />
-        </Main>
+        <BrowserRouter history={history}>
+          <Switch>
+            <Route exact path="/login" component={AuthScene} />
+            <PrivateRoute exact path="/" component={GuestScene} />
+            <Route component={PageNotFoundScene} />
+          </Switch>
+        </BrowserRouter>
+        <GlobalStyles />
       </ApolloProvider>
     );
   }
