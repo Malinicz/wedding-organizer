@@ -4,7 +4,7 @@ import { LoginForm } from './components';
 
 export class AuthScene extends Component {
   render() {
-    return <LoginForm />;
+    return <LoginForm {...this.props} />;
   }
 }
 

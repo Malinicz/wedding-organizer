@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
 
 import { Input, InputLabel, Button } from 'components/base';
 
-const AUTHENTICATE_MUTATION = gql`
-  mutation Authenticate($login: String!, $password: String!) {
-    authenticate(login: $login, password: $password) {
-      success
-    }
-  }
-`;
+import { client as apolloClient } from 'App';
+
+import {
+  SET_IS_LOGGED_MUTATION,
+  AUTHENTICATE_MUTATION,
+} from 'graphql/mutations';
 
 const LoginFormHolder = styled.div`
   display: flex;
@@ -48,8 +46,11 @@ export class LoginForm extends Component {
       } = response;
 
       if (success) {
-        this.props.setIsLogged(true);
-        this.setState({ errorMessage: '' });
+        await apolloClient.mutate({
+          mutation: SET_IS_LOGGED_MUTATION,
+          variables: { isLogged: true },
+        });
+        this.props.history.replace('/');
       } else {
         this.setState({ errorMessage: 'Login lub hasło są nieprawidłowe' });
       }

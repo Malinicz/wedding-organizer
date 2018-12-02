@@ -4,7 +4,7 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
-import { defaults, resolvers } from 'store';
+import { defaults, resolvers, typeDefs } from './graphql';
 
 import GlobalStyles from './globalStyles';
 
@@ -13,11 +13,12 @@ import { PrivateRoute } from 'components';
 
 const history = createBrowserHistory();
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_ENDPOINT,
   clientState: {
     defaults,
     resolvers,
+    typeDefs,
   },
 });
 

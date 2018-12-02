@@ -1,13 +1,8 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 
-const GET_IS_LOGGED = gql`
-  {
-    isLogged @client
-  }
-`;
+import { GET_IS_LOGGED } from 'graphql/queries';
 
 export function PrivateRoute({ component: Component, ...rest }) {
   return (
