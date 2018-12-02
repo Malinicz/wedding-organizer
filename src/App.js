@@ -1,26 +1,44 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
+import styled from 'styled-components';
+
+import GlobalStyles from './globalStyles';
+
+import { LoginForm } from 'components';
+
+const Main = styled.main`
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+`;
+
+const client = new ApolloClient({
+  uri: process.env.REACT_APP_GRAPHQL_ENDPOINT,
+});
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLogged: false,
+    };
+  }
+
+  setIsLogged = isLogged => {
+    this.setState({ isLogged });
+  };
+
   render() {
+    const { isLogged } = this.state;
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <ApolloProvider client={client}>
+        <Main>
+          <LoginForm setIsLogged={this.setIsLogged} isLogged={isLogged} />
+          <GlobalStyles />
+        </Main>
+      </ApolloProvider>
     );
   }
 }
