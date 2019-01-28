@@ -1,11 +1,18 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  type IsLogged {
-    isLogged: Boolean
+  type AuthUser {
+    id: String
+    role: String
+    email: String
+    token: String
   }
 
   type Mutation {
-    setIsLogged(isLogged: Boolean!): IsLogged
+    setAuthUser(authUser: AuthUser!): AuthUser
+  }
+
+  type Query {
+    authUser: AuthUser
   }
 `;

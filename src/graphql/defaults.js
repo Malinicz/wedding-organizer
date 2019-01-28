@@ -1,3 +1,9 @@
 export default {
-  isLogged: false,
+  authUser: {
+    __typename: 'AuthUser',
+    id: '',
+    email: '',
+    role: '',
+    token: '',
+  },
 };

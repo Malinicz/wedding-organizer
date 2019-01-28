@@ -4,12 +4,16 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
-import { defaults, resolvers, typeDefs } from './graphql';
+import { defaults, resolvers } from './graphql';
 
 import GlobalStyles from './globalStyles';
 
-import { GuestScene, AuthScene, PageNotFoundScene } from 'scenes';
+import { SignIn, SignUp, PageNotFound, Wedding } from 'scenes';
 import { PrivateRoute } from 'components';
+
+import { SET_AUTH_USER_MUTATION } from 'graphql/mutations';
+
+import { SIGN_IN, SIGN_UP, HOME } from 'constants/routes';
 
 const history = createBrowserHistory();
 
@@ -18,19 +22,36 @@ export const client = new ApolloClient({
   clientState: {
     defaults,
     resolvers,
-    typeDefs,
   },
 });
 
 class App extends Component {
+  componentDidMount() {
+    this.setAuthUser();
+  }
+
+  setAuthUser = async () => {
+    const authUserFromStorage = window.localStorage.getItem('user');
+
+    if (authUserFromStorage) {
+      const authUser = JSON.parse(authUserFromStorage);
+
+      await client.mutate({
+        mutation: SET_AUTH_USER_MUTATION,
+        variables: { authUser },
+      });
+    }
+  };
+
   render() {
     return (
       <ApolloProvider client={client}>
         <BrowserRouter history={history}>
           <Switch>
-            <Route exact path="/login" component={AuthScene} />
-            <PrivateRoute exact path="/" component={GuestScene} />
-            <Route component={PageNotFoundScene} />
+            <Route exact path={SIGN_IN} component={SignIn} />
+            <Route exact path={SIGN_UP} component={SignUp} />
+            <PrivateRoute exact path={HOME} component={Wedding} />
+            <Route component={PageNotFound} />
           </Switch>
         </BrowserRouter>
         <GlobalStyles />
