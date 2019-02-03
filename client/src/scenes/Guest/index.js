@@ -3,7 +3,7 @@ import { client as apolloClient } from 'App';
 
 import { SIGN_IN } from 'constants/routes';
 
-export class Wedding extends Component {
+export class Guest extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -18,7 +18,7 @@ export class Wedding extends Component {
   render() {
     return (
       <div>
-        this is home<button onClick={this.onLogout}>Wyloguj się</button>
+        this is guest form<button onClick={this.onLogout}>Wyloguj się</button>
       </div>
     );
   }

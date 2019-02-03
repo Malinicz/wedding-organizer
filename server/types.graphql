@@ -18,8 +18,9 @@ type Guest @model {
 }
 
 type GuestGroup @model {
-  accomodation: Boolean!
+  name: String!
   code: String!
+  accomodation: Boolean!
   comments: String
   guests: [Guest!]! @relation(name: "GuestGroupOnGuest")
   id: ID! @isUnique
@@ -49,6 +50,7 @@ type Wedding @model {
   description: String
   guestGroups: [GuestGroup!]! @relation(name: "WeddingOnGuestGroup")
   id: ID! @isUnique
+  internalId: String! @isUnique
   name: String
   slug: String!
   user: User @relation(name: "UserOnWedding")

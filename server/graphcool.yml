@@ -12,38 +12,44 @@ functions:
         src: ./src/signUp.js
     type: resolver
     schema: ./src/signUp.graphql
+  signInGuest:
+    handler:
+      code:
+        src: ./src/signInGuest.js
+    type: resolver
+    schema: ./src/signInGuest.graphql
 permissions:
-- operation: File.read
-- operation: File.create
-- operation: File.update
-- operation: File.delete
-- operation: Guest.read
-- operation: Guest.create
-- operation: Guest.update
-- operation: Guest.delete
-- operation: GuestGroup.read
-- operation: GuestGroup.create
-- operation: GuestGroup.update
-- operation: GuestGroup.delete
-- operation: User.read
-- operation: User.create
-- operation: User.update
-- operation: User.delete
-- operation: Wedding.read
-- operation: Wedding.create
-- operation: Wedding.update
-- operation: Wedding.delete
-- operation: WeddingChurch.read
-- operation: WeddingChurch.create
-- operation: WeddingChurch.update
-- operation: WeddingChurch.delete
-- operation: WeddingParty.read
-- operation: WeddingParty.create
-- operation: WeddingParty.update
-- operation: WeddingParty.delete
-- operation: GuestGroupOnGuest.*
-- operation: UserOnWedding.*
-- operation: WeddingOnGuestGroup.*
-- operation: WeddingOnWeddingChurch.*
-- operation: WeddingOnWeddingParty.*
+  - operation: File.read
+  - operation: File.create
+  - operation: File.update
+  - operation: File.delete
+  - operation: Guest.read
+  - operation: Guest.create
+  - operation: Guest.update
+  - operation: Guest.delete
+  - operation: GuestGroup.read
+  - operation: GuestGroup.create
+  - operation: GuestGroup.update
+  - operation: GuestGroup.delete
+  - operation: User.read
+  - operation: User.create
+  - operation: User.update
+  - operation: User.delete
+  - operation: Wedding.read
+  - operation: Wedding.create
+  - operation: Wedding.update
+  - operation: Wedding.delete
+  - operation: WeddingChurch.read
+  - operation: WeddingChurch.create
+  - operation: WeddingChurch.update
+  - operation: WeddingChurch.delete
+  - operation: WeddingParty.read
+  - operation: WeddingParty.create
+  - operation: WeddingParty.update
+  - operation: WeddingParty.delete
+  - operation: GuestGroupOnGuest.*
+  - operation: UserOnWedding.*
+  - operation: WeddingOnGuestGroup.*
+  - operation: WeddingOnWeddingChurch.*
+  - operation: WeddingOnWeddingParty.*
 rootTokens: []

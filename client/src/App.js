@@ -8,12 +8,12 @@ import { defaults, resolvers } from './graphql';
 
 import GlobalStyles from './globalStyles';
 
-import { SignIn, SignUp, PageNotFound, Wedding } from 'scenes';
+import { SignIn, SignUp, PageNotFound, Guest } from 'scenes';
 import { PrivateRoute } from 'components';
 
 import { SET_AUTH_USER_MUTATION } from 'graphql/mutations';
 
-import { SIGN_IN, SIGN_UP, HOME } from 'constants/routes';
+import { SIGN_IN, SIGN_UP, GUEST } from 'constants/routes';
 
 const history = createBrowserHistory();
 
@@ -50,7 +50,7 @@ class App extends Component {
           <Switch>
             <Route exact path={SIGN_IN} component={SignIn} />
             <Route exact path={SIGN_UP} component={SignUp} />
-            <PrivateRoute exact path={HOME} component={Wedding} />
+            <PrivateRoute exact path={GUEST} component={Guest} />
             <Route component={PageNotFound} />
           </Switch>
         </BrowserRouter>

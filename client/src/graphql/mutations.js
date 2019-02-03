@@ -28,3 +28,11 @@ export const SIGN_IN_MUTATION = gql`
     }
   }
 `;
+
+export const GUEST_SIGN_IN_MUTATION = gql`
+  mutation SignInGuest($weddingId: String!, $code: String!) {
+    signInGuest(weddingId: $weddingId, code: $code) {
+      authUser
+    }
+  }
+`;

@@ -1,0 +1,7 @@
+type SignInGuestPayload {
+  authUser: Json!
+}
+
+extend type Mutation {
+  signInGuest(weddingId: String!, code: String!): SignInGuestPayload
+}
