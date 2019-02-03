@@ -40,13 +40,14 @@ class App extends Component {
 
   setAuthUser = async () => {
     const authUserFromStorage = window.localStorage.getItem('user');
+    const tokenFromStorage = window.localStorage.getItem('token');
 
-    if (authUserFromStorage) {
+    if (authUserFromStorage && tokenFromStorage) {
       const authUser = JSON.parse(authUserFromStorage);
 
       await client.mutate({
         mutation: SET_AUTH_USER_MUTATION,
-        variables: { authUser },
+        variables: { authUser, token: tokenFromStorage },
       });
     }
   };

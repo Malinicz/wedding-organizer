@@ -31,6 +31,7 @@ permissions:
   - operation: GuestGroup.create
   - operation: GuestGroup.update
     authenticated: true
+    query: ./permissions/updateGuestGroup.graphql
   - operation: GuestGroup.delete
   - operation: User.read
   - operation: User.create

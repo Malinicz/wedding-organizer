@@ -1,0 +1,3 @@
+query permitUpdatingGuestGroup($user_id: ID!, $node_id: ID!) {
+  SomeGuestGroupExists(filter: { AND: [{ id: $user_id }, { id: $node_id }] })
+}
