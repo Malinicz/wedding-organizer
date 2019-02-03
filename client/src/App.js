@@ -23,6 +23,14 @@ export const client = new ApolloClient({
     defaults,
     resolvers,
   },
+  request: async operation => {
+    const token = await window.localStorage.getItem('token');
+    operation.setContext({
+      headers: {
+        authorization: token ? `Bearer ${token}` : '',
+      },
+    });
+  },
 });
 
 class App extends Component {

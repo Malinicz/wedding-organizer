@@ -27,11 +27,11 @@ export class AdminSignIn extends Component {
 
   onSubmitSuccess = async response => {
     console.log('Logowanie admina przebiegło pomyślnie');
-    const { authUser } = response.signInUser;
+    const { authUser, token } = response.signInUser;
 
     await apolloClient.mutate({
       mutation: SET_AUTH_USER_MUTATION,
-      variables: { authUser },
+      variables: { authUser, token },
     });
 
     this.props.history.replace('/');

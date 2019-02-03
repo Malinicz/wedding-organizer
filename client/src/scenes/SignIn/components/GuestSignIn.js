@@ -30,14 +30,14 @@ export class GuestSignIn extends Component {
 
   onSubmitSuccess = async response => {
     console.log('Logowanie gościa przebiegło pomyślnie');
-    const { authUser } = response.signInGuest;
+    const { authUser, token } = response.signInGuest;
 
     await apolloClient.mutate({
       mutation: SET_AUTH_USER_MUTATION,
-      variables: { authUser },
+      variables: { authUser, token },
     });
 
-    this.props.history.replace('/guest');
+    this.props.history.replace(`/guest/${authUser.id}`);
   };
 
   onSubmitError = () => {

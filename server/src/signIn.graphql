@@ -1,7 +1,8 @@
 type SignInPayload {
-    authUser: Json!
+  authUser: Json!
+  token: String!
 }
 
 extend type Mutation {
-    signInUser(email: String!, password: String!): SignInPayload
+  signInUser(email: String!, password: String!): SignInPayload
 }

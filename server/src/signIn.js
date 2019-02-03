@@ -30,8 +30,8 @@ module.exports = async event => {
           email: user.email,
           role: user.role,
           weddings: user.weddings,
-          token,
         },
+        token,
       },
     };
   } catch (e) {

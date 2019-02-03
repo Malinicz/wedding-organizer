@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const SET_AUTH_USER_MUTATION = gql`
-  mutation SetAuthUserMutation($authUser: Json!) {
-    setAuthUser(authUser: $authUser) @client
+  mutation SetAuthUserMutation($authUser: Json!, $token: String!) {
+    setAuthUser(authUser: $authUser, token: $token) @client
   }
 `;
 
@@ -25,6 +25,7 @@ export const SIGN_IN_MUTATION = gql`
   mutation SignInUser($email: String!, $password: String!) {
     signInUser(email: $email, password: $password) {
       authUser
+      token
     }
   }
 `;
@@ -33,6 +34,15 @@ export const GUEST_SIGN_IN_MUTATION = gql`
   mutation SignInGuest($weddingId: String!, $code: String!) {
     signInGuest(weddingId: $weddingId, code: $code) {
       authUser
+      token
+    }
+  }
+`;
+
+export const UPDATE_GUEST_GROUP = gql`
+  mutation UpdateGuestGroup($id: ID!, $transport: Boolean) {
+    updateGuestGroup(id: $id, transport: $transport) {
+      id
     }
   }
 `;

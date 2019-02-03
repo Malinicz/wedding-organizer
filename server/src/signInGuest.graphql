@@ -1,5 +1,6 @@
 type SignInGuestPayload {
   authUser: Json!
+  token: String!
 }
 
 extend type Mutation {

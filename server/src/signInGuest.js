@@ -23,8 +23,8 @@ module.exports = async event => {
       data: {
         authUser: {
           id: guestGroupId,
-          token,
         },
+        token,
       },
     };
   } catch (e) {
