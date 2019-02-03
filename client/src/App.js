@@ -13,7 +13,7 @@ import { PrivateRoute } from 'components';
 
 import { SET_AUTH_USER_MUTATION } from 'graphql/mutations';
 
-import { SIGN_IN, SIGN_UP, GUEST } from 'constants/routes';
+import { SIGN_IN, SIGN_UP, GUEST, HOME } from 'constants/routes';
 
 const history = createBrowserHistory();
 
@@ -48,6 +48,7 @@ class App extends Component {
       <ApolloProvider client={client}>
         <BrowserRouter history={history}>
           <Switch>
+            <Route exact path={HOME} component={SignIn} />
             <Route exact path={SIGN_IN} component={SignIn} />
             <Route exact path={SIGN_UP} component={SignUp} />
             <PrivateRoute exact path={GUEST} component={Guest} />
