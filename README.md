@@ -1,6 +1,6 @@
 # wedding-organizer
 
-Simple app for getting important information from wedding guests
+This app will help you organize your wedding ;)
 
 Stack:
 

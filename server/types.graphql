@@ -1,0 +1,76 @@
+type File @model {
+  contentType: String!
+  createdAt: DateTime!
+  id: ID! @isUnique
+  name: String!
+  secret: String! @isUnique
+  size: Int!
+  updatedAt: DateTime!
+  url: String! @isUnique
+}
+
+type Guest @model {
+  guestGroup: GuestGroup @relation(name: "GuestGroupOnGuest")
+  id: ID! @isUnique
+  isPresent: Boolean!
+  isVegetarian: Boolean!
+  name: String!
+}
+
+type GuestGroup @model {
+  accomodation: Boolean!
+  code: String!
+  comments: String
+  guests: [Guest!]! @relation(name: "GuestGroupOnGuest")
+  id: ID! @isUnique
+  transport: Boolean!
+  wedding: Wedding @relation(name: "WeddingOnGuestGroup")
+}
+
+type User @model {
+  createdAt: DateTime!
+  email: String! @isUnique
+  id: ID! @isUnique
+  password: String!
+  privacyPolicyConsent: DateTime
+  resetToken: String
+  resetTokenExpires: DateTime
+  role: UserRoles!
+  updatedAt: DateTime!
+  weddings: [Wedding!]! @relation(name: "UserOnWedding")
+}
+
+enum UserRoles {
+  Organiser
+  Admin
+}
+
+type Wedding @model {
+  description: String
+  guestGroups: [GuestGroup!]! @relation(name: "WeddingOnGuestGroup")
+  id: ID! @isUnique
+  name: String
+  slug: String!
+  user: User @relation(name: "UserOnWedding")
+  weddingChurch: WeddingChurch @relation(name: "WeddingOnWeddingChurch")
+  weddingParty: WeddingParty @relation(name: "WeddingOnWeddingParty")
+}
+
+type WeddingChurch @model {
+  city: String
+  id: ID! @isUnique
+  name: String
+  startTime: DateTime!
+  street: String
+  wedding: Wedding @relation(name: "WeddingOnWeddingChurch")
+}
+
+type WeddingParty @model {
+  city: String
+  description: String
+  id: ID! @isUnique
+  name: String
+  startTime: DateTime
+  street: String
+  wedding: Wedding @relation(name: "WeddingOnWeddingParty")
+}
