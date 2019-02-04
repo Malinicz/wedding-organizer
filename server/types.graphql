@@ -15,6 +15,7 @@ type Guest @model {
   isPresent: Boolean!
   isVegetarian: Boolean!
   name: String!
+  drink: [Drink!]! @relation(name: "DrinkOnGuest")
 }
 
 type GuestGroup @model {
@@ -75,4 +76,11 @@ type WeddingParty @model {
   startTime: DateTime
   street: String
   wedding: Wedding @relation(name: "WeddingOnWeddingParty")
+}
+
+type Drink @model {
+  id: ID! @isUnique
+  name: String!
+  price: Int
+  guest: [Guest!]! @relation(name: "DrinkOnGuest")
 }

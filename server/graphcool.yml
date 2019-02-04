@@ -49,6 +49,10 @@ permissions:
   - operation: WeddingParty.create
   - operation: WeddingParty.update
   - operation: WeddingParty.delete
+  - operation: Drink.read
+  - operation: Drink.create
+  - operation: Drink.update
+  - operation: Drink.delete
   - operation: GuestGroupOnGuest.*
   - operation: UserOnWedding.*
   - operation: WeddingOnGuestGroup.*
