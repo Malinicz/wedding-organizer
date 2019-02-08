@@ -1,0 +1,7 @@
+type SaveGuestGroupFormPayload {
+  id: ID!
+}
+
+extend type Mutation {
+  saveGuestGroupForm(id: ID!, guests: Json): SaveGuestGroupFormPayload
+}

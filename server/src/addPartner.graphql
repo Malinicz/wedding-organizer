@@ -1,0 +1,7 @@
+type AddPartnerPayload {
+  id: ID!
+}
+
+extend type Mutation {
+  addPartner(guestGroupId: ID!, partnerName: String!): AddPartnerPayload
+}

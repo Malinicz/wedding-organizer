@@ -20,7 +20,18 @@ export const GET_GUEST_INITIAL_DATA = gql`
         name
         isPresent
         isVegetarian
+        allowPartner
+        drinks {
+          id
+          name
+          price
+        }
       }
+    }
+    allDrinks {
+      id
+      name
+      price
     }
   }
 `;

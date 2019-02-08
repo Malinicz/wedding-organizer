@@ -18,6 +18,18 @@ functions:
         src: ./src/signInGuest.js
     type: resolver
     schema: ./src/signInGuest.graphql
+  saveGuestGroupForm:
+    handler:
+      code:
+        src: ./src/saveGuestGroupForm.js
+    type: resolver
+    schema: ./src/saveGuestGroupForm.graphql
+  addPartner:
+    handler:
+      code:
+        src: ./src/addPartner.js
+    type: resolver
+    schema: ./src/addPartner.graphql
 permissions:
   - operation: File.read
   - operation: File.create

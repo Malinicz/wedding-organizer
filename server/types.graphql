@@ -14,14 +14,16 @@ type Guest @model {
   id: ID! @isUnique
   isPresent: Boolean!
   isVegetarian: Boolean!
+  allowPartner: Boolean! @defaultValue(value: false)
   name: String!
-  drink: [Drink!]! @relation(name: "DrinkOnGuest")
+  drinks: [Drink!]! @relation(name: "DrinkOnGuest")
 }
 
 type GuestGroup @model {
   name: String!
   code: String!
   accomodation: Boolean!
+  allowAccomodation: Boolean! @defaultValue(value: false)
   comments: String
   guests: [Guest!]! @relation(name: "GuestGroupOnGuest")
   id: ID! @isUnique

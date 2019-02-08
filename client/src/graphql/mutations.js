@@ -39,9 +39,25 @@ export const GUEST_SIGN_IN_MUTATION = gql`
   }
 `;
 
-export const UPDATE_GUEST_GROUP = gql`
+export const UPDATE_GUEST_GROUP_MUTATION = gql`
   mutation UpdateGuestGroup($id: ID!, $transport: Boolean) {
     updateGuestGroup(id: $id, transport: $transport) {
+      id
+    }
+  }
+`;
+
+export const SAVE_GUEST_GROUP_FORM = gql`
+  mutation SaveGuestGroupForm($id: ID!, $guests: Json!) {
+    saveGuestGroupForm(id: $id, guests: $guests) {
+      id
+    }
+  }
+`;
+
+export const ADD_PARTNER_MUTATION = gql`
+  mutation AddPartner($guestGroupId: ID!, $partnerName: String!) {
+    addPartner(guestGroupId: $guestGroupId, partnerName: $partnerName) {
       id
     }
   }
