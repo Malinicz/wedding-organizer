@@ -10,6 +10,10 @@ import logo from 'assets/logo.png';
 const LoginSection = styled(Section)`
   margin: 130px 0 10px 0;
   justify-content: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.small}px) {
+    margin: 80px 0 10px 0;
+  }
 `;
 
 const CallToActionSection = styled(Section)`

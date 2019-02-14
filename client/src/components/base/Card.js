@@ -7,4 +7,8 @@ export const Card = styled.div`
   border-radius: 8%;
   background-color: ${({ theme }) => theme.colors.brightest};
   box-shadow: 0px 6px 15px 0px rgba(0, 0, 0, 0.06);
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.small}px) {
+    padding: ${({ theme }) => theme.baseSpacing}px;
+  }
 `;

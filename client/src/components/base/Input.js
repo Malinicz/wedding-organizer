@@ -9,6 +9,8 @@ export const Input = styled.input`
   border: none;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   border-bottom: ${({ theme }) => `2px solid ${theme.colors.primaryDarker}`};
   background-color: ${({ theme }) => theme.colors.brightest};
   outline: none;
