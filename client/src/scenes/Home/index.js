@@ -12,7 +12,7 @@ const LoginSection = styled(Section)`
   justify-content: center;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.small}px) {
-    margin: 80px 0 10px 0;
+    margin-top: 100px;
   }
 `;
 

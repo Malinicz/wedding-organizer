@@ -9,6 +9,7 @@ export const Card = styled.div`
   box-shadow: 0px 6px 15px 0px rgba(0, 0, 0, 0.06);
 
   @media (max-width: ${({ theme }) => theme.breakpoints.small}px) {
-    padding: ${({ theme }) => theme.baseSpacing}px;
+    padding: ${({ theme }) =>
+      `${theme.baseSpacing * 3}px ${theme.baseSpacing}px`};
   }
 `;
