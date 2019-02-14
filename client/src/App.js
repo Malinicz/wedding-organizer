@@ -3,12 +3,15 @@ import { Router as BrowserRouter, Switch, Route } from 'react-router';
 import createBrowserHistory from 'history/createBrowserHistory';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
+import {
+  GlobalStyles,
+  styledTheme,
+  ThemeProvider as StyledThemeProvider,
+} from 'styles';
 
 import { defaults, resolvers } from './graphql';
 
-import GlobalStyles from './globalStyles';
-
-import { SignIn, SignUp, PageNotFound, Guest } from 'scenes';
+import { SignIn, SignUp, PageNotFound, Guest, Home } from 'scenes';
 import { PrivateRoute } from 'components';
 
 import { SET_AUTH_USER_MUTATION } from 'graphql/mutations';
@@ -54,18 +57,20 @@ class App extends Component {
 
   render() {
     return (
-      <ApolloProvider client={client}>
-        <BrowserRouter history={history}>
-          <Switch>
-            <Route exact path={HOME} component={SignIn} />
-            <Route exact path={SIGN_IN} component={SignIn} />
-            <Route exact path={SIGN_UP} component={SignUp} />
-            <PrivateRoute exact path={GUEST} component={Guest} />
-            <Route component={PageNotFound} />
-          </Switch>
-        </BrowserRouter>
-        <GlobalStyles />
-      </ApolloProvider>
+      <StyledThemeProvider theme={styledTheme}>
+        <ApolloProvider client={client}>
+          <BrowserRouter history={history}>
+            <Switch>
+              <Route exact path={HOME} component={Home} />
+              <Route exact path={SIGN_IN} component={SignIn} />
+              <Route exact path={SIGN_UP} component={SignUp} />
+              <PrivateRoute exact path={GUEST} component={Guest} />
+              <Route component={PageNotFound} />
+            </Switch>
+          </BrowserRouter>
+          <GlobalStyles />
+        </ApolloProvider>
+      </StyledThemeProvider>
     );
   }
 }

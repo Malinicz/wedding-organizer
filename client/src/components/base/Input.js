@@ -4,11 +4,17 @@ export const Input = styled.input`
   width: 100%;
   min-height: 50px;
   margin-bottom: 30px;
-  padding: 0 10px;
+  padding: 0 4px;
   font-size: 16px;
   border: none;
-  border-radius: 10px;
-  box-sizing: border-box;
-  box-shadow: 0px 3px 5px 2px rgba(0, 0, 0, 0.1);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom: ${({ theme }) => `2px solid ${theme.colors.primaryDarker}`};
+  background-color: ${({ theme }) => theme.colors.brightest};
   outline: none;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.brighter};
+  }
 `;

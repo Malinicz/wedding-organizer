@@ -5,3 +5,5 @@ export * from './Headings';
 export * from './Form';
 export * from './Checkbox';
 export * from './InputRadio';
+export * from './Section';
+export * from './Card';

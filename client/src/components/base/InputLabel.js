@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 export const InputLabel = styled.label`
-  font-size: 14px;
+  display: inline-block;
+  font-size: 1em;
   font-weight: bold;
-  margin-bottom: 5px;
-  margin-left: 5px;
+  margin-bottom: 4px;
+  margin-left: 4px;
 `;

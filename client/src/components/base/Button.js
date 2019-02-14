@@ -6,18 +6,19 @@ const ButtonBase = Input.withComponent('button');
 
 export const Button = styled(ButtonBase)`
   padding: 0;
-  background: -webkit-linear-gradient(
-    top,
-    #ffffff 0%,
-    #f1f1f1 50%,
-    #e1e1e1 51%,
-    #f6f6f6 100%
-  );
-  font-weight: bold;
-  font-size: 14px;
-  transition: box-shadow 0.1s ease;
+  font-family: ${({ theme }) => theme.fontFamily.secondary.regular};
+  color: ${({ theme }) => theme.colors.brightest};
+  font-size: 1.7em;
+  background-color: ${({ theme }) => theme.colors.primaryDarker};
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
 
   &:active {
-    box-shadow: none;
+    transform: scale(0.99);
   }
 `;
