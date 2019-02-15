@@ -25,6 +25,11 @@ export const GET_GUEST_INITIAL_DATA = gql`
   query GetGuestInitialData($id: ID!) {
     GuestGroup(id: $id) {
       id
+      customGreeting
+      wedding {
+        id
+        name
+      }
       guests {
         id
         name

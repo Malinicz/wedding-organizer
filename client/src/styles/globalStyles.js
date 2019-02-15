@@ -35,7 +35,7 @@ export default createGlobalStyle`
         color: ${styledTheme.colors.darker};
         font-size: 16px;
         font-family: ${styledTheme.fontFamily.primary.regular};
-        line-height: 20px;
+        line-height: 1.25em;
         background-color: ${styledTheme.colors.primary};
     }
 

@@ -1,22 +1,49 @@
 import React, { Component } from 'react';
 import { Query } from 'react-apollo';
-import { client as apolloClient } from 'App';
+import styled from 'styles';
 
-import { H1 } from 'components/base';
+import { Layout } from 'components';
+import { Section, H1 } from 'components/base';
 import { GuestForm } from './components';
 
 import { GET_GUEST_INITIAL_DATA } from 'graphql/queries';
 
-import { SIGN_IN } from 'constants/routes';
+import logo from 'assets/logo.png';
+
+const Header = styled.header`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 70px;
+`;
+
+const Logo = styled.img`
+  width: 230px;
+`;
+
+const WeddingName = styled(H1)`
+  font-size: 1.2em;
+`;
+
+const Greeting = styled.div`
+  font-family: ${({ theme }) => theme.fontFamily.secondary.regular};
+  font-size: 3em;
+  margin-top: 70px;
+  line-height: 1em;
+  text-align: center;
+`;
+
+const IntroText = styled.p`
+  max-width: 500px;
+  text-align: center;
+`;
+
+const FormSection = styled(Section)`
+  display: flex;
+  align-items: center;
+`;
 
 export class Guest extends Component {
-  onLogout = () => {
-    apolloClient.resetStore();
-    window.localStorage.removeItem('user');
-    window.localStorage.removeItem('token');
-    this.props.history.push(SIGN_IN);
-  };
-
   render() {
     const {
       match: {
@@ -35,13 +62,23 @@ export class Guest extends Component {
           }
 
           return (
-            <div>
-              <H1>Formularz</H1>
-              <GuestForm guestGroup={guestGroup} drinkOptions={drinkOptions} />
-              <div>
-                <button onClick={this.onLogout}>Wyloguj się</button>
-              </div>
-            </div>
+            <Layout>
+              <Header>
+                <Logo src={logo} />
+                <WeddingName>{guestGroup.wedding.name}</WeddingName>
+                <Greeting>{guestGroup.customGreeting || 'Witaj!'}</Greeting>
+                <IntroText>
+                  Potrzebujemy od was dosłownie kilku informacji. Będziemy
+                  wdzięczni za uzupełnienie wszystkich pól!
+                </IntroText>
+              </Header>
+              <FormSection>
+                <GuestForm
+                  guestGroup={guestGroup}
+                  drinkOptions={drinkOptions}
+                />
+              </FormSection>
+            </Layout>
           );
         }}
       </Query>

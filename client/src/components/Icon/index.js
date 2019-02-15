@@ -1,10 +1,11 @@
 import React from 'react';
 import { string, number } from 'prop-types';
 import styled from 'styles';
-import { LoaderIcon } from './svgIcons';
+import { LoaderIcon, PlusIcon } from './svgIcons';
 
 const icons = {
   loader: <LoaderIcon />,
+  plus: <PlusIcon />,
 };
 
 const IconHolder = styled.div`

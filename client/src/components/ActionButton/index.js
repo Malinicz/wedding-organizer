@@ -7,6 +7,8 @@ import { Icon } from 'components';
 const ActionButtonHolder = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 450px;
 `;
 
 const ErrorMessage = styled.div`

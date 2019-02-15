@@ -28,6 +28,7 @@ type GuestGroup @model {
   guests: [Guest!]! @relation(name: "GuestGroupOnGuest")
   id: ID! @isUnique
   transport: Boolean!
+  customGreeting: String
   wedding: Wedding @relation(name: "WeddingOnGuestGroup")
 }
 
