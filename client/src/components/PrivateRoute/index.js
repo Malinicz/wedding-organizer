@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router';
 
-import { SIGN_IN } from 'constants/routes';
+import { HOME } from 'constants/routes';
 
 export function PrivateRoute({ component: Component, ...rest }) {
   return (
@@ -13,7 +13,7 @@ export function PrivateRoute({ component: Component, ...rest }) {
         return isLogged ? (
           <Component {...props} />
         ) : (
-          <Redirect to={{ pathname: SIGN_IN }} />
+          <Redirect to={{ pathname: HOME }} />
         );
       }}
     />

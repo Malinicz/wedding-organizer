@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
-import styled from 'styles';
 
-import { Input, InputLabel, Button, Form } from 'components/base';
+import { ActionButton } from 'components';
+import { Input, InputLabel, Form } from 'components/base';
 
 import { client as apolloClient } from 'App';
 
@@ -10,11 +10,6 @@ import {
   GUEST_SIGN_IN_MUTATION,
   SET_AUTH_USER_MUTATION,
 } from 'graphql/mutations';
-
-const LoginButton = styled(Button)`
-  margin-top: 20px;
-  margin-bottom: 10px;
-`;
 
 export class GuestSignIn extends Component {
   loginInput = null;
@@ -29,7 +24,6 @@ export class GuestSignIn extends Component {
   }
 
   componentDidMount() {
-    console.log('loginInput: ', this.loginInput);
     if (this.loginInput) {
       this.loginInput.focus();
     }
@@ -39,12 +33,20 @@ export class GuestSignIn extends Component {
     this.setState({ weddingId: e.target.value });
   };
 
+  onLoginBlur = () => {
+    const { weddingId } = this.state;
+    const { weddings, handleWeddingNameChange } = this.props;
+    const wedding =
+      weddings && weddings.find(wedding => wedding.internalId === weddingId);
+
+    handleWeddingNameChange(wedding ? wedding.name : '');
+  };
+
   onCodeChange = e => {
     this.setState({ code: e.target.value });
   };
 
   onSubmitSuccess = async response => {
-    console.log('Logowanie gościa przebiegło pomyślnie');
     const { authUser, token } = response.signInGuest;
 
     await apolloClient.mutate({
@@ -55,10 +57,6 @@ export class GuestSignIn extends Component {
     this.props.history.replace(`/guest/${authUser.id}`);
   };
 
-  onSubmitError = () => {
-    console.log('Podczas logowania wystąpił błąd');
-  };
-
   render() {
     const { weddingId, code } = this.state;
 
@@ -66,9 +64,8 @@ export class GuestSignIn extends Component {
       <Mutation
         mutation={GUEST_SIGN_IN_MUTATION}
         onCompleted={this.onSubmitSuccess}
-        onError={this.onSubmitError}
       >
-        {guestSignIn => (
+        {(guestSignIn, { loading, error }) => (
           <Form
             onSubmit={e => {
               e.preventDefault();
@@ -82,14 +79,21 @@ export class GuestSignIn extends Component {
               placeholder="np. wesele0125"
               onChange={this.onLoginChange}
               ref={el => (this.loginInput = el)}
+              onBlur={this.onLoginBlur}
             />
             <InputLabel forHtml="code">kod</InputLabel>
             <Input
               type="code"
-              placeholder="np. FC83CK"
+              placeholder="np. FC42C"
               onChange={this.onCodeChange}
             />
-            <LoginButton type="submit">Wchodzę!</LoginButton>
+            <ActionButton
+              type="submit"
+              label="Wchodzę!"
+              loading={loading}
+              error={error && 'Ups! Coś poszło nie tak - spróbuj ponownie'}
+              style={{ marginTop: '20px', marginBotton: '10px' }}
+            />
           </Form>
         )}
       </Mutation>

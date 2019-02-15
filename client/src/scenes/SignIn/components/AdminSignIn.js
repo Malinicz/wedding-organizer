@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 
-import { Input, InputLabel, Button, Form } from 'components/base';
+import { ActionButton } from 'components';
+import { Input, InputLabel, Form } from 'components/base';
 
 import { client as apolloClient } from 'App';
 
@@ -26,7 +27,6 @@ export class AdminSignIn extends Component {
   };
 
   onSubmitSuccess = async response => {
-    console.log('Logowanie admina przebiegło pomyślnie');
     const { authUser, token } = response.signInUser;
 
     await apolloClient.mutate({
@@ -37,20 +37,12 @@ export class AdminSignIn extends Component {
     this.props.history.replace('/');
   };
 
-  onSubmitError = () => {
-    console.log('Podczas logowania wystąpił błąd');
-  };
-
   render() {
     const { email, password } = this.state;
 
     return (
-      <Mutation
-        mutation={SIGN_IN_MUTATION}
-        onCompleted={this.onSubmitSuccess}
-        onError={this.onSubmitError}
-      >
-        {signIn => (
+      <Mutation mutation={SIGN_IN_MUTATION} onCompleted={this.onSubmitSuccess}>
+        {(signIn, { loading, error }) => (
           <Form
             onSubmit={e => {
               e.preventDefault();
@@ -70,7 +62,13 @@ export class AdminSignIn extends Component {
               placeholder="******"
               onChange={this.onPasswordChange}
             />
-            <Button type="submit">Zaloguj</Button>
+            <ActionButton
+              type="submit"
+              style={{ marginTop: '10px' }}
+              label="Wchodzę!"
+              loading={loading}
+              error={error && 'Ups! Błędny login lub hasło'}
+            />
           </Form>
         )}
       </Mutation>

@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import { Query } from 'react-apollo';
 import styled from 'styled-components';
 
 import { Layout } from 'components';
 import { H1, Section, Card } from 'components/base';
 import { GuestSignIn } from './components';
+
+import { GET_WEDDING_NAMES } from 'graphql/queries';
 
 import logo from 'assets/logo.png';
 
@@ -59,24 +62,47 @@ const Title = styled(H1)`
 `;
 
 export class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      weddingName: '',
+    };
+  }
+  onWeddingNameChange = weddingName => {
+    this.setState({ weddingName });
+  };
+
   render() {
+    const { weddingName } = this.state;
+
     return (
-      <Layout>
-        <LoginSection>
-          <Card>
-            <Logo src={logo} />
-            <Title>Witaj, gościu!</Title>
-            <GuestSignIn {...this.props} />
-          </Card>
-        </LoginSection>
-        <CallToActionSection>
-          <CallToActionText>
-            “Witaj, gościu” to aplikacja która oszczędzi Twój czas podczas
-            organizacji wesela. Brzmi dobrze?
-          </CallToActionText>
-          <CallToActionButton>DOWIEDZ SIĘ WIĘCEJ!</CallToActionButton>
-        </CallToActionSection>
-      </Layout>
+      <Query query={GET_WEDDING_NAMES}>
+        {({ data: { allWeddings: weddings } }) => {
+          console.log('weddings: ', weddings);
+          return (
+            <Layout>
+              <LoginSection>
+                <Card>
+                  <Logo src={logo} />
+                  <Title>{weddingName || 'Witaj, Gościu!'}</Title>
+                  <GuestSignIn
+                    {...this.props}
+                    weddings={weddings}
+                    handleWeddingNameChange={this.onWeddingNameChange}
+                  />
+                </Card>
+              </LoginSection>
+              <CallToActionSection>
+                <CallToActionText>
+                  “Witaj, gościu” to aplikacja która oszczędzi Twój czas podczas
+                  organizacji wesela. Brzmi dobrze?
+                </CallToActionText>
+                <CallToActionButton>DOWIEDZ SIĘ WIĘCEJ!</CallToActionButton>
+              </CallToActionSection>
+            </Layout>
+          );
+        }}
+      </Query>
     );
   }
 }

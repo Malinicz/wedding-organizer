@@ -11,6 +11,16 @@ export const GET_AUTH_USER = gql`
   }
 `;
 
+export const GET_WEDDING_NAMES = gql`
+  query GetWeddingNames {
+    allWeddings {
+      id
+      name
+      internalId
+    }
+  }
+`;
+
 export const GET_GUEST_INITIAL_DATA = gql`
   query GetGuestInitialData($id: ID!) {
     GuestGroup(id: $id) {

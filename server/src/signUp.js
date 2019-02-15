@@ -37,12 +37,22 @@ module.exports = async event => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // create new user
-    const userId = await createGraphcoolUser(api, email, hashedPassword);
+    const user = await createGraphcoolUser(api, email, hashedPassword);
 
     // generate node token for new User node
-    const token = await graphcool.generateNodeToken(userId, 'User');
+    const token = await graphcool.generateNodeToken(user.id, 'User');
 
-    return { data: { id: userId, token } };
+    return {
+      data: {
+        authUser: {
+          id: user.id,
+          email: user.email,
+          role: user.role,
+          weddings: user.weddings,
+        },
+        token,
+      },
+    };
   } catch (e) {
     console.log(e);
     return { error: 'Wystąpił nieoczekiwany błąd' };
@@ -74,7 +84,12 @@ async function createGraphcoolUser(api, email, password) {
         role: Organiser
 		privacyPolicyConsent: $privacyPolicyConsent
       ) {
-        id	
+        id
+        email
+        role
+        weddings {
+          id
+        }	
       }
     }
   `;
@@ -85,7 +100,5 @@ async function createGraphcoolUser(api, email, password) {
     privacyPolicyConsent: new Date().toISOString(),
   };
 
-  return api
-    .request(mutation, variables)
-    .then(response => response.createUser.id);
+  return api.request(mutation, variables).then(response => response.createUser);
 }

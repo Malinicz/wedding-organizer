@@ -45,7 +45,10 @@ class App extends Component {
     const authUserFromStorage = window.localStorage.getItem('user');
     const tokenFromStorage = window.localStorage.getItem('token');
 
-    if (authUserFromStorage && tokenFromStorage) {
+    if (
+      authUserFromStorage !== 'undefined' &&
+      tokenFromStorage !== 'undefined'
+    ) {
       const authUser = JSON.parse(authUserFromStorage);
 
       await client.mutate({

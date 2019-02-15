@@ -15,7 +15,7 @@ export const GET_AUTH_USER_MUTATION = gql`
 export const SIGN_UP_MUTATION = gql`
   mutation SignUpUser($email: String!, $password: String!) {
     signUpUser(email: $email, password: $password, privacyPolicyConsent: true) {
-      id
+      authUser
       token
     }
   }
