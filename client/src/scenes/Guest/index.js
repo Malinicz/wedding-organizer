@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Query } from 'react-apollo';
 import styled from 'styles';
 
-import { Layout } from 'components';
+import { Layout, Loader } from 'components';
 import { Section, H1 } from 'components/base';
 import { GuestForm } from './components';
 
@@ -15,6 +15,7 @@ const Header = styled.header`
   flex-direction: column;
   align-items: center;
   margin-bottom: 70px;
+  padding: 0 15px;
 `;
 
 const Logo = styled.img`
@@ -58,7 +59,7 @@ export class Guest extends Component {
           loading,
         }) => {
           if (loading) {
-            return <div>loading...</div>;
+            return <Loader />;
           }
 
           return (

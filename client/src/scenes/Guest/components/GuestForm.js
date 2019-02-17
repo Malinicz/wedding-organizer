@@ -3,7 +3,7 @@ import { Mutation } from 'react-apollo';
 import styled from 'styles';
 
 import { ActionButton } from 'components';
-import { Form, Button } from 'components/base';
+import { Form } from 'components/base';
 import { GuestCard } from './GuestCard';
 
 import { SAVE_GUEST_GROUP_FORM } from 'graphql/mutations';
@@ -16,7 +16,7 @@ const GuestFormHolder = styled(Form)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 1200px;
+  max-width: 1250px;
 `;
 
 const GuestCards = styled.div`
@@ -51,11 +51,27 @@ export class GuestForm extends Component {
   }
 
   initializeForm = () => {
-    const { guestGroup } = this.props;
-    this.setState({ form: guestGroup });
+    const {
+      guestGroup: { id, wedding, customGreeting, guests },
+    } = this.props;
+    const form = {
+      id,
+      wedding,
+      customGreeting,
+      guests: guests.map(guest => ({
+        id: guest.id,
+        name: guest.name,
+        allowPartner: guest.allowPartner,
+        isPresent: guest.isPresent,
+        isVegetarian: guest.isVegetarian,
+        isDrinkingAlcohol: true,
+        drinks: guest.drinks,
+      })),
+    };
+    this.setState({ form });
   };
 
-  onRadioInputChange = (guestId, name, value) => {
+  onRadioInputChange = (value, guestId, name) => {
     const { guests } = this.state.form;
     const updatedGuests = guests.map(guest =>
       guestId === guest.id ? { ...guest, [name]: toBoolean(value) } : guest
@@ -63,7 +79,19 @@ export class GuestForm extends Component {
     this.setState({ form: { ...this.state.form, guests: updatedGuests } });
   };
 
-  onDrinksChange = (guestId, drinkId) => {
+  onIsDrinkingAlcoholChange = (value, guestId) => {
+    const { guests } = this.state.form;
+    const booleanValue = toBoolean(value);
+
+    const updatedGuests = guests.map(guest =>
+      guestId === guest.id
+        ? { ...guest, isDrinkingAlcohol: booleanValue, drinks: [] }
+        : guest
+    );
+    this.setState({ form: { ...this.state.form, guests: updatedGuests } });
+  };
+
+  onDrinksChange = (drinkId, guestId) => {
     const { guests } = this.state.form;
     const { drinkOptions } = this.props;
     const selectedDrink = drinkOptions.find(drink => drink.id === drinkId);
@@ -110,6 +138,9 @@ export class GuestForm extends Component {
                     guestGroupId={guestGroupId}
                     handleRadioInputChange={this.onRadioInputChange}
                     handleDrinksChange={this.onDrinksChange}
+                    handleIsDrinkingAlcoholChange={
+                      this.onIsDrinkingAlcoholChange
+                    }
                   />
                 );
               })}

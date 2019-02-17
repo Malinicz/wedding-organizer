@@ -1,35 +1,45 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import { styledTheme } from 'styles';
 
-import { Checkbox } from 'components/base';
-
-const CheckboxGroupHolder = styled.div``;
+import { InputGroupLabel, InputGroupHolder } from 'components/base';
+import { CheckboxStandardView } from './CheckboxStandardView';
+import { CheckboxTableView } from './CheckboxTableView';
 
 export class CheckboxGroup extends Component {
   render() {
-    const { label, options, handleChange, activeValues } = this.props;
+    const {
+      label,
+      options,
+      handleChange,
+      activeValues,
+      columns,
+      disabled,
+    } = this.props;
 
     return (
-      <CheckboxGroupHolder>
-        <div>{label}</div>
-        <div>
-          {options.map((option, index) => {
-            const isChecked = activeValues.includes(option.value);
-
-            return (
-              <label key={`${index}-${option.value}`}>
-                <Checkbox
-                  type="checkbox"
-                  value={option.value}
-                  checked={isChecked}
-                  onChange={handleChange}
-                />
-                {option.label}
-              </label>
-            );
-          })}
-        </div>
-      </CheckboxGroupHolder>
+      <InputGroupHolder>
+        <InputGroupLabel
+          style={{ color: disabled ? styledTheme.colors.brighter : 'inherit' }}
+        >
+          {label}
+        </InputGroupLabel>
+        {columns ? (
+          <CheckboxTableView
+            columns={columns}
+            options={options}
+            activeValues={activeValues}
+            handleChange={handleChange}
+            disabled={disabled}
+          />
+        ) : (
+          <CheckboxStandardView
+            options={options}
+            activeValues={activeValues}
+            handleChange={handleChange}
+            disabled={disabled}
+          />
+        )}
+      </InputGroupHolder>
     );
   }
 }

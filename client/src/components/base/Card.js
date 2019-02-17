@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Card = styled.div`
   position: relative;
   padding: ${({ theme }) => theme.baseSpacing * 4}px;
+  width: 100%;
   max-width: 550px;
   border-radius: 30px;
   background-color: ${({ theme }) => theme.colors.brightest};
@@ -10,6 +11,6 @@ export const Card = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.small}px) {
     padding: ${({ theme }) =>
-      `${theme.baseSpacing * 3}px ${theme.baseSpacing}px`};
+      `${theme.baseSpacing * 3}px ${theme.baseSpacing * 2}px`};
   }
 `;

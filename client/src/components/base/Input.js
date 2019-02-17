@@ -20,3 +20,26 @@ export const Input = styled.input`
     color: ${({ theme }) => theme.colors.brighter};
   }
 `;
+
+export const InputLabel = styled.label`
+  display: inline-block;
+  font-size: 1em;
+  font-weight: bold;
+  margin-bottom: 4px;
+  margin-left: 4px;
+`;
+
+export const InputGroupLabel = styled.div`
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1em;
+  font-weight: bold;
+`;
+
+export const InputGroupHolder = styled.div`
+  margin-bottom: 20px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;

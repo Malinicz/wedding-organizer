@@ -1,11 +1,12 @@
 import React from 'react';
 import { string, number } from 'prop-types';
 import styled from 'styles';
-import { LoaderIcon, PlusIcon } from './svgIcons';
+import { LoaderIcon, PlusIcon, CheckmarkIcon } from './svgIcons';
 
 const icons = {
   loader: <LoaderIcon />,
   plus: <PlusIcon />,
+  checkmark: <CheckmarkIcon />,
 };
 
 const IconHolder = styled.div`

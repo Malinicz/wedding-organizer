@@ -14,7 +14,13 @@ export const RADIO_INPUT_TRUE_FALSE_OPTIONS = [
 ];
 
 const GuestCardHolder = styled(Card)`
+  width: auto;
   margin: 30px 30px 60px 30px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.small}px) {
+    width: 100%;
+    margin: 0 0 100px 0;
+  }
 `;
 
 const GuestName = styled(H2)`
@@ -63,34 +69,46 @@ export class GuestCard extends Component {
       drinkOptions,
       handleRadioInputChange,
       handleDrinksChange,
+      handleIsDrinkingAlcoholChange,
     } = this.props;
 
     return (
       <GuestCardHolder>
         <GuestName>{guest.name}</GuestName>
         <RadioInputGroup
-          label="Obecność"
+          label="Czy potwierdzasz obecność?"
           name={`${guest.id}-isPresent`}
           activeValue={guest.isPresent}
           options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
           handleChange={e =>
-            handleRadioInputChange(guest.id, 'isPresent', e.target.value)
+            handleRadioInputChange(e.target.value, guest.id, 'isPresent')
           }
         />
         <RadioInputGroup
-          label="Dania wegetariańskie"
+          label="Czy jesteś wegetarianinem?"
           name={`${guest.id}-isVegetarian`}
           activeValue={guest.isVegetarian}
           options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
           handleChange={e =>
-            handleRadioInputChange(guest.id, 'isVegetarian', e.target.value)
+            handleRadioInputChange(e.target.value, guest.id, 'isVegetarian')
+          }
+        />
+        <RadioInputGroup
+          label="Czy napijesz się alkoholu?"
+          name={`${guest.id}-isDrinkingAlcohol`}
+          activeValue={guest.isDrinkingAlcohol}
+          options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
+          handleChange={e =>
+            handleIsDrinkingAlcoholChange(e.target.value, guest.id)
           }
         />
         <CheckboxGroup
-          label="Preferowane alkohole"
+          label="Czego się napijesz?"
+          columns={3}
+          disabled={!guest.isDrinkingAlcohol}
           activeValues={guest.drinks.map(drink => drink.id)}
           options={drinkOptions}
-          handleChange={e => handleDrinksChange(guest.id, e.target.value)}
+          handleChange={e => handleDrinksChange(e.target.value, guest.id)}
         />
         {guest.allowPartner && (
           <Mutation

@@ -1,36 +1,40 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 
-import { InputRadio } from 'components/base';
-
-const RadioInputGroupHolder = styled.div``;
+import { InputGroupLabel, InputGroupHolder } from 'components/base';
+import { RadioInputStandardView } from './RadioInputStandardView';
+import { RadioInputTableView } from './RadioInputTableView';
 
 export class RadioInputGroup extends Component {
   render() {
-    const { name, label, options, handleChange, activeValue } = this.props;
+    const {
+      label,
+      options,
+      handleChange,
+      activeValue,
+      columns,
+      name,
+    } = this.props;
 
     return (
-      <RadioInputGroupHolder>
-        <div>{label}</div>
-        <div>
-          {options.map((option, index) => {
-            const isChecked = activeValue === option.value;
-
-            return (
-              <label key={`${index}-${option.value}`}>
-                <InputRadio
-                  type="radio"
-                  name={name}
-                  value={option.value}
-                  checked={isChecked}
-                  onChange={handleChange}
-                />
-                {option.label}
-              </label>
-            );
-          })}
-        </div>
-      </RadioInputGroupHolder>
+      <InputGroupHolder>
+        <InputGroupLabel>{label}</InputGroupLabel>
+        {columns ? (
+          <RadioInputTableView
+            name={name}
+            columns={columns}
+            options={options}
+            activeValue={activeValue}
+            handleChange={handleChange}
+          />
+        ) : (
+          <RadioInputStandardView
+            name={name}
+            options={options}
+            activeValue={activeValue}
+            handleChange={handleChange}
+          />
+        )}
+      </InputGroupHolder>
     );
   }
 }
