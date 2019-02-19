@@ -3,5 +3,11 @@ type SaveGuestGroupFormPayload {
 }
 
 extend type Mutation {
-  saveGuestGroupForm(id: ID!, guests: Json): SaveGuestGroupFormPayload
+  saveGuestGroupForm(
+    id: ID!
+    guests: Json!
+    accomodation: Boolean!
+    transport: Boolean!
+    comments: String
+  ): SaveGuestGroupFormPayload
 }

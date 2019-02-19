@@ -1,0 +1,82 @@
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import styled, { keyframes } from 'styles';
+
+import { Card } from 'components/base';
+
+const overlayAnimation = keyframes`
+  from { background: rgba(0, 0, 0, 0);}
+  to { background: rgba(0, 0, 0, 0.3);}
+`;
+
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  animation: ${overlayAnimation} 0.7s ease;
+  animation-fill-mode: forwards;
+`;
+
+const modalAnimation = keyframes`
+  from { transform: translate(-50%, -700px);}
+  to { transform: translate(-50%, 0px);}
+`;
+
+const ModalHolder = styled(Card)`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin: 50px 15px;
+  z-index: 10;
+  box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.3);
+  animation: ${modalAnimation} 0.3s ease;
+  animation-fill-mode: forwards;
+`;
+
+const ModalTitle = styled.div`
+  font-family: ${({ theme }) => theme.fontFamily.secondary.regular};
+  font-size: 2em;
+  text-align: center;
+  line-height: 1.2em;
+`;
+
+const CloseArea = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+`;
+
+export const ModalContent = styled.div`
+  margin-top: 50px;
+`;
+
+export class Modal extends React.Component {
+  static Title = ModalTitle;
+  static Content = ModalContent;
+
+  componentDidMount() {
+    document.body.style.overflow = 'hidden';
+  }
+
+  componentWillUnmount() {
+    document.body.style.overflow = 'initial';
+  }
+
+  render() {
+    const { children, handleClose } = this.props;
+
+    return ReactDOM.createPortal(
+      <Overlay>
+        <ModalHolder>{children}</ModalHolder>
+        <CloseArea onClick={handleClose} />
+      </Overlay>,
+      document.body
+    );
+  }
+}

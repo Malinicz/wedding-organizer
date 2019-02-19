@@ -8,3 +8,4 @@ export * from './Icon';
 export * from './Loader';
 export * from './Checkbox';
 export * from './RadioInput';
+export * from './Modal';

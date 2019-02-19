@@ -26,16 +26,24 @@ export const GET_GUEST_INITIAL_DATA = gql`
     GuestGroup(id: $id) {
       id
       customGreeting
+      accomodation
+      allowAccomodation
+      comments
+      transport
       wedding {
         id
         name
       }
       guests {
         id
-        name
+        firstName
+        lastName
         isPresent
         isVegetarian
         allowPartner
+        partner {
+          id
+        }
         drinks {
           id
           name

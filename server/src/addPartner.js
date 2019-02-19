@@ -5,17 +5,29 @@ module.exports = async event => {
     const graphcool = fromEvent(event);
     const api = graphcool.api('simple/v1');
 
-    const { guestGroupId, partnerName } = event.data;
+    const { guestGroupId, guestId, firstName, lastName } = event.data;
 
-    const {
-      createGuest: { id: partnerId },
-    } = await createGuest(api, partnerName);
-    guest = await getGuest(api, partnerId);
-    await addPartnerToGuestGroup(api, guestGroupId, guest.Guest.id);
+    const { Guest: guest } = await getGuest(api, guestId);
+
+    if (!guest.allowPartner) {
+      return { error: 'Dodanie osoby towarzyszącej nie jest możliwe' };
+    }
+
+    if (guest.allowPartner && guest.partner) {
+      return { error: 'Osoba towarzysząca została już dodana' };
+    }
+
+    const { createGuest: partner } = await createPartner(
+      api,
+      firstName,
+      lastName,
+      guestId,
+      guestGroupId
+    );
 
     return {
       data: {
-        id: '0',
+        partner,
       },
     };
   } catch (e) {
@@ -24,17 +36,39 @@ module.exports = async event => {
   }
 };
 
-async function createGuest(api, name) {
+async function createPartner(
+  api,
+  firstName,
+  lastName,
+  partnerId,
+  guestGroupId
+) {
   const mutation = `
-    mutation CreateGuest($name: String!) {
-      createGuest(name: $name, isPresent: true, isVegetarian: false) {
+    mutation CreateGuest($firstName: String!, $lastName: String!, $partnerId: ID!, $guestGroupId: ID!) {
+      createGuest(firstName: $firstName, lastName: $lastName, isPresent: true, isVegetarian: false, partnerId: $partnerId, guestGroupId: $guestGroupId) {
         id
+        firstName
+        lastName
+        allowPartner
+        isPresent
+        isVegetarian
+        partner {
+          id
+        }
+        drinks {
+          id
+          name
+          price
+        }
       }
     }
   `;
 
   const variables = {
-    name,
+    firstName,
+    lastName,
+    partnerId,
+    guestGroupId,
   };
 
   return await api.request(mutation, variables);
@@ -45,6 +79,19 @@ async function getGuest(api, id) {
     query GetGuest($id: ID!) {
       Guest(id: $id) {
         id
+        firstName
+        lastName
+        allowPartner
+        isPresent
+        isVegetarian
+        partner {
+          id
+        }
+        drinks {
+          id
+          name
+          price
+        }
       }
     }
   `;
@@ -54,26 +101,4 @@ async function getGuest(api, id) {
   };
 
   return await api.request(query, variables);
-}
-
-async function addPartnerToGuestGroup(api, guestGroupId, partnerId) {
-  const mutation = `
-    mutation AddToGuestGroupOnGuest($guestGroupId: ID!, $partnerId: ID!) {
-        addToGuestGroupOnGuest(guestsGuestId: $partnerId, guestGroupGuestGroupId: $guestGroupId) {
-        guestsGuest {
-            id
-        }
-        guestGroupGuestGroup {
-            id
-          }
-      }
-    }
-  `;
-
-  const variables = {
-    guestGroupId,
-    partnerId,
-  };
-
-  return await api.request(mutation, variables);
 }

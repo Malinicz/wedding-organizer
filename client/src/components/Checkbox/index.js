@@ -54,7 +54,7 @@ const CheckboxText = styled.span`
 
 const CheckboxLabel = styled.label`
   display: block;
-  padding-bottom: 10px;
+  padding: 5px 0;
   pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
   transition: color 0.15s;
   cursor: pointer;

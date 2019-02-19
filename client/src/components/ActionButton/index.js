@@ -21,6 +21,7 @@ const ErrorMessage = styled.div`
 const ButtonHolder = styled(Button)`
   position: relative;
   overflow: hidden;
+  margin-top: 20px;
 `;
 
 const ButtonInside = styled.div`
@@ -48,11 +49,18 @@ const ButtonLoader = styled.div`
   height: 50px;
 `;
 
-export const ActionButton = ({ label, style, type, loading, error }) => {
+export const ActionButton = ({
+  label,
+  style,
+  type,
+  loading,
+  error,
+  ...props
+}) => {
   return (
     <ActionButtonHolder>
       <ErrorMessage error={error}>{error}</ErrorMessage>
-      <ButtonHolder style={style} type={type || 'button'}>
+      <ButtonHolder style={style} type={type || 'button'} {...props}>
         <ButtonInside loading={loading}>
           <ButtonLabel>{label}</ButtonLabel>
           <ButtonLoader>

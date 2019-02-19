@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import { Mutation } from 'react-apollo';
 import styled from 'styles';
 
 import { Card, Button, H2 } from 'components/base';
 import { RadioInputGroup, CheckboxGroup, Icon } from 'components';
-
-import { ADD_PARTNER_MUTATION } from 'graphql/mutations';
-import { GET_GUEST_INITIAL_DATA } from 'graphql/queries';
 
 export const RADIO_INPUT_TRUE_FALSE_OPTIONS = [
   { value: true, label: 'Tak' },
@@ -61,77 +57,101 @@ const PlusButton = styled(Button)`
   }
 `;
 
+const RemovePartnerIcon = styled.div`
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  transform: rotate(45deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  color: ${({ theme }) => theme.colors.brightest};
+  background-color: ${({ theme }) => theme.colors.darkest};
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.5;
+  }
+
+  &:active {
+    transform: scale(0.95) rotate(45deg);
+  }
+`;
+
 export class GuestCard extends Component {
   render() {
     const {
       guest,
-      guestGroupId,
       drinkOptions,
       handleRadioInputChange,
       handleDrinksChange,
       handleIsDrinkingAlcoholChange,
+      handleAddPartnerModalOpen,
+      handleDeletePartnerModalOpen,
     } = this.props;
 
     return (
-      <GuestCardHolder>
-        <GuestName>{guest.name}</GuestName>
-        <RadioInputGroup
-          label="Czy potwierdzasz obecność?"
-          name={`${guest.id}-isPresent`}
-          activeValue={guest.isPresent}
-          options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
-          handleChange={e =>
-            handleRadioInputChange(e.target.value, guest.id, 'isPresent')
-          }
-        />
-        <RadioInputGroup
-          label="Czy jesteś wegetarianinem?"
-          name={`${guest.id}-isVegetarian`}
-          activeValue={guest.isVegetarian}
-          options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
-          handleChange={e =>
-            handleRadioInputChange(e.target.value, guest.id, 'isVegetarian')
-          }
-        />
-        <RadioInputGroup
-          label="Czy napijesz się alkoholu?"
-          name={`${guest.id}-isDrinkingAlcohol`}
-          activeValue={guest.isDrinkingAlcohol}
-          options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
-          handleChange={e =>
-            handleIsDrinkingAlcoholChange(e.target.value, guest.id)
-          }
-        />
-        <CheckboxGroup
-          label="Czego się napijesz?"
-          columns={3}
-          disabled={!guest.isDrinkingAlcohol}
-          activeValues={guest.drinks.map(drink => drink.id)}
-          options={drinkOptions}
-          handleChange={e => handleDrinksChange(e.target.value, guest.id)}
-        />
-        {guest.allowPartner && (
-          <Mutation
-            mutation={ADD_PARTNER_MUTATION}
-            variables={{ guestGroupId, partnerName: 'test' }}
-            refetchQueries={[
-              {
-                query: GET_GUEST_INITIAL_DATA,
-                variables: { id: guestGroupId },
-              },
-            ]}
-          >
-            {addPartner => (
-              <AddPartnerHolder>
-                <PlusButton type="button" onClick={addPartner}>
-                  <Icon name="plus" size={25} marginTop={5} />
-                </PlusButton>
-                <AddPartnerText>Dodaj osobę towarzyszącą</AddPartnerText>
-              </AddPartnerHolder>
-            )}
-          </Mutation>
-        )}
-      </GuestCardHolder>
+      <>
+        <GuestCardHolder>
+          <GuestName>{guest.firstName}</GuestName>
+          <RadioInputGroup
+            label="Czy potwierdzasz obecność?"
+            name={`${guest.id}-isPresent`}
+            activeValue={guest.isPresent}
+            options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
+            handleChange={e =>
+              handleRadioInputChange(e.target.value, guest.id, 'isPresent')
+            }
+          />
+          <RadioInputGroup
+            label="Czy jesteś wegetarianinem?"
+            name={`${guest.id}-isVegetarian`}
+            activeValue={guest.isVegetarian}
+            options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
+            handleChange={e =>
+              handleRadioInputChange(e.target.value, guest.id, 'isVegetarian')
+            }
+          />
+          <RadioInputGroup
+            label="Czy napijesz się alkoholu?"
+            name={`${guest.id}-isDrinkingAlcohol`}
+            activeValue={guest.isDrinkingAlcohol}
+            options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
+            handleChange={e =>
+              handleIsDrinkingAlcoholChange(e.target.value, guest.id)
+            }
+          />
+          <CheckboxGroup
+            label="Czego się napijesz?"
+            columns={3}
+            disabled={!guest.isDrinkingAlcohol}
+            activeValues={guest.drinks.map(drink => drink.id)}
+            options={drinkOptions}
+            handleChange={e => handleDrinksChange(e.target.value, guest.id)}
+          />
+          {guest.allowPartner && !guest.partner && (
+            <AddPartnerHolder>
+              <PlusButton
+                type="button"
+                onClick={() => handleAddPartnerModalOpen(guest)}
+              >
+                <Icon name="plus" size={25} marginTop={5} />
+              </PlusButton>
+              <AddPartnerText>Dodaj osobę towarzyszącą</AddPartnerText>
+            </AddPartnerHolder>
+          )}
+          {!guest.allowPartner && guest.partner && (
+            <RemovePartnerIcon
+              onClick={() => handleDeletePartnerModalOpen(guest)}
+            >
+              <Icon name="plus" size={20} marginTop={5} />
+            </RemovePartnerIcon>
+          )}
+        </GuestCardHolder>
+      </>
     );
   }
 }

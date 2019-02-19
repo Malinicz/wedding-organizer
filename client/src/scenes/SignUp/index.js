@@ -84,7 +84,6 @@ export class SignUp extends Component {
                 />
                 <ActionButton
                   type="submit"
-                  style={{ marginTop: '10px' }}
                   label="Załóż konto"
                   loading={loading}
                   error={error && 'Ups! Coś poszło nie tak'}

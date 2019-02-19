@@ -92,7 +92,6 @@ export class GuestSignIn extends Component {
               label="Wchodzę!"
               loading={loading}
               error={error && 'Ups! Coś poszło nie tak - spróbuj ponownie'}
-              style={{ marginTop: '20px', marginBotton: '10px' }}
             />
           </Form>
         )}

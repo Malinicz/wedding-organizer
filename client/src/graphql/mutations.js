@@ -48,16 +48,46 @@ export const UPDATE_GUEST_GROUP_MUTATION = gql`
 `;
 
 export const SAVE_GUEST_GROUP_FORM = gql`
-  mutation SaveGuestGroupForm($id: ID!, $guests: Json!) {
-    saveGuestGroupForm(id: $id, guests: $guests) {
+  mutation SaveGuestGroupForm(
+    $id: ID!
+    $guests: Json!
+    $accomodation: Boolean!
+    $transport: Boolean!
+    $comments: String
+  ) {
+    saveGuestGroupForm(
+      id: $id
+      guests: $guests
+      accomodation: $accomodation
+      transport: $transport
+      comments: $comments
+    ) {
       id
     }
   }
 `;
 
 export const ADD_PARTNER_MUTATION = gql`
-  mutation AddPartner($guestGroupId: ID!, $partnerName: String!) {
-    addPartner(guestGroupId: $guestGroupId, partnerName: $partnerName) {
+  mutation AddPartner(
+    $guestGroupId: ID!
+    $guestId: ID!
+    $firstName: String!
+    $lastName: String!
+  ) {
+    addPartner(
+      guestGroupId: $guestGroupId
+      guestId: $guestId
+      firstName: $firstName
+      lastName: $lastName
+    ) {
+      partner
+    }
+  }
+`;
+
+export const DELETE_PARTNER_MUTATION = gql`
+  mutation DeletePartner($partnerId: ID!) {
+    deleteGuest(id: $partnerId) {
       id
     }
   }

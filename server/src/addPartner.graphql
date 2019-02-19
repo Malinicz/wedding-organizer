@@ -1,7 +1,12 @@
 type AddPartnerPayload {
-  id: ID!
+  partner: Json!
 }
 
 extend type Mutation {
-  addPartner(guestGroupId: ID!, partnerName: String!): AddPartnerPayload
+  addPartner(
+    guestGroupId: ID!
+    guestId: ID!
+    firstName: String!
+    lastName: String!
+  ): AddPartnerPayload
 }

@@ -45,7 +45,7 @@ const StyledRadioInput = styled.div`
 
 const RadioInputLabel = styled.label`
   display: inline-block;
-  padding-bottom: 5px;
+  padding: 2px 0;
   cursor: pointer;
 
   &:hover {

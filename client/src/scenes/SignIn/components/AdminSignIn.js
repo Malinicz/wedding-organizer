@@ -64,7 +64,6 @@ export class AdminSignIn extends Component {
             />
             <ActionButton
               type="submit"
-              style={{ marginTop: '10px' }}
               label="Wchodzę!"
               loading={loading}
               error={error && 'Ups! Błędny login lub hasło'}

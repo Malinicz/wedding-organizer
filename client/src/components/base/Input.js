@@ -31,7 +31,7 @@ export const InputLabel = styled.label`
 
 export const InputGroupLabel = styled.div`
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   font-size: 1em;
   font-weight: bold;
 `;

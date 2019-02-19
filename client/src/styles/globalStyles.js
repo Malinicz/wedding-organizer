@@ -55,4 +55,8 @@ export default createGlobalStyle`
         font-family: ${styledTheme.fontFamily.secondary.regular};
     }
 
+    input, textarea, button {
+        font-family: ${styledTheme.fontFamily.primary.regular};
+    }
+
 `;
