@@ -9,3 +9,4 @@ export * from './Loader';
 export * from './Checkbox';
 export * from './RadioInput';
 export * from './Modal';
+export * from './FloatingButton';

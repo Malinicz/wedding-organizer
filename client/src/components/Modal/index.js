@@ -1,8 +1,9 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import styled, { keyframes } from 'styles';
+import styled, { styledTheme, keyframes } from 'styles';
 
 import { Card } from 'components/base';
+import { FloatingButton } from 'components';
 
 const overlayAnimation = keyframes`
   from { background: rgba(0, 0, 0, 0);}
@@ -29,8 +30,10 @@ const modalAnimation = keyframes`
 const ModalHolder = styled(Card)`
   position: absolute;
   top: 0;
-  left: 50%;
+  left: calc(50% - 15px);
   margin: 50px 15px;
+  width: calc(100% - 30px);
+  box-sizing: border-box;
   z-index: 10;
   box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.3);
   animation: ${modalAnimation} 0.3s ease;
@@ -73,7 +76,18 @@ export class Modal extends React.Component {
 
     return ReactDOM.createPortal(
       <Overlay>
-        <ModalHolder>{children}</ModalHolder>
+        <ModalHolder>
+          <FloatingButton
+            handleClick={handleClose}
+            style={{
+              top: '15px',
+              right: '15px',
+              backgroundColor: styledTheme.colors.brightest,
+              color: styledTheme.colors.primaryDarker,
+            }}
+          />
+          {children}
+        </ModalHolder>
         <CloseArea onClick={handleClose} />
       </Overlay>,
       document.body

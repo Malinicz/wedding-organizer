@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import styled from 'styles';
 
 import { Card, Button, H2 } from 'components/base';
-import { RadioInputGroup, CheckboxGroup, Icon } from 'components';
+import {
+  RadioInputGroup,
+  CheckboxGroup,
+  Icon,
+  FloatingButton,
+} from 'components';
 
 export const RADIO_INPUT_TRUE_FALSE_OPTIONS = [
   { value: true, label: 'Tak' },
@@ -144,11 +149,9 @@ export class GuestCard extends Component {
             </AddPartnerHolder>
           )}
           {!guest.allowPartner && guest.partner && (
-            <RemovePartnerIcon
-              onClick={() => handleDeletePartnerModalOpen(guest)}
-            >
-              <Icon name="plus" size={20} marginTop={5} />
-            </RemovePartnerIcon>
+            <FloatingButton
+              handleClick={() => handleDeletePartnerModalOpen(guest)}
+            />
           )}
         </GuestCardHolder>
       </>
