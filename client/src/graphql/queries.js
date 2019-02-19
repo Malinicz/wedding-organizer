@@ -30,6 +30,8 @@ export const GET_GUEST_INITIAL_DATA = gql`
       allowAccomodation
       comments
       transport
+      contactEmail
+      submissionDate
       wedding {
         id
         name

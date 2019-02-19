@@ -51,8 +51,8 @@ async function updateGuestGroup(
   comments
 ) {
   const mutation = `
-    mutation UpdateGuestGroup($guestGroupId: ID!, $accomodation: Boolean!, $transport: Boolean!, $comments: String) {
-      updateGuestGroup(id: $guestGroupId, accomodation: $accomodation, transport: $transport, comments: $comments) {
+    mutation UpdateGuestGroup($guestGroupId: ID!, $accomodation: Boolean!, $transport: Boolean!, $comments: String, $submissionDate: DateTime) {
+      updateGuestGroup(id: $guestGroupId, accomodation: $accomodation, transport: $transport, comments: $comments, submissionDate: $submissionDate) {
         id
       }
     }
@@ -63,6 +63,7 @@ async function updateGuestGroup(
     accomodation,
     transport,
     comments,
+    submissionDate: new Date(),
   };
 
   return await api.request(mutation, variables);

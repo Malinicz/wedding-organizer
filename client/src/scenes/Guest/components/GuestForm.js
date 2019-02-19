@@ -3,7 +3,7 @@ import { Mutation } from 'react-apollo';
 import styled from 'styles';
 
 import { ActionButton, RadioInputGroup } from 'components';
-import { Form, InputGroupLabel, TextArea } from 'components/base';
+import { Form, InputGroupLabel, TextArea, Input } from 'components/base';
 import { GuestCard, RADIO_INPUT_TRUE_FALSE_OPTIONS } from './GuestCard';
 import { AddPartnerModal } from './AddPartnerModal';
 
@@ -26,6 +26,10 @@ const GuestCards = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 50px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.small}px) {
+    margin-bottom: 0px;
+  }
 `;
 
 const GuestGroupQuestions = styled.div`
@@ -68,6 +72,7 @@ export class GuestForm extends Component {
         accomodation,
         comments,
         transport,
+        contactEmail,
       },
     } = this.props;
 
@@ -78,6 +83,7 @@ export class GuestForm extends Component {
       accomodation,
       comments,
       transport,
+      contactEmail,
       guests: guests.map(guest => ({
         id: guest.id,
         firstName: guest.firstName,
@@ -136,6 +142,10 @@ export class GuestForm extends Component {
 
   onCommentsChange = text => {
     this.setState({ form: { ...this.state.form, comments: text } });
+  };
+
+  onEmailChange = text => {
+    this.setState({ form: { ...this.state.form, contactEmail: text } });
   };
 
   onAddPartnerSuccess = (guestId, partner) => {
@@ -207,7 +217,7 @@ export class GuestForm extends Component {
       activeGuest,
       form: { guests, id: guestGroupId },
     } = this.state;
-    const { drinkOptions } = this.props;
+    const { drinkOptions, guestGroup } = this.props;
 
     return (
       <Mutation mutation={SAVE_GUEST_GROUP_FORM} variables={form}>
@@ -271,12 +281,23 @@ export class GuestForm extends Component {
                 />
                 <br />
                 <InputGroupLabel>
-                  Szczególne życzenia lub uwagi wpiszcie poniżej ;)
+                  Szczególne życzenia lub uwagi wpiszcie poniżej:
                 </InputGroupLabel>
                 <TextArea
                   type="text"
                   value={form.comments}
                   onChange={e => this.onCommentsChange(e.target.value)}
+                />
+                <br />
+                <InputGroupLabel>
+                  Jeśli macie ochotę, zostawcie nam swój email, może się przydać
+                  ;)
+                </InputGroupLabel>
+                <Input
+                  type="text"
+                  value={form.contactEmail}
+                  placeholder="jan.nowak@gmail.com"
+                  onChange={e => this.onEmailChange(e.target.value)}
                 />
                 <ActionButton
                   loading={loading}
@@ -284,7 +305,7 @@ export class GuestForm extends Component {
                     error && 'Ups! Nie udało się zapisać - spróbuj ponownie'
                   }
                   type="submit"
-                  label="Gotowe!"
+                  label={guestGroup.submissionDate ? 'Zaktualizuj' : 'Gotowe!'}
                 />
               </GuestGroupQuestions>
             </GuestFormHolder>

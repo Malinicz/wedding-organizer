@@ -20,6 +20,10 @@ const Header = styled.header`
 
 const Logo = styled.img`
   width: 230px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.small}px) {
+    width: 180px;
+  }
 `;
 
 const WeddingName = styled(H1)`
@@ -32,6 +36,11 @@ const Greeting = styled.div`
   margin-top: 70px;
   line-height: 1em;
   text-align: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.small}px) {
+    font-size: 2.2em;
+    margin-top: 30px;
+  }
 `;
 
 const IntroText = styled.p`

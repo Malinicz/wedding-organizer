@@ -32,6 +32,8 @@ type GuestGroup @model {
   transport: Boolean!
   customGreeting: String
   wedding: Wedding @relation(name: "WeddingOnGuestGroup")
+  contactEmail: String
+  submissionDate: DateTime
 }
 
 type User @model {
