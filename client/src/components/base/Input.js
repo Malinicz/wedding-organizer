@@ -15,6 +15,7 @@ export const Input = styled.input`
   background-color: ${({ theme }) => theme.colors.brightest};
   outline: none;
   box-sizing: border-box;
+  -webkit-appearance: none;
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.brighter};
