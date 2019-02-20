@@ -63,10 +63,7 @@ export class Guest extends Component {
 
     return (
       <Query query={GET_GUEST_INITIAL_DATA} variables={{ id: guestGroupId }}>
-        {({
-          data: { GuestGroup: guestGroup, allDrinks: drinkOptions },
-          loading,
-        }) => {
+        {({ data: { GuestGroup: guestGroup, allDrinks }, loading }) => {
           if (loading) {
             return <Loader />;
           }
@@ -83,10 +80,7 @@ export class Guest extends Component {
                 </IntroText>
               </Header>
               <FormSection>
-                <GuestForm
-                  guestGroup={guestGroup}
-                  drinkOptions={drinkOptions}
-                />
+                <GuestForm guestGroup={guestGroup} drinks={allDrinks} />
               </FormSection>
             </Layout>
           );

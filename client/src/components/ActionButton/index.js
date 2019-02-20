@@ -11,10 +11,13 @@ const ActionButtonHolder = styled.div`
   max-width: 450px;
 `;
 
-const ErrorMessage = styled.div`
+const ErrorMessage = styled.div.attrs(props => ({
+  style: {
+    opacity: props.error ? '1' : '0',
+    height: props.error ? '16px' : '1px',
+  },
+}))`
   text-align: center;
-  opacity: ${({ error }) => (error ? '1' : '0')};
-  height: ${({ error }) => (error ? '16px' : '1px')};
   transition: height 0.3s ease, opacity 0.3s ease;
 `;
 
@@ -24,11 +27,13 @@ const ButtonHolder = styled(Button)`
   margin-top: 20px;
 `;
 
-const ButtonInside = styled.div`
+const ButtonInside = styled.div.attrs(props => ({
+  style: {
+    transform: props.loading ? 'translateY(-50px)' : 'translateY(0)',
+  },
+}))`
   position: absolute;
   top: 0;
-  transform: ${({ loading }) =>
-    loading ? `translateY(-50px)` : `translateY(0)`};
   display: flex;
   flex-direction: column;
   width: 100%;

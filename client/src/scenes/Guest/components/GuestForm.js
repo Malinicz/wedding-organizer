@@ -44,25 +44,14 @@ export class GuestForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      form: {
-        id: undefined,
-        guests: [],
-      },
+      form: this.initializeForm(),
       isAddPartnerModalOpen: false,
       isDeletePartnerModalOpen: false,
       activeGuest: undefined,
     };
   }
 
-  componentDidMount() {
-    this.initializeForm();
-  }
-
   initializeForm = () => {
-    this.setState({ form: this.createFormModel() });
-  };
-
-  createFormModel = () => {
     const {
       guestGroup: {
         id,
@@ -81,9 +70,9 @@ export class GuestForm extends Component {
       wedding,
       customGreeting,
       accomodation,
-      comments,
+      comments: comments || '',
       transport,
-      contactEmail,
+      contactEmail: contactEmail || '',
       guests: guests.map(guest => ({
         id: guest.id,
         firstName: guest.firstName,
@@ -120,8 +109,8 @@ export class GuestForm extends Component {
 
   onDrinksChange = (drinkId, guestId) => {
     const { guests } = this.state.form;
-    const { drinkOptions } = this.props;
-    const selectedDrink = drinkOptions.find(drink => drink.id === drinkId);
+    const { drinks } = this.props;
+    const selectedDrink = drinks.find(drink => drink.id === drinkId);
 
     const updatedGuests = guests.map(guest =>
       guestId === guest.id
@@ -217,7 +206,12 @@ export class GuestForm extends Component {
       activeGuest,
       form: { guests, id: guestGroupId },
     } = this.state;
-    const { drinkOptions, guestGroup } = this.props;
+    const { drinks, guestGroup } = this.props;
+
+    const drinkOptions = drinks.map(drink => ({
+      value: drink.id,
+      label: pl.drinks[drink.name],
+    }));
 
     return (
       <Mutation mutation={SAVE_GUEST_GROUP_FORM} variables={form}>
@@ -230,14 +224,11 @@ export class GuestForm extends Component {
               }}
             >
               <GuestCards>
-                {guests.map(guest => {
+                {guests.map((guest, index) => {
                   return (
                     <GuestCard
                       key={guest.id}
-                      drinkOptions={drinkOptions.map(drink => ({
-                        value: drink.id,
-                        label: pl.drinks[drink.name],
-                      }))}
+                      drinkOptions={drinkOptions}
                       guest={guest}
                       guestGroupId={guestGroupId}
                       handleAddPartnerModalOpen={this.onAddPartnerModalOpen}
@@ -249,6 +240,7 @@ export class GuestForm extends Component {
                       handleIsDrinkingAlcoholChange={
                         this.onIsDrinkingAlcoholChange
                       }
+                      animationDelay={index / 8}
                     />
                   );
                 })}

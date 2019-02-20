@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styles';
+import styled, { keyframes } from 'styles';
 
 import { Card, Button, H2 } from 'components/base';
 import {
@@ -14,9 +14,18 @@ export const RADIO_INPUT_TRUE_FALSE_OPTIONS = [
   { value: false, label: 'Nie' },
 ];
 
+const guestCardAnimation = keyframes`
+  from { transform: scale3d(0.9,0.9,0.9) }
+  to { transform: scale3d(1,1,1)}
+`;
+
 const GuestCardHolder = styled(Card)`
   width: auto;
   margin: 30px 30px 60px 30px;
+  transform: scale3d(0.9, 0.9, 0.9);
+  animation: ${guestCardAnimation} 1s ease;
+  animation-fill-mode: forwards;
+  animation-delay: ${({ animationDelay }) => animationDelay}s;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.small}px) {
     width: 100%;
@@ -91,7 +100,12 @@ const RemovePartnerIcon = styled.div`
 `;
 
 export class GuestCard extends Component {
+  shouldComponentUpdate(nextProps) {
+    return nextProps.guest !== this.props.guest;
+  }
+
   render() {
+    console.log('guest card');
     const {
       guest,
       drinkOptions,
@@ -100,11 +114,12 @@ export class GuestCard extends Component {
       handleIsDrinkingAlcoholChange,
       handleAddPartnerModalOpen,
       handleDeletePartnerModalOpen,
+      animationDelay,
     } = this.props;
 
     return (
       <>
-        <GuestCardHolder>
+        <GuestCardHolder animationDelay={animationDelay}>
           <GuestName>{guest.firstName}</GuestName>
           <RadioInputGroup
             label="Czy potwierdzasz obecność?"

@@ -5,13 +5,26 @@ module.exports = async event => {
     const graphcool = fromEvent(event);
     const api = graphcool.api('simple/v1');
 
-    const { id, guests, transport, accomodation, comments } = event.data;
+    const {
+      id,
+      guests,
+      transport,
+      accomodation,
+      comments,
+      contactEmail,
+    } = event.data;
 
     for (let i = 0, len = guests.length; i < len; i++) {
       await updateGuest(api, guests[i]);
     }
 
-    await updateGuestGroup(api, id, accomodation, transport, comments);
+    await updateGuestGroup(api, {
+      id,
+      accomodation,
+      transport,
+      comments,
+      contactEmail,
+    });
 
     return {
       data: {
@@ -45,24 +58,22 @@ async function updateGuest(api, guest) {
 
 async function updateGuestGroup(
   api,
-  guestGroupId,
-  accomodation,
-  transport,
-  comments
+  { id, accomodation, transport, comments, contactEmail }
 ) {
   const mutation = `
-    mutation UpdateGuestGroup($guestGroupId: ID!, $accomodation: Boolean!, $transport: Boolean!, $comments: String, $submissionDate: DateTime) {
-      updateGuestGroup(id: $guestGroupId, accomodation: $accomodation, transport: $transport, comments: $comments, submissionDate: $submissionDate) {
+    mutation UpdateGuestGroup($id: ID!, $accomodation: Boolean!, $transport: Boolean!, $comments: String, $submissionDate: DateTime, $contactEmail: String) {
+      updateGuestGroup(id: $id, accomodation: $accomodation, transport: $transport, comments: $comments, submissionDate: $submissionDate, contactEmail: $contactEmail) {
         id
       }
     }
   `;
 
   const variables = {
-    guestGroupId,
+    id,
     accomodation,
     transport,
     comments,
+    contactEmail,
     submissionDate: new Date(),
   };
 

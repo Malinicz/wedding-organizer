@@ -54,6 +54,7 @@ export const SAVE_GUEST_GROUP_FORM = gql`
     $accomodation: Boolean!
     $transport: Boolean!
     $comments: String
+    $contactEmail: String
   ) {
     saveGuestGroupForm(
       id: $id
@@ -61,6 +62,7 @@ export const SAVE_GUEST_GROUP_FORM = gql`
       accomodation: $accomodation
       transport: $transport
       comments: $comments
+      contactEmail: $contactEmail
     ) {
       id
     }

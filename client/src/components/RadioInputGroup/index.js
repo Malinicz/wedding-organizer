@@ -5,6 +5,10 @@ import { RadioInputStandardView } from './RadioInputStandardView';
 import { RadioInputTableView } from './RadioInputTableView';
 
 export class RadioInputGroup extends Component {
+  shouldComponentUpdate(nextProps) {
+    return nextProps.activeValue !== this.props.activeValue;
+  }
+
   render() {
     const {
       label,

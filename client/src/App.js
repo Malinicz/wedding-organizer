@@ -17,6 +17,7 @@ import { PrivateRoute } from 'components';
 import { SET_AUTH_USER_MUTATION } from 'graphql/mutations';
 
 import { SIGN_IN, SIGN_UP, GUEST, HOME } from 'constants/routes';
+import { ScrollToTop } from './components';
 
 const history = createBrowserHistory();
 
@@ -63,13 +64,15 @@ class App extends Component {
       <StyledThemeProvider theme={styledTheme}>
         <ApolloProvider client={client}>
           <BrowserRouter history={history}>
-            <Switch>
-              <Route exact path={HOME} component={Home} />
-              <Route exact path={SIGN_IN} component={SignIn} />
-              <Route exact path={SIGN_UP} component={SignUp} />
-              <PrivateRoute exact path={GUEST} component={Guest} />
-              <Route component={PageNotFound} />
-            </Switch>
+            <ScrollToTop>
+              <Switch>
+                <Route exact path={HOME} component={Home} />
+                <Route exact path={SIGN_IN} component={SignIn} />
+                <Route exact path={SIGN_UP} component={SignUp} />
+                <PrivateRoute exact path={GUEST} component={Guest} />
+                <Route component={PageNotFound} />
+              </Switch>
+            </ScrollToTop>
           </BrowserRouter>
           <GlobalStyles />
         </ApolloProvider>

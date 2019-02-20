@@ -10,3 +10,4 @@ export * from './Checkbox';
 export * from './RadioInput';
 export * from './Modal';
 export * from './FloatingButton';
+export * from './ScrollToTop';
