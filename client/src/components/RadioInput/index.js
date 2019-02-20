@@ -34,18 +34,24 @@ const StyledRadioInput = styled.div`
   width: 25px;
   height: 25px;
   border-radius: 25px;
-  border: ${({ theme }) => `2px solid ${theme.colors.primaryDarker}`};
+  border: ${({ theme, disabled }) =>
+    disabled
+      ? `2px solid ${theme.colors.brighter}`
+      : `2px solid ${theme.colors.primaryDarker}`};
   background: ${({ theme }) => theme.colors.brightest};
   transition: all 0.15s;
 
   ${ActivityIndicator} {
     visibility: ${({ isActive }) => (isActive ? 'visible' : 'hidden')};
+    background: ${({ theme, disabled }) =>
+      disabled ? theme.colors.brighter : theme.colors.primaryDarker};
   }
 `;
 
 const RadioInputLabel = styled.label`
   display: inline-block;
   padding: 2px 0;
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
   cursor: pointer;
 
   &:hover {
@@ -63,17 +69,20 @@ const RadioInputText = styled.span`
 
 export class RadioInput extends Component {
   shouldComponentUpdate(nextProps) {
-    return nextProps.isActive !== this.props.isActive;
+    return (
+      nextProps.isActive !== this.props.isActive ||
+      nextProps.disabled !== this.props.disabled
+    );
   }
 
   render() {
-    const { isActive, label, style } = this.props;
+    const { isActive, label, style, disabled } = this.props;
 
     return (
-      <RadioInputLabel style={style}>
+      <RadioInputLabel style={style} disabled={disabled}>
         <RadioInputHolder>
           <HiddenRadioInput isActive={isActive} {...this.props} />
-          <StyledRadioInput isActive={isActive}>
+          <StyledRadioInput isActive={isActive} disabled={disabled}>
             <ActivityIndicator />
           </StyledRadioInput>
         </RadioInputHolder>

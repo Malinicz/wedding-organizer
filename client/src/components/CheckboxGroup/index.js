@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
-import { styledTheme } from 'styles';
 
 import { InputGroupLabel, InputGroupHolder } from 'components/base';
 import { CheckboxStandardView } from './CheckboxStandardView';
 import { CheckboxTableView } from './CheckboxTableView';
 
 export class CheckboxGroup extends Component {
+  shouldComponentUpdate(nextProps) {
+    return (
+      nextProps.activeValues !== this.props.activeValues ||
+      nextProps.disabled !== this.props.disabled
+    );
+  }
+
   render() {
     const {
       label,
@@ -17,12 +23,8 @@ export class CheckboxGroup extends Component {
     } = this.props;
 
     return (
-      <InputGroupHolder>
-        <InputGroupLabel
-          style={{ color: disabled ? styledTheme.colors.brighter : 'inherit' }}
-        >
-          {label}
-        </InputGroupLabel>
+      <InputGroupHolder disabled={disabled}>
+        <InputGroupLabel>{label}</InputGroupLabel>
         {columns ? (
           <CheckboxTableView
             columns={columns}

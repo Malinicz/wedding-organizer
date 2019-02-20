@@ -37,8 +37,8 @@ const StyledCheckbox = styled.div`
     disabled
       ? `2px solid ${theme.colors.brighter}`
       : `2px solid ${theme.colors.primaryDarker}`};
-  background: ${({ checked, theme }) =>
-    checked ? theme.colors.primaryDarker : theme.colors.brightest};
+  background: ${({ checked, disabled, theme }) =>
+    checked && !disabled ? theme.colors.primaryDarker : theme.colors.brightest};
   transition: all 0.15s;
 
   ${Checkmark} {
@@ -47,8 +47,6 @@ const StyledCheckbox = styled.div`
 `;
 
 const CheckboxText = styled.span`
-  color: ${({ theme, disabled }) =>
-    disabled ? theme.colors.brighter : 'auto'};
   margin: 0px 5px;
 `;
 
@@ -82,16 +80,12 @@ export class Checkbox extends Component {
     return (
       <CheckboxLabel style={style} disabled={disabled}>
         <CheckboxHolder>
-          <HiddenCheckbox
-            checked={checked}
-            {...this.props}
-            disabled={disabled}
-          />
+          <HiddenCheckbox checked={checked} {...this.props} />
           <StyledCheckbox checked={checked} disabled={disabled}>
             <Checkmark src={checkmark} />
           </StyledCheckbox>
         </CheckboxHolder>
-        <CheckboxText disabled={disabled}>{label}</CheckboxText>
+        <CheckboxText>{label}</CheckboxText>
       </CheckboxLabel>
     );
   }

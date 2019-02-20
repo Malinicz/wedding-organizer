@@ -119,7 +119,9 @@ export class GuestCard extends Component {
     return (
       <>
         <GuestCardHolder animationDelay={animationDelay}>
-          <GuestName>{guest.firstName}</GuestName>
+          <GuestName>
+            {guest.firstName} {guest.lastName && guest.lastName.charAt(0)}.
+          </GuestName>
           <RadioInputGroup
             label="Czy potwierdzasz obecność?"
             name={`${guest.id}-isPresent`}
@@ -134,6 +136,7 @@ export class GuestCard extends Component {
             name={`${guest.id}-isVegetarian`}
             activeValue={guest.isVegetarian}
             options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
+            disabled={!guest.isPresent}
             handleChange={e =>
               handleRadioInputChange(e.target.value, guest.id, 'isVegetarian')
             }
@@ -143,6 +146,7 @@ export class GuestCard extends Component {
             name={`${guest.id}-isDrinkingAlcohol`}
             activeValue={guest.isDrinkingAlcohol}
             options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
+            disabled={!guest.isPresent}
             handleChange={e =>
               handleIsDrinkingAlcoholChange(e.target.value, guest.id)
             }
@@ -153,9 +157,10 @@ export class GuestCard extends Component {
             disabled={!guest.isDrinkingAlcohol}
             activeValues={guest.drinks.map(drink => drink.id)}
             options={drinkOptions}
+            disabled={!guest.isPresent}
             handleChange={e => handleDrinksChange(e.target.value, guest.id)}
           />
-          {guest.allowPartner && !guest.partner && (
+          {guest.isPresent && guest.allowPartner && !guest.partner && (
             <AddPartnerHolder>
               <PlusButton
                 type="button"

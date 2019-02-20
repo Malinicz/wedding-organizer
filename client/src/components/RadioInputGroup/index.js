@@ -6,7 +6,10 @@ import { RadioInputTableView } from './RadioInputTableView';
 
 export class RadioInputGroup extends Component {
   shouldComponentUpdate(nextProps) {
-    return nextProps.activeValue !== this.props.activeValue;
+    return (
+      nextProps.activeValue !== this.props.activeValue ||
+      nextProps.disabled !== this.props.disabled
+    );
   }
 
   render() {
@@ -17,10 +20,11 @@ export class RadioInputGroup extends Component {
       activeValue,
       columns,
       name,
+      disabled,
     } = this.props;
 
     return (
-      <InputGroupHolder>
+      <InputGroupHolder disabled={disabled}>
         <InputGroupLabel>{label}</InputGroupLabel>
         {columns ? (
           <RadioInputTableView
@@ -29,6 +33,7 @@ export class RadioInputGroup extends Component {
             options={options}
             activeValue={activeValue}
             handleChange={handleChange}
+            disabled={disabled}
           />
         ) : (
           <RadioInputStandardView
@@ -36,6 +41,7 @@ export class RadioInputGroup extends Component {
             options={options}
             activeValue={activeValue}
             handleChange={handleChange}
+            disabled={disabled}
           />
         )}
       </InputGroupHolder>

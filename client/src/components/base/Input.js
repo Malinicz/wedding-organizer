@@ -37,7 +37,11 @@ export const InputGroupLabel = styled.div`
   font-weight: bold;
 `;
 
-export const InputGroupHolder = styled.div`
+export const InputGroupHolder = styled.div.attrs(props => ({
+  style: {
+    color: props.disabled ? props.theme.colors.brighter : 'inherit',
+  },
+}))`
   margin-bottom: 20px;
 
   &:last-child {

@@ -10,6 +10,7 @@ export const RadioInputStandardView = ({
   activeValue,
   handleChange,
   name,
+  disabled,
 }) => {
   return (
     <RadioInputs>
@@ -24,6 +25,7 @@ export const RadioInputStandardView = ({
             label={option.label}
             isActive={isActive}
             onChange={handleChange}
+            disabled={disabled}
           />
         );
       })}
