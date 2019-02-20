@@ -20,6 +20,7 @@ const Overlay = styled.div`
   overflow-y: auto;
   animation: ${overlayAnimation} 0.7s ease;
   animation-fill-mode: forwards;
+  -webkit-overflow-scrolling: touch;
 `;
 
 const modalAnimation = keyframes`

@@ -105,7 +105,6 @@ export class GuestCard extends Component {
   }
 
   render() {
-    console.log('guest card');
     const {
       guest,
       drinkOptions,
