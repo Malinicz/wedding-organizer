@@ -29,10 +29,15 @@ export default createGlobalStyle`
         box-sizing: border-box;
     }
 
+    html {
+        height: 100%;
+    }
+
     body {
         position: relative;
         margin: 0;
         padding: 0;
+        height: 100%;
         color: ${styledTheme.colors.darker};
         font-size: 16px;
         font-family: ${styledTheme.fontFamily.primary.regular};
