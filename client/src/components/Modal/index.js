@@ -54,8 +54,6 @@ const CloseArea = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
 `;
 
 export const ModalContent = styled.div`
@@ -68,12 +66,10 @@ export class Modal extends React.Component {
 
   componentDidMount() {
     document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
   }
 
   componentWillUnmount() {
     document.body.style.overflow = 'initial';
-    document.body.style.position = 'relative';
   }
 
   render() {
