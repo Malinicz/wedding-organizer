@@ -1,5 +1,10 @@
 const { fromEvent } = require('graphcool-lib');
 
+const mailgun = require('mailgun-js')({
+  apiKey: process.env.MAILGUN_API_KEY,
+  domain: process.env.MAILGUN_DOMAIN,
+});
+
 module.exports = async event => {
   try {
     const graphcool = fromEvent(event);
@@ -24,6 +29,19 @@ module.exports = async event => {
       transport,
       comments,
       contactEmail,
+    });
+
+    const { GuestGroup: guestGroup } = await getGuestGroup(api, { id });
+
+    const data = {
+      from: 'pomoc@witajgosciu.pl',
+      to: `${guestGroup.wedding.user.email}`,
+      subject: `${guestGroup.name} wypełnili wniosek`,
+      text: 'Wypełnili!',
+    };
+
+    mailgun.messages().send(data, function(error, body) {
+      console.log(body);
     });
 
     return {
@@ -78,4 +96,26 @@ async function updateGuestGroup(
   };
 
   return await api.request(mutation, variables);
+}
+
+async function getGuestGroup(api, { id }) {
+  const query = `
+    query GetGuestGroup($id: ID!) {
+      GuestGroup(id: $id) {
+        id
+        name
+        wedding {
+          user {
+            email
+          }
+        }
+      }
+    }
+  `;
+
+  const variables = {
+    id,
+  };
+
+  return await api.request(query, variables);
 }

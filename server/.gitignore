@@ -5,3 +5,6 @@
 
 # build folder
 .build/
+
+# environment variables
+.env

@@ -21,6 +21,7 @@ const Overlay = styled.div`
   animation: ${overlayAnimation} 0.7s ease;
   animation-fill-mode: forwards;
   -webkit-overflow-scrolling: touch;
+  overflow-y: scroll;
 `;
 
 const modalAnimation = keyframes`
@@ -54,6 +55,8 @@ const CloseArea = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+  -webkit-overflow-scrolling: touch;
+  overflow-y: scroll;
 `;
 
 export const ModalContent = styled.div`
