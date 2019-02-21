@@ -30,6 +30,7 @@ export default createGlobalStyle`
     }
 
     body {
+        position: relative;
         margin: 0;
         padding: 0;
         color: ${styledTheme.colors.darker};
