@@ -68,10 +68,12 @@ export class Modal extends React.Component {
 
   componentDidMount() {
     document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
   }
 
   componentWillUnmount() {
     document.body.style.overflow = 'initial';
+    document.body.style.position = 'relative';
   }
 
   render() {
