@@ -17,10 +17,9 @@ const Overlay = styled.div`
   z-index: 200;
   width: 100%;
   height: 100%;
-  overflow-y: auto;
   animation: ${overlayAnimation} 0.7s ease;
   animation-fill-mode: forwards;
-  overflow: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 `;
 
@@ -55,7 +54,7 @@ const CloseArea = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  overflow: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 `;
 
