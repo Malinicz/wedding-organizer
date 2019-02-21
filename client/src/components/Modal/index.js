@@ -19,7 +19,7 @@ const Overlay = styled.div`
   height: 100%;
   animation: ${overlayAnimation} 0.7s ease;
   animation-fill-mode: forwards;
-  overflow-y: auto;
+  overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 `;
 

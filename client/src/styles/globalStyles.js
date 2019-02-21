@@ -38,7 +38,6 @@ export default createGlobalStyle`
         font-family: ${styledTheme.fontFamily.primary.regular};
         line-height: 1.25em;
         background-color: ${styledTheme.colors.primary};
-        -webkit-overflow-scrolling: auto;
     }
 
     a {
