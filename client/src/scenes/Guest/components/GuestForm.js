@@ -213,6 +213,8 @@ export class GuestForm extends Component {
       label: pl.drinks[drink.name],
     }));
 
+    const isGuestGroupPresent = guests.some(guest => guest.isPresent);
+
     return (
       <Mutation mutation={SAVE_GUEST_GROUP_FORM} variables={form}>
         {(saveGuestGroupForm, { loading, error }) => (
@@ -251,6 +253,7 @@ export class GuestForm extends Component {
                   name="transport"
                   activeValue={form.transport}
                   options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
+                  disabled={!isGuestGroupPresent}
                   handleChange={e =>
                     this.onGuestGroupRadioInputChange(
                       e.target.value,
@@ -264,6 +267,7 @@ export class GuestForm extends Component {
                   name="accomodation"
                   activeValue={form.accomodation}
                   options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
+                  disabled={!isGuestGroupPresent}
                   handleChange={e =>
                     this.onGuestGroupRadioInputChange(
                       e.target.value,
