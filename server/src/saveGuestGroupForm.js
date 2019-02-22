@@ -37,12 +37,19 @@ module.exports = async event => {
       .filter(guest => !guest.isPresent)
       .map(guest => guest.firstName);
 
-    let isPresentMessage = 'wszyscy przyjdą!';
+    const isGroupPresent = guestGroup.guests.length > notPresentGuests.length;
+
+    let introductionMessage = 'wszyscy przyjdą! 😊';
 
     if (notPresentGuests.length) {
-      isPresentMessage = `niestety, ${notPresentGuests.join(' i ')} nie ${
-        notPresentGuests.length === 1 ? 'przyjdzie' : 'przyjdą'
-      } :(`;
+      introductionMessage =
+        notPresentGuests.length === guestGroup.guests.length
+          ? 'niestety, nie będą mogli przyjść 😞'
+          : `niestety, ${notPresentGuests
+              .map(guest => `<strong>${guest}</strong>`)
+              .join(', ')} nie ${
+              notPresentGuests.length === 1 ? 'przyjdzie' : 'przyjdą'
+            } 😞`;
     }
 
     const mailHtml = `
@@ -51,7 +58,8 @@ module.exports = async event => {
           <img src="http://serwer30424.lh.pl/dot.png" />
           <div style="max-width: 600px;">
             <div style="position: relative; padding: 15px; border-bottom: 1px solid #dbdbdb; background-color: #ffffff;">
-              <h1 style="font-weight: bold; font-size: 20px;">
+              <img src="http://serwer30424.lh.pl/logo-witajgosciu.png" style="width: 60px; height: 60px; vertical-align: middle"/>
+              <h1 style="display: inline-block; font-weight: bold; font-size: 20px; vertical-align: middle">
                 Cześć!
               </h1>
             </div>
@@ -59,18 +67,22 @@ module.exports = async event => {
               <p style="margin-bottom: 30px; font-size: 18px;">
                 Grupa ${
                   guestGroup.name
-                } właśnie wysłała nowe powiadomienie - ${isPresentMessage}
+                } właśnie wysłała nowe powiadomienie - ${introductionMessage}
               </p>
-              <h2 style="font-size: 16px; margin: 0 0 3px 0;">Transport</h2>
+              ${
+                isGroupPresent
+                  ? `<h2 style="font-size: 16px; margin: 0 0 3px 0;">Transport</h2>
               <p style="margin: 0 0 15px 0;">${
                 guestGroup.transport ? 'tak' : 'nie'
               }</p>
               <h2 style="font-size: 16px; margin: 0 0 3px 0;">Nocleg</h2>
               <p style="margin: 0 0 15px 0;">${
                 guestGroup.accomodation ? 'tak' : 'nie'
-              }</p>
+              }</p>`
+                  : ''
+              }
               <h2 style="font-size: 16px; margin: 0 0 3px 0;">Komentarze</h2>
-              <p style="margin: 0 0 15px 0;">${guestGroup.comments}</p>
+              <p style="margin: 0 0 15px 0;">${guestGroup.comments || '-'}</p>
               <p style="margin-top: 30px">
               <a href="https://witajgosciu.pl/sign-in" style="color: #e5998d"><strong>Zaloguj się</strong></a> aby zobaczyć więcej szczegółów!
               </p>
