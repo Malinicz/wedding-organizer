@@ -12,6 +12,9 @@ import {
 } from 'graphql/mutations';
 
 import { GUEST } from 'constants/routes';
+import { RETRY_MESSAGE } from 'constants/errorMessages';
+
+import { getErrorMessage } from 'utils/helpers';
 
 export class GuestSignIn extends Component {
   loginInput = null;
@@ -67,36 +70,38 @@ export class GuestSignIn extends Component {
         mutation={GUEST_SIGN_IN_MUTATION}
         onCompleted={this.onSubmitSuccess}
       >
-        {(guestSignIn, { loading, error }) => (
-          <Form
-            onSubmit={e => {
-              e.preventDefault();
-              guestSignIn({ variables: { weddingId, code } });
-            }}
-          >
-            <InputLabel forHtml="weddingId">login</InputLabel>
-            <Input
-              name="weddingId"
-              type="text"
-              placeholder="np. wesele0125"
-              onChange={this.onLoginChange}
-              ref={el => (this.loginInput = el)}
-              onBlur={this.onLoginBlur}
-            />
-            <InputLabel forHtml="code">kod</InputLabel>
-            <Input
-              type="code"
-              placeholder="np. FC42C"
-              onChange={this.onCodeChange}
-            />
-            <ActionButton
-              type="submit"
-              label="Wchodzę!"
-              loading={loading}
-              error={error && 'Ups! Coś poszło nie tak - spróbuj ponownie'}
-            />
-          </Form>
-        )}
+        {(guestSignIn, { loading, error }) => {
+          return (
+            <Form
+              onSubmit={e => {
+                e.preventDefault();
+                guestSignIn({ variables: { weddingId, code } });
+              }}
+            >
+              <InputLabel forHtml="weddingId">login</InputLabel>
+              <Input
+                name="weddingId"
+                type="text"
+                placeholder="np. wesele0125"
+                onChange={this.onLoginChange}
+                ref={el => (this.loginInput = el)}
+                onBlur={this.onLoginBlur}
+              />
+              <InputLabel forHtml="code">kod</InputLabel>
+              <Input
+                type="code"
+                placeholder="np. FC42C"
+                onChange={this.onCodeChange}
+              />
+              <ActionButton
+                type="submit"
+                label="Wchodzę!"
+                loading={loading}
+                error={error && (getErrorMessage(error) || RETRY_MESSAGE)}
+              />
+            </Form>
+          );
+        }}
       </Mutation>
     );
   }

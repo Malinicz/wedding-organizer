@@ -12,7 +12,12 @@ module.exports = async event => {
     );
 
     if (guestGroup.length !== 1) {
-      return { error: 'Nieprawidłowe id wesela lub kod' };
+      return {
+        error: {
+          message:
+            'Wygląda na to, że taki login lub kod nie istnieje 😔. Sprawdź, czy poprawnie wprowadziłeś dane i spróbuj ponownie.',
+        },
+      };
     }
 
     const guestGroupId = guestGroup[0].id;

@@ -7,7 +7,7 @@ const theme = {
     darkest: '#000000',
     primary: '#FDF8F7',
     primaryDarker: '#F5D8D4',
-    primaryDarkest: '#E5998D',
+    primaryDarkest: '#e4bab1',
   },
   baseBoxShadow: '0px 3px 20px 0px rgba(0, 0, 0, 0.07)',
   baseBoxShadowHover: '0px 5px 22px 0px rgba(0, 0, 0, 0.17)',

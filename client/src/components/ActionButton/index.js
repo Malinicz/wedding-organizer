@@ -14,11 +14,12 @@ const ActionButtonHolder = styled.div`
 const ErrorMessage = styled.div.attrs(props => ({
   style: {
     opacity: props.error ? '1' : '0',
-    height: props.error ? '16px' : '1px',
+    maxHeight: props.error ? '50px' : '1px',
   },
 }))`
   text-align: center;
-  transition: height 0.3s ease, opacity 0.3s ease;
+  font-size: 0.9em;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
 `;
 
 const ButtonHolder = styled(Button)`

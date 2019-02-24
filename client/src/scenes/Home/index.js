@@ -77,11 +77,6 @@ const SignInLink = styled(RouterLink)`
   padding: 10px 0;
   margin-top: -20px;
   text-align: center;
-  color: ${({ theme }) => theme.colors.darkest};
-
-  &:visited {
-    color: ${({ theme }) => theme.colors.darker};
-  }
 `;
 
 export class Home extends Component {
