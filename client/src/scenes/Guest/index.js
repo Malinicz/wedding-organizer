@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Query } from 'react-apollo';
 import styled from 'styles';
 
-import { Layout, Loader } from 'components';
+import { Layout, Main, Loader } from 'components';
 import { Section, H1 } from 'components/base';
 import { GuestForm } from './components';
 import { PageNotFound } from 'scenes';
@@ -89,13 +89,15 @@ export class Guest extends Component {
                   wdzięczni za uzupełnienie wszystkich pól!
                 </IntroText>
               </Header>
-              <FormSection>
-                <GuestForm
-                  guestGroup={guestGroup}
-                  drinks={allDrinks}
-                  history={history}
-                />
-              </FormSection>
+              <Main>
+                <FormSection>
+                  <GuestForm
+                    guestGroup={guestGroup}
+                    drinks={allDrinks}
+                    history={history}
+                  />
+                </FormSection>
+              </Main>
             </Layout>
           );
         }}

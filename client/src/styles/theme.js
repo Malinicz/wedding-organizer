@@ -14,6 +14,7 @@ const theme = {
   baseSpacing: 15,
   baseFontSize: 16,
   inputHeight: 40,
+  inputMaxWidth: 450,
   fontFamily: {
     primary: {
       regular: 'SofiaProRegular',

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { Layout } from 'components';
+import { Layout, Main } from 'components';
 import { H1, Section } from 'components/base';
 import { AdminSignIn } from './components';
 
@@ -22,10 +22,12 @@ export class SignIn extends Component {
   render() {
     return (
       <Layout>
-        <SignInHolder>
-          <Title>Zaloguj się</Title>
-          <AdminSignIn {...this.props} />
-        </SignInHolder>
+        <Main>
+          <SignInHolder>
+            <Title>Zaloguj się</Title>
+            <AdminSignIn {...this.props} />
+          </SignInHolder>
+        </Main>
       </Layout>
     );
   }

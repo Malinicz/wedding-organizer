@@ -11,14 +11,21 @@ import {
 
 import { defaults, resolvers } from './graphql';
 
-import { SignIn, PageNotFound, Guest, Home } from 'scenes';
-import { FormSubmissionSuccess } from 'scenes/Guest/scenes';
 import { PrivateRoute, ScrollToTop } from 'components';
+import { SignIn, PageNotFound, Guest, Home, About } from 'scenes';
+import { FormSubmissionSuccess } from 'scenes/Guest/scenes';
+import { SubscriberSubmissionSuccess } from 'scenes/About/scenes';
 
 import { SET_AUTH_USER_MUTATION } from 'graphql/mutations';
 
-import { SIGN_IN, GUEST, HOME } from 'constants/routes';
-import { GUEST_FORM_SUBMISSION_SUCCESS } from 'constants/routes';
+import {
+  SIGN_IN,
+  GUEST,
+  HOME,
+  ABOUT,
+  GUEST_FORM_SUBMISSION_SUCCESS,
+  ABOUT_SUBSCRIBER_SUBMISSION_SUCCESS,
+} from 'constants/routes';
 
 const history = createBrowserHistory();
 
@@ -68,6 +75,12 @@ class App extends Component {
             <ScrollToTop>
               <Switch>
                 <Route exact path={HOME} component={Home} />
+                <Route exact path={ABOUT} component={About} />
+                <Route
+                  exact
+                  path={ABOUT_SUBSCRIBER_SUBMISSION_SUCCESS}
+                  component={SubscriberSubmissionSuccess}
+                />
                 <Route exact path={SIGN_IN} component={SignIn} />
                 <PrivateRoute
                   exact

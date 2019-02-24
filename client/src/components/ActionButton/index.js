@@ -8,7 +8,7 @@ const ActionButtonHolder = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 450px;
+  max-width: ${({ theme }) => theme.inputMaxWidth}px;
 `;
 
 const ErrorMessage = styled.div.attrs(props => ({

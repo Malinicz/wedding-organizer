@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styles';
 
 import { Footer } from 'components';
+import { Paragraph } from 'components/base';
 
 const InfoPageHolder = styled.div`
   display: flex;
@@ -27,7 +28,7 @@ export const InfoPageTitle = styled.h1`
   font-family: ${({ theme }) => theme.fontFamily.secondary.regular};
 `;
 
-export const InfoPageSubtitle = styled.p`
+export const InfoPageSubtitle = styled(Paragraph)`
   text-align: center;
 `;
 

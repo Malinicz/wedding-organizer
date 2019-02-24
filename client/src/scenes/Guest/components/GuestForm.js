@@ -13,6 +13,7 @@ import { SAVE_GUEST_GROUP_FORM } from 'graphql/mutations';
 import { toBoolean } from 'utils/helpers';
 
 import { GUEST_FORM_SUBMISSION_SUCCESS } from 'constants/routes';
+import { RETRY_MESSAGE } from 'constants/errorMessages';
 
 import { pl } from 'languages';
 
@@ -311,9 +312,7 @@ export class GuestForm extends Component {
                 />
                 <ActionButton
                   loading={loading}
-                  error={
-                    error && 'Ups! Nie udało się zapisać - spróbuj ponownie'
-                  }
+                  error={error && RETRY_MESSAGE}
                   type="submit"
                   label={guestGroup.submissionDate ? 'Zaktualizuj' : 'Gotowe!'}
                 />

@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Query } from 'react-apollo';
 import styled from 'styled-components';
 
-import { Layout } from 'components';
+import { Layout, Main } from 'components';
 import { H1, Section, Card, RouterLink } from 'components/base';
 import { GuestSignIn } from './components';
 
 import { GET_WEDDING_NAMES } from 'graphql/queries';
 
-import { SIGN_IN } from 'constants/routes';
+import { SIGN_IN, ABOUT } from 'constants/routes';
 
 import logo from 'assets/logo.png';
 
@@ -51,7 +51,7 @@ const CallToActionText = styled.h2`
   text-align: center;
 `;
 
-const CallToActionButton = styled.a`
+const CallToActionButton = styled(RouterLink)`
   margin-top: 20px;
   font-family: ${({ theme }) => theme.fontFamily.secondary.regular};
   font-size: 2em;
@@ -98,32 +98,37 @@ export class Home extends Component {
         {({ data }) => {
           return (
             <Layout>
-              <LoginSection>
-                <GuestSignInCard>
-                  <Logo src={logo} />
-                  <Title>{weddingName || 'Witaj, Gościu!'}</Title>
-                  <Subtitle>
-                    Miło nam, że jesteś{' '}
-                    <span role="img" aria-label="uśmiechnięta buźka">
-                      😊
-                    </span>
-                    . Poniżej wprowadź login i kod otrzymany od Pary Młodej.
-                  </Subtitle>
-                  <GuestSignIn
-                    {...this.props}
-                    weddings={data ? data.allWeddings : []}
-                    handleWeddingNameChange={this.onWeddingNameChange}
-                  />
-                  <SignInLink to={SIGN_IN}>Nie jestem Gościem</SignInLink>
-                </GuestSignInCard>
-              </LoginSection>
-              <CallToActionSection>
-                <CallToActionText>
-                  “Witaj, gościu” to aplikacja która oszczędzi Twój czas podczas
-                  organizacji wesela. Brzmi dobrze?
-                </CallToActionText>
-                <CallToActionButton>DOWIEDZ SIĘ WIĘCEJ!</CallToActionButton>
-              </CallToActionSection>
+              <Main>
+                <LoginSection>
+                  <GuestSignInCard>
+                    <Logo src={logo} />
+                    <Title>{weddingName || 'Witaj, Gościu!'}</Title>
+                    <Subtitle>
+                      Miło nam, że jesteś{' '}
+                      <span role="img" aria-label="uśmiechnięta buźka">
+                        😊
+                      </span>
+                      . Poniżej wprowadź login i kod otrzymany od Pary Młodej.
+                    </Subtitle>
+                    <GuestSignIn
+                      {...this.props}
+                      weddings={data ? data.allWeddings : []}
+                      handleWeddingNameChange={this.onWeddingNameChange}
+                    />
+                    <SignInLink to={SIGN_IN}>Nie jestem Gościem</SignInLink>
+                  </GuestSignInCard>
+                </LoginSection>
+                <CallToActionSection>
+                  <CallToActionText>
+                    “Witaj, Gościu!” to aplikacja, która pozwoli Ci w łatwy i
+                    przyjemny sposób zarządzać swoimi Gośćmi weselnymi. Brzmi
+                    dobrze?
+                  </CallToActionText>
+                  <CallToActionButton to={ABOUT}>
+                    DOWIEDZ SIĘ WIĘCEJ!
+                  </CallToActionButton>
+                </CallToActionSection>
+              </Main>
             </Layout>
           );
         }}

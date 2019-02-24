@@ -84,13 +84,13 @@ module.exports = async event => {
               <h2 style="font-size: 16px; margin: 0 0 3px 0;">Komentarze</h2>
               <p style="margin: 0 0 15px 0;">${guestGroup.comments || '-'}</p>
               <p style="margin-top: 30px">
-              <a href="https://witajgosciu.pl/sign-in" style="color: #e5998d"><strong>Zaloguj się</strong></a> aby zobaczyć więcej szczegółów!
+              <a href="https://witajgosciu.pl/zaloguj" style="color: #e5998d"><strong>Zaloguj się</strong></a> aby zobaczyć więcej szczegółów!
               </p>
               <p></p>
             </div>
 
             <div style="padding: 15px; border-top: 1px solid #dbdbdb; font-size: 14px">
-              <p>Powiadomienie zostało wysłane, ponieważ opcja “włącz powiadomienia” została zaznaczona w profilu Twojego wesela. Aby zrezygnować z otrzymywania tych powiadomień, <a href="https://witajgosciu.pl/sign-in" style="color: #e5998d">zaloguj się</a> do aplikacji i odznacz tę opcję w zakładce “ustawienia”.</p>
+              <p>Powiadomienie zostało wysłane, ponieważ opcja “włącz powiadomienia” została zaznaczona w profilu Twojego wesela. Aby zrezygnować z otrzymywania tych powiadomień, <a href="https://witajgosciu.pl/zaloguj" style="color: #e5998d">zaloguj się</a> do aplikacji i odznacz tę opcję w zakładce “ustawienia”.</p>
               <p><strong>Wszelkie prawa zastrzeżone © witajgosciu.pl</strong></p>
             </div>
           </div>

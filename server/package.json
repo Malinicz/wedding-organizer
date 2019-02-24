@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "My Graphcool Service",
   "scripts": {
-    "deploy": "dotenv -e .env graphcool deploy"
+    "deploy": "dotenv -e .env graphcool deploy",
+    "deploy:force": "graphcool deploy --force && dotenv -e .env graphcool deploy"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

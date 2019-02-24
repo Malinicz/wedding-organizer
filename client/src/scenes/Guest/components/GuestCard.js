@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled, { keyframes } from 'styles';
 
-import { Card, Button, H2 } from 'components/base';
+import { Card, RoundButton, H2 } from 'components/base';
 import {
   RadioInputGroup,
   CheckboxGroup,
@@ -64,17 +64,6 @@ const AddPartnerText = styled.p`
   font-size: 13px;
   white-space: nowrap;
   margin: 0 0 5px 0;
-`;
-
-const PlusButton = styled(Button)`
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-  margin-bottom: 0;
-
-  &:active {
-    transform: scale(0.95);
-  }
 `;
 
 export class GuestCard extends Component {
@@ -140,12 +129,12 @@ export class GuestCard extends Component {
           {guest.isPresent && guest.allowPartner && !guest.partner && (
             <AddPartnerHolder>
               <AddPartnerText>Dodaj osobę towarzyszącą</AddPartnerText>
-              <PlusButton
+              <RoundButton
                 type="button"
                 onClick={() => handleAddPartnerModalOpen(guest)}
               >
                 <Icon name="plus" size={25} marginTop={5} />
-              </PlusButton>
+              </RoundButton>
             </AddPartnerHolder>
           )}
           {!guest.allowPartner && guest.partner && (

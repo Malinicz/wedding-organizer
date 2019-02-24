@@ -68,6 +68,10 @@ permissions:
   - operation: Drink.create
   - operation: Drink.update
   - operation: Drink.delete
+  - operation: Subscriber.read
+  - operation: Subscriber.create
+  - operation: Subscriber.update
+  - operation: Subscriber.delete
   - operation: GuestGroupOnGuest.*
   - operation: UserOnWedding.*
   - operation: WeddingOnGuestGroup.*

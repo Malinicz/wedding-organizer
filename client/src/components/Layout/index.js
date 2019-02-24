@@ -3,8 +3,13 @@ import styled from 'styles';
 
 import { Footer } from 'components';
 
-const Main = styled.main`
+export const Header = styled.header`
+  display: flex;
+`;
+
+export const Main = styled.main`
   width: 100%;
+  max-width: 1200px;
 `;
 
 const LayoutHolder = styled.div`
@@ -18,7 +23,7 @@ const LayoutHolder = styled.div`
 export const Layout = ({ children }) => {
   return (
     <LayoutHolder>
-      <Main>{children}</Main>
+      {children}
       <Footer />
     </LayoutHolder>
   );

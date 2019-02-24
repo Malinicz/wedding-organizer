@@ -49,6 +49,13 @@ type User @model {
   weddings: [Wedding!]! @relation(name: "UserOnWedding")
 }
 
+type Subscriber @model {
+  id: ID! @isUnique
+  email: String! @isUnique
+  createdAt: DateTime!
+  promoCode: String
+}
+
 enum UserRoles {
   Organiser
   Admin

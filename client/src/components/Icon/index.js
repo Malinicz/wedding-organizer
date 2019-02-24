@@ -1,12 +1,26 @@
 import React from 'react';
 import { string, number } from 'prop-types';
 import styled from 'styles';
-import { LoaderIcon, PlusIcon, CheckmarkIcon } from './svgIcons';
+import {
+  LoaderIcon,
+  PlusIcon,
+  CheckmarkIcon,
+  ArrowDownIcon,
+  NotepadIcon,
+  PiggyBankIcon,
+  ContactIcon,
+  AlarmClockIcon,
+} from './svgIcons';
 
 const icons = {
   loader: <LoaderIcon />,
   plus: <PlusIcon />,
   checkmark: <CheckmarkIcon />,
+  arrowDown: <ArrowDownIcon />,
+  notepad: <NotepadIcon />,
+  piggyBank: <PiggyBankIcon />,
+  contact: <ContactIcon />,
+  alarmClock: <AlarmClockIcon />,
 };
 
 const IconHolder = styled.div`

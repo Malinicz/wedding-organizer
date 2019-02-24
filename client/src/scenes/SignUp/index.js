@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Mutation } from 'react-apollo';
 
-import { Layout, ActionButton } from 'components';
+import { Layout, Main, ActionButton } from 'components';
 import { Input, InputLabel, Section, H1, Form } from 'components/base';
 
 import { SIGN_UP_MUTATION, SET_AUTH_USER_MUTATION } from 'graphql/mutations';
@@ -56,42 +56,44 @@ export class SignUp extends Component {
 
     return (
       <Layout>
-        <SignUpHolder>
-          <Title>Załóż nowe konto</Title>
-          <Mutation
-            mutation={SIGN_UP_MUTATION}
-            onCompleted={this.onSubmitSuccess}
-          >
-            {(signUp, { error, loading }) => (
-              <Form
-                onSubmit={e => {
-                  e.preventDefault();
-                  signUp({ variables: { email, password } });
-                }}
-              >
-                <InputLabel forHtml="email">email</InputLabel>
-                <Input
-                  name="email"
-                  type="text"
-                  placeholder="np. artur.malinowski"
-                  onChange={this.onEmailChange}
-                />
-                <InputLabel forHtml="password">hasło</InputLabel>
-                <Input
-                  type="password"
-                  placeholder="******"
-                  onChange={this.onPasswordChange}
-                />
-                <ActionButton
-                  type="submit"
-                  label="Załóż konto"
-                  loading={loading}
-                  error={error && 'Ups! Coś poszło nie tak'}
-                />
-              </Form>
-            )}
-          </Mutation>
-        </SignUpHolder>
+        <Main>
+          <SignUpHolder>
+            <Title>Załóż nowe konto</Title>
+            <Mutation
+              mutation={SIGN_UP_MUTATION}
+              onCompleted={this.onSubmitSuccess}
+            >
+              {(signUp, { error, loading }) => (
+                <Form
+                  onSubmit={e => {
+                    e.preventDefault();
+                    signUp({ variables: { email, password } });
+                  }}
+                >
+                  <InputLabel forHtml="email">email</InputLabel>
+                  <Input
+                    name="email"
+                    type="text"
+                    placeholder="np. artur.malinowski"
+                    onChange={this.onEmailChange}
+                  />
+                  <InputLabel forHtml="password">hasło</InputLabel>
+                  <Input
+                    type="password"
+                    placeholder="******"
+                    onChange={this.onPasswordChange}
+                  />
+                  <ActionButton
+                    type="submit"
+                    label="Załóż konto"
+                    loading={loading}
+                    error={error && 'Ups! Coś poszło nie tak'}
+                  />
+                </Form>
+              )}
+            </Mutation>
+          </SignUpHolder>
+        </Main>
       </Layout>
     );
   }

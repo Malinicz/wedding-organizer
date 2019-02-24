@@ -31,6 +31,7 @@ export default createGlobalStyle`
 
     html {
         height: 100%;
+        scroll-behavior: smooth;
     }
 
     body {

@@ -94,3 +94,11 @@ export const DELETE_PARTNER_MUTATION = gql`
     }
   }
 `;
+
+export const CREATE_SUBSCRIBER = gql`
+  mutation CreateSubscriber($email: String!) {
+    createSubscriber(email: $email) {
+      id
+    }
+  }
+`;
