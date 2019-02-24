@@ -1,4 +1,4 @@
 export const HOME = '/';
-export const SIGN_IN = '/sign-in';
-export const SIGN_UP = '/sign-up';
-export const GUEST = '/guest/:id';
+export const SIGN_IN = '/zaloguj';
+export const SIGN_UP = '/zarejestruj';
+export const GUEST = '/gosc';

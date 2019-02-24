@@ -49,7 +49,7 @@ const GuestName = styled(H2)`
 
 const AddPartnerHolder = styled.div`
   position: absolute;
-  bottom: -50px;
+  bottom: -25px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -61,7 +61,7 @@ const AddPartnerHolder = styled.div`
 const AddPartnerText = styled.p`
   font-size: 13px;
   white-space: nowrap;
-  margin: 5px 0 0 0;
+  margin: 0 0 5px 0;
 `;
 
 const PlusButton = styled(Button)`
@@ -72,30 +72,6 @@ const PlusButton = styled(Button)`
 
   &:active {
     transform: scale(0.95);
-  }
-`;
-
-const RemovePartnerIcon = styled.div`
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  transform: rotate(45deg);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 30px;
-  color: ${({ theme }) => theme.colors.brightest};
-  background-color: ${({ theme }) => theme.colors.darkest};
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.5;
-  }
-
-  &:active {
-    transform: scale(0.95) rotate(45deg);
   }
 `;
 
@@ -154,21 +130,20 @@ export class GuestCard extends Component {
           <CheckboxGroup
             label="Czego się napijesz?"
             columns={3}
-            disabled={!guest.isDrinkingAlcohol}
+            disabled={!guest.isDrinkingAlcohol || !guest.isPresent}
             activeValues={guest.drinks.map(drink => drink.id)}
             options={drinkOptions}
-            disabled={!guest.isPresent}
             handleChange={e => handleDrinksChange(e.target.value, guest.id)}
           />
           {guest.isPresent && guest.allowPartner && !guest.partner && (
             <AddPartnerHolder>
+              <AddPartnerText>Dodaj osobę towarzyszącą</AddPartnerText>
               <PlusButton
                 type="button"
                 onClick={() => handleAddPartnerModalOpen(guest)}
               >
                 <Icon name="plus" size={25} marginTop={5} />
               </PlusButton>
-              <AddPartnerText>Dodaj osobę towarzyszącą</AddPartnerText>
             </AddPartnerHolder>
           )}
           {!guest.allowPartner && guest.partner && (

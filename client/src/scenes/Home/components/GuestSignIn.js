@@ -11,6 +11,8 @@ import {
   SET_AUTH_USER_MUTATION,
 } from 'graphql/mutations';
 
+import { GUEST } from 'constants/routes';
+
 export class GuestSignIn extends Component {
   loginInput = null;
 
@@ -54,7 +56,7 @@ export class GuestSignIn extends Component {
       variables: { authUser, token },
     });
 
-    this.props.history.replace(`/guest/${authUser.id}`);
+    this.props.history.replace(`${GUEST}/${authUser.id}`);
   };
 
   render() {

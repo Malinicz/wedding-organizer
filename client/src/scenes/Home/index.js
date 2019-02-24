@@ -3,10 +3,12 @@ import { Query } from 'react-apollo';
 import styled from 'styled-components';
 
 import { Layout } from 'components';
-import { H1, Section, Card } from 'components/base';
+import { H1, Section, Card, RouterLink } from 'components/base';
 import { GuestSignIn } from './components';
 
 import { GET_WEDDING_NAMES } from 'graphql/queries';
+
+import { SIGN_IN } from 'constants/routes';
 
 import logo from 'assets/logo.png';
 
@@ -32,6 +34,10 @@ const Logo = styled.img`
   }
 `;
 
+const GuestSignInCard = styled(Card)`
+  padding-bottom: 40px;
+`;
+
 const CallToActionSection = styled(Section)`
   flex-direction: column;
   align-items: center;
@@ -55,9 +61,27 @@ const CallToActionButton = styled.a`
 
 const Title = styled(H1)`
   padding-top: 30px;
-  padding-bottom: 30px;
+  padding-bottom: 15px;
   text-align: center;
   font-size: 1.8em;
+`;
+
+const Subtitle = styled.p`
+  padding-bottom: 30px;
+  margin: 0 3px;
+  text-align: center;
+`;
+
+const SignInLink = styled(RouterLink)`
+  display: block;
+  padding: 10px 0;
+  margin-top: -20px;
+  text-align: center;
+  color: ${({ theme }) => theme.colors.darkest};
+
+  &:visited {
+    color: ${({ theme }) => theme.colors.darker};
+  }
 `;
 
 export class Home extends Component {
@@ -80,15 +104,23 @@ export class Home extends Component {
           return (
             <Layout>
               <LoginSection>
-                <Card>
+                <GuestSignInCard>
                   <Logo src={logo} />
                   <Title>{weddingName || 'Witaj, Gościu!'}</Title>
+                  <Subtitle>
+                    Miło nam, że jesteś{' '}
+                    <span role="img" aria-label="uśmiechnięta buźka">
+                      😊
+                    </span>
+                    . Poniżej wprowadź login i kod otrzymany od Pary Młodej.
+                  </Subtitle>
                   <GuestSignIn
                     {...this.props}
                     weddings={data ? data.allWeddings : []}
                     handleWeddingNameChange={this.onWeddingNameChange}
                   />
-                </Card>
+                  <SignInLink to={SIGN_IN}>Nie jestem Gościem</SignInLink>
+                </GuestSignInCard>
               </LoginSection>
               <CallToActionSection>
                 <CallToActionText>
