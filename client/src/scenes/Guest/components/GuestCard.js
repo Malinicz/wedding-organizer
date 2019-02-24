@@ -21,6 +21,7 @@ const guestCardAnimation = keyframes`
 
 const GuestCardHolder = styled(Card)`
   width: auto;
+  padding-bottom: 70px;
   margin: 30px 30px 60px 30px;
   transform: scale3d(0.9, 0.9, 0.9);
   animation: ${guestCardAnimation} 1s ease;
@@ -29,7 +30,8 @@ const GuestCardHolder = styled(Card)`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.small}px) {
     width: 100%;
-    margin: 0 0 100px 0;
+    margin: 0 0 80px 0;
+    padding-bottom: 70px;
   }
 `;
 

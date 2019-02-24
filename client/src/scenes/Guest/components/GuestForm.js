@@ -5,14 +5,16 @@ import styled from 'styles';
 import { ActionButton, RadioInputGroup } from 'components';
 import { Form, InputGroupLabel, TextArea, Input } from 'components/base';
 import { GuestCard, RADIO_INPUT_TRUE_FALSE_OPTIONS } from './GuestCard';
+import { DeletePartnerModal } from './DeletePartnerModal';
 import { AddPartnerModal } from './AddPartnerModal';
 
 import { SAVE_GUEST_GROUP_FORM } from 'graphql/mutations';
 
 import { toBoolean } from 'utils/helpers';
 
+import { GUEST_FORM_SUBMISSION_SUCCESS } from 'constants/routes';
+
 import { pl } from 'languages';
-import { DeletePartnerModal } from './DeletePartnerModal';
 
 const GuestFormHolder = styled(Form)`
   display: flex;
@@ -25,10 +27,10 @@ const GuestCards = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 50px;
+  margin-bottom: 15px;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.small}px) {
-    margin-bottom: 0px;
+    margin-bottom: -15px;
   }
 `;
 
@@ -206,7 +208,7 @@ export class GuestForm extends Component {
       activeGuest,
       form: { guests, id: guestGroupId },
     } = this.state;
-    const { drinks, guestGroup } = this.props;
+    const { drinks, guestGroup, history } = this.props;
 
     const drinkOptions = drinks.map(drink => ({
       value: drink.id,
@@ -216,7 +218,11 @@ export class GuestForm extends Component {
     const isGuestGroupPresent = guests.some(guest => guest.isPresent);
 
     return (
-      <Mutation mutation={SAVE_GUEST_GROUP_FORM} variables={form}>
+      <Mutation
+        mutation={SAVE_GUEST_GROUP_FORM}
+        variables={form}
+        onCompleted={() => history.push(GUEST_FORM_SUBMISSION_SUCCESS)}
+      >
         {(saveGuestGroupForm, { loading, error }) => (
           <>
             <GuestFormHolder
@@ -249,7 +255,11 @@ export class GuestForm extends Component {
               </GuestCards>
               <GuestGroupQuestions>
                 <RadioInputGroup
-                  label="Czy chcecie, żeby was przewieźć spod kościoła na miejsce wesela?"
+                  label={`Czy ${
+                    guests.length === 1 ? 'chcesz' : 'chcecie'
+                  }, żeby ${
+                    guests.length === 1 ? 'Cię' : 'Was'
+                  } podwieźć spod kościoła na miejsce wesela?`}
                   name="transport"
                   activeValue={form.transport}
                   options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
@@ -263,7 +273,9 @@ export class GuestForm extends Component {
                 />
                 <br />
                 <RadioInputGroup
-                  label="Czy chcecie, żeby zarezerwować dla Was nocleg?"
+                  label={`Zarezerwować dla ${
+                    guests.length === 1 ? 'Ciebie' : 'Was'
+                  } nocleg?`}
                   name="accomodation"
                   activeValue={form.accomodation}
                   options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
@@ -277,7 +289,10 @@ export class GuestForm extends Component {
                 />
                 <br />
                 <InputGroupLabel>
-                  Szczególne życzenia lub uwagi wpiszcie poniżej:
+                  Uwagi, sugestie czy dodatkowe prośby można wpisać poniżej{' '}
+                  <span role="img" aria-label="uśmiechnięta buźka">
+                    😉
+                  </span>
                 </InputGroupLabel>
                 <TextArea
                   type="text"
@@ -286,8 +301,7 @@ export class GuestForm extends Component {
                 />
                 <br />
                 <InputGroupLabel>
-                  Jeśli macie ochotę, zostawcie nam swój email, może się przydać
-                  ;)
+                  Jeśli chcecie, zostawcie nam swój email
                 </InputGroupLabel>
                 <Input
                   type="text"

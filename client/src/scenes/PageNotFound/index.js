@@ -1,5 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-export const PageNotFound = () => {
-  return <div>Page not found</div>;
-};
+import { InfoPage, InfoPageTitle, InfoPageSubtitle } from 'components';
+
+export class PageNotFound extends Component {
+  render() {
+    return (
+      <InfoPage>
+        <InfoPageTitle>Hmm... 🤔</InfoPageTitle>
+        <InfoPageSubtitle>
+          Wygląda na to, że strona o podanym adresie nie istnieje.
+        </InfoPageSubtitle>
+      </InfoPage>
+    );
+  }
+}

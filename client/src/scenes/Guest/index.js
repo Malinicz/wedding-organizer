@@ -5,6 +5,7 @@ import styled from 'styles';
 import { Layout, Loader } from 'components';
 import { Section, H1 } from 'components/base';
 import { GuestForm } from './components';
+import { PageNotFound } from 'scenes';
 
 import { GET_GUEST_INITIAL_DATA } from 'graphql/queries';
 
@@ -16,6 +17,10 @@ const Header = styled.header`
   align-items: center;
   margin-bottom: 70px;
   padding: 0 15px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.small}px) {
+    margin-bottom: 40px;
+  }
 `;
 
 const Logo = styled.img`
@@ -56,6 +61,7 @@ const FormSection = styled(Section)`
 export class Guest extends Component {
   render() {
     const {
+      history,
       match: {
         params: { id: guestGroupId },
       },
@@ -63,9 +69,13 @@ export class Guest extends Component {
 
     return (
       <Query query={GET_GUEST_INITIAL_DATA} variables={{ id: guestGroupId }}>
-        {({ data: { GuestGroup: guestGroup, allDrinks }, loading }) => {
+        {({ data: { GuestGroup: guestGroup, allDrinks }, loading, error }) => {
           if (loading) {
             return <Loader />;
+          }
+
+          if (!error && !guestGroup) {
+            return <PageNotFound />;
           }
 
           return (
@@ -80,7 +90,11 @@ export class Guest extends Component {
                 </IntroText>
               </Header>
               <FormSection>
-                <GuestForm guestGroup={guestGroup} drinks={allDrinks} />
+                <GuestForm
+                  guestGroup={guestGroup}
+                  drinks={allDrinks}
+                  history={history}
+                />
               </FormSection>
             </Layout>
           );
