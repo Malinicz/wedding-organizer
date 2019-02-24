@@ -7,7 +7,7 @@ import { Layout, Main, Header, Icon, ActionButton } from 'components';
 import {
   H1,
   Section,
-  Button,
+  RoundButton,
   Card as CardBase,
   Input,
   Paragraph,
@@ -119,21 +119,6 @@ const NewsletterInput = styled(Input)`
   margin-bottom: 15px;
 `;
 
-const NewsletterButton = styled(Button.withComponent('a'))`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-  margin-bottom: 0;
-  font-size: 1em;
-
-  &:active {
-    transform: scale(0.95);
-  }
-`;
-
 export class About extends Component {
   constructor(props) {
     super(props);
@@ -166,9 +151,16 @@ export class About extends Component {
             <SubmitToNewsletterTitle>
               Zapisz się do newslettera i zyskaj zniżkę!
             </SubmitToNewsletterTitle>
-            <NewsletterButton href="#newsletter">
+            <RoundButton
+              onClick={() =>
+                window.scroll({
+                  top: document.body.scrollHeight,
+                  behavior: 'smooth',
+                })
+              }
+            >
               <Icon name="arrowDown" size={20} />
-            </NewsletterButton>
+            </RoundButton>
           </SubmitToNewsletterHolder>
         </AboutHeader>
         <Main>
