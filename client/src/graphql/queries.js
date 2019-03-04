@@ -60,3 +60,11 @@ export const GET_GUEST_INITIAL_DATA = gql`
     }
   }
 `;
+
+export const GET_WEDDING_INITIAL_DATA = gql`
+  query GetWeddingInitialData($id: ID!) {
+    Wedding(id: $id) {
+      id
+    }
+  }
+`;

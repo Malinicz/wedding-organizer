@@ -10,6 +10,12 @@ import {
   PiggyBankIcon,
   ContactIcon,
   AlarmClockIcon,
+  AddUserIcon,
+  ListIcon,
+  StatsIcon,
+  AccountSettingsIcon,
+  ConfigurationIcon,
+  LogOutIcon,
 } from './svgIcons';
 
 const icons = {
@@ -21,6 +27,12 @@ const icons = {
   piggyBank: <PiggyBankIcon />,
   contact: <ContactIcon />,
   alarmClock: <AlarmClockIcon />,
+  addUser: <AddUserIcon />,
+  list: <ListIcon />,
+  stats: <StatsIcon />,
+  accountSettings: <AccountSettingsIcon />,
+  configuration: <ConfigurationIcon />,
+  logOut: <LogOutIcon />,
 };
 
 const IconHolder = styled.div`

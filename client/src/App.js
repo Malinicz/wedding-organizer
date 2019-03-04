@@ -12,7 +12,7 @@ import {
 import { defaults, resolvers } from './graphql';
 
 import { PrivateRoute, ScrollToTop } from 'components';
-import { SignIn, PageNotFound, Guest, Home, About } from 'scenes';
+import { SignIn, PageNotFound, Guest, Home, About, Organiser } from 'scenes';
 import { FormSubmissionSuccess } from 'scenes/Guest/scenes';
 import { SubscriberSubmissionSuccess } from 'scenes/About/scenes';
 
@@ -21,6 +21,7 @@ import { SET_AUTH_USER_MUTATION } from 'graphql/mutations';
 import {
   SIGN_IN,
   GUEST,
+  ORGANISER,
   HOME,
   ABOUT,
   GUEST_FORM_SUBMISSION_SUCCESS,
@@ -88,6 +89,7 @@ class App extends Component {
                   component={FormSubmissionSuccess}
                 />
                 <PrivateRoute exact path={`${GUEST}/:id`} component={Guest} />
+                <PrivateRoute exact path={ORGANISER} component={Organiser} />
                 <Route component={PageNotFound} />
               </Switch>
             </ScrollToTop>
