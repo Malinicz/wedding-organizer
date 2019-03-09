@@ -290,7 +290,7 @@ export class GuestForm extends Component {
                 />
                 <br />
                 <InputGroupLabel>
-                  Uwagi, sugestie czy dodatkowe prośby można wpisać poniżej{' '}
+                  Uwagi, sugestie czy dodatkowe prośby wpiszcie poniżej{' '}
                   <span role="img" aria-label="uśmiechnięta buźka">
                     😉
                   </span>
