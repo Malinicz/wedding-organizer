@@ -23,7 +23,7 @@ type Guest @model {
 
 type GuestGroup @model {
   name: String!
-  code: String!
+  code: String! @isUnique
   accomodation: Boolean!
   allowAccomodation: Boolean! @defaultValue(value: false)
   comments: String
@@ -33,7 +33,7 @@ type GuestGroup @model {
   customGreeting: String
   wedding: Wedding @relation(name: "WeddingOnGuestGroup")
   contactEmail: String
-  submissionDate: DateTime
+  submissionDate: DateTime @defaultValue(value: null)
 }
 
 type User @model {
@@ -80,6 +80,7 @@ type WeddingChurch @model {
   startTime: DateTime!
   street: String
   wedding: Wedding @relation(name: "WeddingOnWeddingChurch")
+  locationUrl: String
 }
 
 type WeddingParty @model {
@@ -90,6 +91,7 @@ type WeddingParty @model {
   startTime: DateTime
   street: String
   wedding: Wedding @relation(name: "WeddingOnWeddingParty")
+  locationUrl: String
 }
 
 type Drink @model {
