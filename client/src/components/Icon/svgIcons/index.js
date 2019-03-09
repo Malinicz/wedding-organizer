@@ -12,3 +12,4 @@ export * from './StatsIcon';
 export * from './ConfigurationIcon';
 export * from './AccountSettingsIcon';
 export * from './LogOutIcon';
+export * from './LocationIcon';

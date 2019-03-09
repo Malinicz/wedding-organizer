@@ -16,6 +16,7 @@ import {
   AccountSettingsIcon,
   ConfigurationIcon,
   LogOutIcon,
+  LocationIcon,
 } from './svgIcons';
 
 const icons = {
@@ -33,6 +34,7 @@ const icons = {
   accountSettings: <AccountSettingsIcon />,
   configuration: <ConfigurationIcon />,
   logOut: <LogOutIcon />,
+  location: <LocationIcon />,
 };
 
 const IconHolder = styled.div`

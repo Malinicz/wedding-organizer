@@ -4,7 +4,7 @@ import styled from 'styles';
 
 import { Layout, Main, Loader } from 'components';
 import { Section, H1 } from 'components/base';
-import { GuestForm } from './components';
+import { GuestForm, LocationInfo } from './components';
 import { PageNotFound } from 'scenes';
 
 import { GET_GUEST_INITIAL_DATA } from 'graphql/queries';
@@ -15,7 +15,7 @@ const Header = styled.header`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 70px;
+  margin-bottom: 50px;
   padding: 0 15px;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.small}px) {
@@ -90,6 +90,7 @@ export class Guest extends Component {
                 </IntroText>
               </Header>
               <Main>
+                <LocationInfo />
                 <FormSection>
                   <GuestForm
                     guestGroup={guestGroup}
