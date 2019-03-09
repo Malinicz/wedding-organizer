@@ -43,6 +43,7 @@ const GuestName = styled(H2)`
   margin: 0;
   padding: 0;
   font-size: 2.5em;
+  white-space: nowrap;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.small}px) {
     font-size: 2.2em;
