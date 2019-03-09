@@ -9,7 +9,7 @@ export const Header = styled.header`
 
 export const Main = styled.main`
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
 `;
 
 const LayoutHolder = styled.div`
