@@ -7,7 +7,7 @@ const LocationInfoHolder = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 `;
 
 const Location = styled.div`
@@ -16,7 +16,7 @@ const Location = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 300px;
-  margin: 0 15px;
+  margin: 0 15px 30px 0;
 `;
 
 const LocationDetailsHolder = styled.div`
