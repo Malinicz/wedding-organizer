@@ -89,7 +89,7 @@ class App extends Component {
                   component={FormSubmissionSuccess}
                 />
                 <PrivateRoute exact path={`${GUEST}/:id`} component={Guest} />
-                <PrivateRoute exact path={ORGANISER} component={Organiser} />
+                <PrivateRoute path={ORGANISER} component={Organiser} />
                 <Route component={PageNotFound} />
               </Switch>
             </ScrollToTop>
