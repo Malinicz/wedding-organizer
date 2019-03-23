@@ -273,22 +273,26 @@ export class GuestForm extends Component {
                   }
                 />
                 <br />
-                <RadioInputGroup
-                  label={`Zarezerwować dla ${
-                    guests.length === 1 ? 'Ciebie' : 'Was'
-                  } nocleg?`}
-                  name="accomodation"
-                  activeValue={form.accomodation}
-                  options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
-                  disabled={!isGuestGroupPresent}
-                  handleChange={e =>
-                    this.onGuestGroupRadioInputChange(
-                      e.target.value,
-                      'accomodation'
-                    )
-                  }
-                />
-                <br />
+                {guestGroup.allowAccomodation && (
+                  <>
+                    <RadioInputGroup
+                      label={`Zarezerwować dla ${
+                        guests.length === 1 ? 'Ciebie' : 'Was'
+                      } nocleg?`}
+                      name="accomodation"
+                      activeValue={form.accomodation}
+                      options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
+                      disabled={!isGuestGroupPresent}
+                      handleChange={e =>
+                        this.onGuestGroupRadioInputChange(
+                          e.target.value,
+                          'accomodation'
+                        )
+                      }
+                    />
+                    <br />
+                  </>
+                )}
                 <InputGroupLabel>
                   Uwagi, sugestie czy dodatkowe prośby wpiszcie poniżej{' '}
                   <span role="img" aria-label="uśmiechnięta buźka">
