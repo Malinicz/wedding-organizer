@@ -4,6 +4,7 @@ export const GUEST_GROUP = gql`
   fragment GuestGroup on GuestGroup {
     id
     name
+    code
     customGreeting
     accomodation
     allowAccomodation

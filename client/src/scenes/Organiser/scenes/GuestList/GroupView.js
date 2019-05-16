@@ -140,6 +140,7 @@ class GroupViewComp extends Component {
                   <TableRow>
                     <TableHeadCell />
                     <TableHeadCell>nazwa</TableHeadCell>
+                    <TableHeadCell>kod</TableHeadCell>
                     <TableHeadCell>email</TableHeadCell>
                     <TableHeadCell>zakwaterowanie</TableHeadCell>
                     <TableHeadCell>liczba obecnych</TableHeadCell>
@@ -152,6 +153,7 @@ class GroupViewComp extends Component {
                       {
                         id,
                         name,
+                        code,
                         contactEmail,
                         submissionDate,
                         allowAccomodation,
@@ -164,6 +166,7 @@ class GroupViewComp extends Component {
                       <TableRow key={id} isConfirmed={!!submissionDate}>
                         <TableCell>{index + 1}</TableCell>
                         <TableCell>{name}</TableCell>
+                        <TableCell>{code}</TableCell>
                         <TableCell>{contactEmail}</TableCell>
                         <TableCell>
                           {allowAccomodation && accomodation ? 'Tak' : 'Nie'}

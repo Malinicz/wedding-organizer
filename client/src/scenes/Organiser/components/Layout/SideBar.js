@@ -17,7 +17,6 @@ const SideBarHolder = styled.aside`
   flex-direction: column;
   min-width: ${SIDEBAR_WIDTH}px;
   min-height: 100vh;
-  background-color: ${({ theme }) => theme.colors.brightest};
 `;
 
 const FixedWrapper = styled.div`
@@ -25,6 +24,7 @@ const FixedWrapper = styled.div`
   height: 100%;
   width: ${SIDEBAR_WIDTH}px;
   overflow-y: auto;
+  background-color: ${({ theme }) => theme.colors.brightest};
 `;
 
 const SideBarHeader = styled.div`
