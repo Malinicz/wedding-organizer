@@ -5,10 +5,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:client": "cd ./client && yarn start",
-    "build:client": "cd ./client && yarn build",
+    "start": "cd ./client && yarn start",
+    "build": "cd ./client && yarn build",
     "deploy:server": "cd ./server && graphcool deploy",
-    "deploy:client": "yarn build:client && netlify deploy --prod"
+    "deploy:client": "yarn build && netlify deploy --prod"
   },
   "repository": {
     "type": "git",

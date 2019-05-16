@@ -27,6 +27,7 @@ import {
   GUEST_FORM_SUBMISSION_SUCCESS,
   ABOUT_SUBSCRIBER_SUBMISSION_SUCCESS,
 } from 'constants/routes';
+import { ORGANISER_WEDDING } from './constants/routes';
 
 const history = createBrowserHistory();
 
@@ -89,7 +90,10 @@ class App extends Component {
                   component={FormSubmissionSuccess}
                 />
                 <PrivateRoute exact path={`${GUEST}/:id`} component={Guest} />
-                <PrivateRoute exact path={ORGANISER} component={Organiser} />
+                <PrivateRoute
+                  path={`${ORGANISER_WEDDING}/:id`}
+                  component={Organiser}
+                />
                 <Route component={PageNotFound} />
               </Switch>
             </ScrollToTop>

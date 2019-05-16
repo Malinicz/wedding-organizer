@@ -102,3 +102,27 @@ export const CREATE_SUBSCRIBER = gql`
     }
   }
 `;
+
+export const ADD_NEW_GUEST = gql`
+  mutation AddNewGuest(
+    $weddingId: ID!
+    $name: String!
+    $code: String!
+    $customGreeting: String!
+    $allowAccomodation: Boolean!
+    $guests: [GuestGroupguestsGuest!]
+  ) {
+    createGuestGroup(
+      name: $name
+      accomodation: true
+      customGreeting: $customGreeting
+      allowAccomodation: $allowAccomodation
+      code: $code
+      transport: true
+      weddingId: $weddingId
+      guests: $guests
+    ) {
+      id
+    }
+  }
+`;

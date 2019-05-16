@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { GUEST_GROUP } from './fragments';
 
 export const GET_AUTH_USER = gql`
   {
@@ -65,6 +66,29 @@ export const GET_WEDDING_INITIAL_DATA = gql`
   query GetWeddingInitialData($id: ID!) {
     Wedding(id: $id) {
       id
+      internalId
+      name
+      weddingChurch {
+        id
+        name
+        street
+        city
+        startTime
+        locationUrl
+      }
+      weddingParty {
+        id
+        name
+        street
+        city
+        startTime
+        locationUrl
+      }
+      description
+      guestGroups {
+        ...GuestGroup
+      }
     }
   }
+  ${GUEST_GROUP}
 `;

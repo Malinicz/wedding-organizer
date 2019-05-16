@@ -34,6 +34,7 @@ type GuestGroup @model {
   wedding: Wedding @relation(name: "WeddingOnGuestGroup")
   contactEmail: String
   submissionDate: DateTime @defaultValue(value: null)
+  manualSubmissionDate: DateTime @defaultValue(value: null)
 }
 
 type User @model {
