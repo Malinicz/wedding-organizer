@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import { Query, Mutation } from 'react-apollo';
+import { Mutation } from 'react-apollo';
 import styled from 'styles';
 
-import { Loader, ActionButton, Checkbox } from 'components';
+import { ActionButton, Checkbox } from 'components';
 import { Form, InputLabel, Input, Button } from 'components/base';
 
-import { NOT_FOUND } from 'constants/routes';
-
-import { GET_WEDDING_INITIAL_DATA } from 'graphql/queries';
 import { ADD_NEW_GUEST } from 'graphql/mutations';
 
 const SingleGuest = styled.div`
@@ -107,139 +104,116 @@ export class Wedding extends Component {
       match: {
         params: { id: weddingId },
       },
-      history,
     } = this.props;
 
     const { guests, guestGroup } = this.state;
 
     return (
-      <Query query={GET_WEDDING_INITIAL_DATA} variables={{ id: weddingId }}>
-        {({ data: { Wedding: wedding }, loading, error }) => {
-          if (loading) {
-            return <Loader />;
-          }
-
-          if (!error && !wedding) {
-            history.push(NOT_FOUND);
-            return null;
-          }
-
+      <Mutation
+        mutation={ADD_NEW_GUEST}
+        variables={{
+          weddingId: weddingId,
+          name: guestGroup.name,
+          code: guestGroup.code,
+          customGreeting: guestGroup.customGreeting,
+          allowAccomodation: guestGroup.allowAccomodation,
+          guests: guests.map(guest => ({
+            firstName: guest.firstName,
+            lastName: guest.lastName,
+            allowPartner: guest.allowPartner,
+            isPresent: true,
+            isVegetarian: false,
+          })),
+        }}
+      >
+        {(addNewGuest, { loading, error }) => {
           return (
-            <Mutation
-              mutation={ADD_NEW_GUEST}
-              variables={{
-                weddingId: wedding.id,
-                name: guestGroup.name,
-                code: guestGroup.code,
-                customGreeting: guestGroup.customGreeting,
-                allowAccomodation: guestGroup.allowAccomodation,
-                guests: guests.map(guest => ({
-                  firstName: guest.firstName,
-                  lastName: guest.lastName,
-                  allowPartner: guest.allowPartner,
-                  isPresent: true,
-                  isVegetarian: false,
-                })),
+            <div
+              style={{
+                padding: '15px',
+                display: 'flex',
+                flexDirection: 'column',
               }}
             >
-              {(addNewGuest, { loading, error }) => {
-                console.log('guests: ', guests);
-                console.log('guestGroup: ', guestGroup);
-
-                return (
-                  <div
-                    style={{
-                      padding: '15px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                    }}
-                  >
-                    <InputLabel forHtml="name">nazwa grupy</InputLabel>
-                    <Input
-                      name="name"
-                      value={guestGroup.name}
-                      type="text"
-                      placeholder="Nowakowie"
-                      onChange={e =>
-                        this.onGuestGroupNameChange(e.target.value)
-                      }
-                    />
-                    <InputLabel forHtml="code">kod grupy</InputLabel>
-                    <Input
-                      name="code"
-                      value={guestGroup.code}
-                      type="text"
-                      placeholder="J43KS"
-                      onChange={e =>
-                        this.onGuestGroupCodeChange(e.target.value)
-                      }
-                    />
-                    <InputLabel forHtml="code">przywitanie</InputLabel>
-                    <Input
-                      name="customGreeting"
-                      value={guestGroup.customGreeting}
-                      type="text"
-                      placeholder="Elo, Ziomeczki!"
-                      onChange={e =>
-                        this.onGuestGroupCustomGreetingChange(e.target.value)
-                      }
-                    />
-                    <Checkbox
-                      value="allowAccomodation"
-                      label="Pozwól na dodanie opcji noclegu"
-                      checked={guestGroup.allowAccomodation}
-                      onChange={this.toggleAllowAccomodation}
-                    />
-                    <Button onClick={this.onAddNewGuest}>dodaj gościa</Button>
-                    <Form onSubmit={addNewGuest}>
-                      {guests.map(guest => {
-                        return (
-                          <SingleGuest key={guest.id}>
-                            <InputLabel forHtml="firstName">imię</InputLabel>
-                            <Input
-                              name="firstName"
-                              value={guest.firstName}
-                              type="text"
-                              placeholder="Jan"
-                              onChange={e =>
-                                this.onFirstNameChange(guest.id, e.target.value)
-                              }
-                            />
-                            <InputLabel forHtml="lastName">nazwisko</InputLabel>
-                            <Input
-                              name="lastName"
-                              value={guest.lastName}
-                              type="text"
-                              placeholder="Nowak"
-                              onChange={e =>
-                                this.onLastNameChange(guest.id, e.target.value)
-                              }
-                            />
-                            <Checkbox
-                              value="allowPartner"
-                              label="Pozwól na dodanie Osoby Towarzyszącej"
-                              checked={guest.allowPartner}
-                              onChange={() => this.toggleAllowPartner(guest.id)}
-                            />
-                          </SingleGuest>
-                        );
-                      })}
-                      <ActionButton
-                        type="button"
-                        onClick={addNewGuest}
-                        style={{ marginTop: '5px' }}
-                        label="Zapisz"
-                        loading={loading}
-                        error={error && 'coś nie tak'}
+              <InputLabel forHtml="name">nazwa grupy</InputLabel>
+              <Input
+                name="name"
+                value={guestGroup.name}
+                type="text"
+                placeholder="Nowakowie"
+                onChange={e => this.onGuestGroupNameChange(e.target.value)}
+              />
+              <InputLabel forHtml="code">kod grupy</InputLabel>
+              <Input
+                name="code"
+                value={guestGroup.code}
+                type="text"
+                placeholder="J43KS"
+                onChange={e => this.onGuestGroupCodeChange(e.target.value)}
+              />
+              <InputLabel forHtml="code">przywitanie</InputLabel>
+              <Input
+                name="customGreeting"
+                value={guestGroup.customGreeting}
+                type="text"
+                placeholder="Elo, Ziomeczki!"
+                onChange={e =>
+                  this.onGuestGroupCustomGreetingChange(e.target.value)
+                }
+              />
+              <Checkbox
+                value="allowAccomodation"
+                label="Pozwól na dodanie opcji noclegu"
+                checked={guestGroup.allowAccomodation}
+                onChange={this.toggleAllowAccomodation}
+              />
+              <Button onClick={this.onAddNewGuest}>dodaj gościa</Button>
+              <Form onSubmit={addNewGuest}>
+                {guests.map(guest => {
+                  return (
+                    <SingleGuest key={guest.id}>
+                      <InputLabel forHtml="firstName">imię</InputLabel>
+                      <Input
+                        name="firstName"
+                        value={guest.firstName}
+                        type="text"
+                        placeholder="Jan"
+                        onChange={e =>
+                          this.onFirstNameChange(guest.id, e.target.value)
+                        }
                       />
-                    </Form>
-                  </div>
-                );
-              }}
-            </Mutation>
+                      <InputLabel forHtml="lastName">nazwisko</InputLabel>
+                      <Input
+                        name="lastName"
+                        value={guest.lastName}
+                        type="text"
+                        placeholder="Nowak"
+                        onChange={e =>
+                          this.onLastNameChange(guest.id, e.target.value)
+                        }
+                      />
+                      <Checkbox
+                        value="allowPartner"
+                        label="Pozwól na dodanie Osoby Towarzyszącej"
+                        checked={guest.allowPartner}
+                        onChange={() => this.toggleAllowPartner(guest.id)}
+                      />
+                    </SingleGuest>
+                  );
+                })}
+                <ActionButton
+                  type="button"
+                  onClick={addNewGuest}
+                  style={{ marginTop: '5px' }}
+                  label="Zapisz"
+                  loading={loading}
+                  error={error && 'coś nie tak'}
+                />
+              </Form>
+            </div>
           );
         }}
-      </Query>
+      </Mutation>
     );
   }
 }

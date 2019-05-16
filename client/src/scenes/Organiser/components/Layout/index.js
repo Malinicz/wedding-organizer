@@ -4,7 +4,6 @@ import { SideBar } from './SideBar';
 
 export const Main = styled.main`
   width: 100%;
-  max-width: 1200px;
 `;
 
 const LayoutHolder = styled.div`

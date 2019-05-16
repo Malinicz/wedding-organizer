@@ -7,7 +7,7 @@ import { Input, InputLabel, Form } from 'components/base';
 import { client as apolloClient } from 'App';
 
 import { SET_AUTH_USER_MUTATION, SIGN_IN_MUTATION } from 'graphql/mutations';
-import { ORGANISER } from 'constants/routes';
+import { ORGANISER_WEDDING } from 'constants/routes';
 
 export class AdminSignIn extends Component {
   constructor(props) {
@@ -35,7 +35,13 @@ export class AdminSignIn extends Component {
       variables: { authUser, token },
     });
 
-    this.props.history.replace(ORGANISER);
+    const weddingId =
+      authUser &&
+      authUser.weddings &&
+      authUser.weddings[0] &&
+      authUser.weddings[0].id;
+
+    this.props.history.replace(`${ORGANISER_WEDDING}/${weddingId}`);
   };
 
   render() {

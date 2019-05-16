@@ -7,3 +7,4 @@ export * from './Card';
 export * from './TextArea';
 export * from './Link';
 export * from './Paragraph';
+export * from './Ellipsis';
