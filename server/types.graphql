@@ -35,6 +35,7 @@ type GuestGroup @model {
   contactEmail: String
   submissionDate: DateTime @defaultValue(value: null)
   manualSubmissionDate: DateTime @defaultValue(value: null)
+  isDraft: Boolean! @defaultValue(value: false)
 }
 
 type User @model {

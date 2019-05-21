@@ -69,6 +69,30 @@ export const SAVE_GUEST_GROUP_FORM = gql`
   }
 `;
 
+export const MANUAL_GUEST_GROUP_UPDATE = gql`
+  mutation ManualGuestGroupUpdate(
+    $id: ID!
+    $guests: Json!
+    $accomodation: Boolean!
+    $transport: Boolean!
+    $comments: String
+    $contactEmail: String
+    $isDraft: Boolean!
+  ) {
+    manualGuestGroupUpdate(
+      id: $id
+      guests: $guests
+      accomodation: $accomodation
+      transport: $transport
+      comments: $comments
+      contactEmail: $contactEmail
+      isDraft: $isDraft
+    ) {
+      id
+    }
+  }
+`;
+
 export const ADD_PARTNER_MUTATION = gql`
   mutation AddPartner(
     $guestGroupId: ID!

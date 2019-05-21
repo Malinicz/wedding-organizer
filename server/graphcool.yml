@@ -18,6 +18,12 @@ functions:
         src: ./src/signInGuest.js
     type: resolver
     schema: ./src/signInGuest.graphql
+  manualGuestGroupUpdate:
+    handler:
+      code:
+        src: ./src/manualGuestGroupUpdate.js
+    type: resolver
+    schema: ./src/manualGuestGroupUpdate.graphql
   saveGuestGroupForm:
     handler:
       code:

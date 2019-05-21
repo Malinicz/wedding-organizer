@@ -8,3 +8,4 @@ export * from './TextArea';
 export * from './Link';
 export * from './Paragraph';
 export * from './Ellipsis';
+export * from './Table';
