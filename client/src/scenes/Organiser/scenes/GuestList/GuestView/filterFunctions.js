@@ -29,3 +29,11 @@ export const filterByShowPresentOnly = guests => {
 export const filterByShowDraftsOnly = guests => {
   return guests.filter(guest => guest.guestGroup.isDraft);
 };
+
+export const filterByShowWithTransportOnly = guests => {
+  return guests.filter(guest => guest.guestGroup.transport);
+};
+
+export const filterByShowWithoutTransportOnly = guests => {
+  return guests.filter(guest => !guest.guestGroup.transport);
+};

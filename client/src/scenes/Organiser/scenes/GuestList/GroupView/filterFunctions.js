@@ -19,3 +19,17 @@ export const filterByShowWithAccomodationOnly = guestGroups => {
 export const filterByShowDraftsOnly = guestGroups => {
   return guestGroups.filter(guestGroup => guestGroup.isDraft);
 };
+
+export const filterByShowWithTransportOnly = guestGroups => {
+  return guestGroups.filter(guestGroup => guestGroup.transport);
+};
+
+export const filterByShowWithoutTransportOnly = guestGroups => {
+  return guestGroups.filter(guestGroup => !guestGroup.transport);
+};
+
+export const filterByShowPresentOnly = guestGroups => {
+  return guestGroups.filter(guestGroup =>
+    guestGroup.guests.some(guest => guest.isPresent)
+  );
+};

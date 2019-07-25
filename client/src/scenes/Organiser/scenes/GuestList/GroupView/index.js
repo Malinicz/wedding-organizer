@@ -21,6 +21,9 @@ import {
   filterByShowWithAccomodationOnly,
   filterByShowUnconfirmedOnly,
   filterByShowDraftsOnly,
+  filterByShowPresentOnly,
+  filterByShowWithTransportOnly,
+  filterByShowWithoutTransportOnly,
 } from './filterFunctions';
 
 import { ORGANISER_WEDDING } from 'constants/routes';
@@ -53,10 +56,13 @@ class GroupViewComp extends Component {
 
   applyFilters = data => {
     const filterConfig = {
+      showPresentOnly: filterByShowPresentOnly,
       showConfirmedOnly: filterByShowConfirmedOnly,
       showWithAccomodationOnly: filterByShowWithAccomodationOnly,
       showUnconfirmedOnly: filterByShowUnconfirmedOnly,
       showDraftsOnly: filterByShowDraftsOnly,
+      showWithTransportOnly: filterByShowWithTransportOnly,
+      showWithoutTransportOnly: filterByShowWithoutTransportOnly,
     };
 
     const { filters } = this.state;
@@ -83,6 +89,10 @@ class GroupViewComp extends Component {
 
           const filterOptions = [
             {
+              label: 'Tylko obecni',
+              value: 'showPresentOnly',
+            },
+            {
               label: 'Tylko potwierdzone',
               value: 'showConfirmedOnly',
             },
@@ -97,6 +107,14 @@ class GroupViewComp extends Component {
             {
               label: 'Tylko wersje robocze',
               value: 'showDraftsOnly',
+            },
+            {
+              label: 'Tylko z transportem',
+              value: 'showWithTransportOnly',
+            },
+            {
+              label: 'Tylko bez transportu',
+              value: 'showWithoutTransportOnly',
             },
           ];
 
@@ -120,6 +138,7 @@ class GroupViewComp extends Component {
                     <TableHeadCell>email</TableHeadCell>
                     <TableHeadCell>zakwaterowanie</TableHeadCell>
                     <TableHeadCell>liczba obecnych</TableHeadCell>
+                    <TableHeadCell>transport</TableHeadCell>
                     <TableHeadCell>komentarze</TableHeadCell>
                   </TableRow>
                 </TableHead>
@@ -136,6 +155,7 @@ class GroupViewComp extends Component {
                         allowAccomodation,
                         accomodation,
                         comments,
+                        transport,
                         guests,
                       },
                       index
@@ -165,6 +185,7 @@ class GroupViewComp extends Component {
                               ? guests.filter(guest => guest.isPresent).length
                               : '-'}
                           </TableCell>
+                          <TableCell>{transport ? 'Tak' : 'Nie'}</TableCell>
                           <TableCell title={comments}>
                             <Ellipsis>{comments}</Ellipsis>
                           </TableCell>
