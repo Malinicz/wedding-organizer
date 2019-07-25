@@ -6,9 +6,8 @@ import { PrivateRoute } from 'components';
 
 import { ORGANISER_WEDDING } from 'constants/routes';
 
-import { Wedding } from './scenes';
+import { Wedding, GuestList, EditGroup } from './scenes';
 import { Layout } from './components';
-import { GuestList } from './scenes/GuestList';
 
 import { GET_WEDDING_INITIAL_DATA } from 'graphql/queries';
 
@@ -49,6 +48,11 @@ export class Organiser extends Component {
                   exact
                   path={`${ORGANISER_WEDDING}/:id/lista-gosci`}
                   component={GuestList}
+                />
+                <PrivateRoute
+                  exact
+                  path={`${ORGANISER_WEDDING}/:id/grupa/:id`}
+                  component={EditGroup}
                 />
                 <Redirect
                   from={`${ORGANISER_WEDDING}/:id`}

@@ -9,7 +9,7 @@ import logo from 'assets/logo.png';
 
 import { ORGANISER_WEDDING } from 'constants/routes';
 
-const SIDEBAR_WIDTH = 320;
+const SIDEBAR_WIDTH = 290;
 
 const SideBarHolder = styled.aside`
   position: relative;

@@ -25,11 +25,12 @@ const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
 
 const Checkmark = styled.img`
   width: 15px;
-  transform: translate(3px, 2px);
 `;
 
 const StyledCheckbox = styled.div`
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 25px;
   height: 25px;
   border-radius: 5px;

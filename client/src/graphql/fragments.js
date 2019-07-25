@@ -12,6 +12,8 @@ export const GUEST_GROUP = gql`
     transport
     contactEmail
     submissionDate
+    manualSubmissionDate
+    isDraft
     guests {
       id
       firstName
@@ -21,8 +23,10 @@ export const GUEST_GROUP = gql`
       allowPartner
       guestGroup {
         submissionDate
+        manualSubmissionDate
         allowAccomodation
         accomodation
+        isDraft
       }
       partner {
         id

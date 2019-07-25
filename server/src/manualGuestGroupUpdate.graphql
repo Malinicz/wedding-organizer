@@ -1,0 +1,15 @@
+type ManualGuestGroupUpdatePayload {
+  id: ID!
+}
+
+extend type Mutation {
+  manualGuestGroupUpdate(
+    id: ID!
+    guests: Json!
+    accomodation: Boolean!
+    transport: Boolean!
+    comments: String
+    contactEmail: String
+    isDraft: Boolean!
+  ): ManualGuestGroupUpdatePayload
+}

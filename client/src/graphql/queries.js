@@ -33,6 +33,8 @@ export const GET_GUEST_INITIAL_DATA = gql`
       transport
       contactEmail
       submissionDate
+      manualSubmissionDate
+      isDraft
       wedding {
         id
         name
