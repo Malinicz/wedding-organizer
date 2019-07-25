@@ -27,6 +27,7 @@ export const GUEST_GROUP = gql`
         allowAccomodation
         accomodation
         isDraft
+        transport
       }
       partner {
         id

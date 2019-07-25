@@ -23,6 +23,8 @@ import {
   filterByShowVegetariansOnly,
   filterByShowUnconfirmedOnly,
   filterByShowDraftsOnly,
+  filterByShowWithTransportOnly,
+  filterByShowWithoutTransportOnly,
 } from './filterFunctions';
 
 import { pipe } from '../utils';
@@ -59,6 +61,8 @@ class GuestViewComp extends Component {
       showVegetariansOnly: filterByShowVegetariansOnly,
       showUnconfirmedOnly: filterByShowUnconfirmedOnly,
       showDraftsOnly: filterByShowDraftsOnly,
+      showWithTransportOnly: filterByShowWithTransportOnly,
+      showWithoutTransportOnly: filterByShowWithoutTransportOnly,
     };
 
     const { filters } = this.state;
@@ -109,6 +113,14 @@ class GuestViewComp extends Component {
             {
               label: 'Tylko wersje robocze',
               value: 'showDraftsOnly',
+            },
+            {
+              label: 'Tylko z transportem',
+              value: 'showWithTransportOnly',
+            },
+            {
+              label: 'Tylko bez transportu',
+              value: 'showWithoutTransportOnly',
             },
           ];
 
