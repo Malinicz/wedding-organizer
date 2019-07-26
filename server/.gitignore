@@ -9,5 +9,5 @@
 # environment variables
 .env
 
-# miscelaneous
+# miscellaneous
 .DS_Store

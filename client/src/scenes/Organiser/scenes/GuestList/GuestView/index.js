@@ -15,7 +15,6 @@ import {
 
 import { GET_WEDDING_INITIAL_DATA } from 'graphql/queries';
 
-import { drinks as drinkList } from 'languages/pl/drinks';
 import {
   filterByShowPresentOnly,
   filterByShowConfirmedOnly,
@@ -143,8 +142,8 @@ class GuestViewComp extends Component {
                     <TableHeadCell>obecność</TableHeadCell>
                     <TableHeadCell>zakwaterowanie</TableHeadCell>
                     <TableHeadCell>wegetarianin</TableHeadCell>
+                    <TableHeadCell>alkohol</TableHeadCell>
                     <TableHeadCell>partner</TableHeadCell>
-                    <TableHeadCell>napoje</TableHeadCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -156,8 +155,8 @@ class GuestViewComp extends Component {
                         lastName,
                         isPresent,
                         isVegetarian,
+                        isDrinkingAlcohol,
                         partner,
-                        drinks,
                         guestGroup: {
                           submissionDate,
                           manualSubmissionDate,
@@ -181,14 +180,12 @@ class GuestViewComp extends Component {
                           </TableCell>
                           <TableCell>{isVegetarian ? 'Tak' : 'Nie'}</TableCell>
                           <TableCell>
+                            {isDrinkingAlcohol ? 'Tak' : 'Nie'}
+                          </TableCell>
+                          <TableCell>
                             {!!partner
                               ? `${partner.firstName} ${partner.lastName}`
                               : '-'}
-                          </TableCell>
-                          <TableCell>
-                            {drinks
-                              .map(drink => drinkList[drink.name])
-                              .join(', ')}
                           </TableCell>
                         </TableRow>
                       );

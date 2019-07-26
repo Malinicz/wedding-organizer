@@ -83,9 +83,8 @@ export class GuestForm extends Component {
         allowPartner: guest.allowPartner,
         isPresent: guest.isPresent,
         isVegetarian: guest.isVegetarian,
-        isDrinkingAlcohol: true,
+        isDrinkingAlcohol: guest.isDrinkingAlcohol,
         partner: guest.partner,
-        drinks: guest.drinks,
       })),
     };
   };
@@ -94,36 +93,6 @@ export class GuestForm extends Component {
     const { guests } = this.state.form;
     const updatedGuests = guests.map(guest =>
       guestId === guest.id ? { ...guest, [name]: toBoolean(value) } : guest
-    );
-    this.setState({ form: { ...this.state.form, guests: updatedGuests } });
-  };
-
-  onIsDrinkingAlcoholChange = (value, guestId) => {
-    const { guests } = this.state.form;
-    const booleanValue = toBoolean(value);
-
-    const updatedGuests = guests.map(guest =>
-      guestId === guest.id
-        ? { ...guest, isDrinkingAlcohol: booleanValue, drinks: [] }
-        : guest
-    );
-    this.setState({ form: { ...this.state.form, guests: updatedGuests } });
-  };
-
-  onDrinksChange = (drinkId, guestId) => {
-    const { guests } = this.state.form;
-    const { drinks } = this.props;
-    const selectedDrink = drinks.find(drink => drink.id === drinkId);
-
-    const updatedGuests = guests.map(guest =>
-      guestId === guest.id
-        ? {
-            ...guest,
-            drinks: guest.drinks.some(drink => drink.id === drinkId)
-              ? guest.drinks.filter(drink => drink.id !== drinkId)
-              : guest.drinks.concat(selectedDrink),
-          }
-        : guest
     );
     this.setState({ form: { ...this.state.form, guests: updatedGuests } });
   };
@@ -156,7 +125,7 @@ export class GuestForm extends Component {
               ? { ...guest, partner: { id: partner.id } }
               : guest
           )
-          .concat({ ...partner, isDrinkingAlcohol: true }),
+          .concat(partner),
       },
     });
   };
@@ -209,12 +178,7 @@ export class GuestForm extends Component {
       activeGuest,
       form: { guests, id: guestGroupId },
     } = this.state;
-    const { drinks, guestGroup, history } = this.props;
-
-    const drinkOptions = drinks.map(drink => ({
-      value: drink.id,
-      label: pl.drinks[drink.name],
-    }));
+    const { guestGroup, history } = this.props;
 
     const isGuestGroupPresent = guests.some(guest => guest.isPresent);
 
@@ -237,7 +201,6 @@ export class GuestForm extends Component {
                   return (
                     <GuestCard
                       key={guest.id}
-                      drinkOptions={drinkOptions}
                       guest={guest}
                       guestGroupId={guestGroupId}
                       handleAddPartnerModalOpen={this.onAddPartnerModalOpen}
@@ -245,10 +208,6 @@ export class GuestForm extends Component {
                         this.onDeletePartnerModalOpen
                       }
                       handleRadioInputChange={this.onGuestRadioInputChange}
-                      handleDrinksChange={this.onDrinksChange}
-                      handleIsDrinkingAlcoholChange={
-                        this.onIsDrinkingAlcoholChange
-                      }
                       animationDelay={index / 8}
                     />
                   );
@@ -256,11 +215,9 @@ export class GuestForm extends Component {
               </GuestCards>
               <GuestGroupQuestions>
                 <RadioInputGroup
-                  label={`Czy ${
-                    guests.length === 1 ? 'chcesz' : 'chcecie'
-                  }, żeby ${
-                    guests.length === 1 ? 'Cię' : 'Was'
-                  } podwieźć spod kościoła na miejsce wesela?`}
+                  label={`Czy zapewnić ${
+                    guests.length === 1 ? 'Ci' : 'Wam'
+                  } transport busem?`}
                   name="transport"
                   activeValue={form.transport}
                   options={RADIO_INPUT_TRUE_FALSE_OPTIONS}

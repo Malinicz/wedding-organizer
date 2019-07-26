@@ -52,13 +52,9 @@ async function createPartner(
         allowPartner
         isPresent
         isVegetarian
+        isDrinkingAlcohol
         partner {
           id
-        }
-        drinks {
-          id
-          name
-          price
         }
       }
     }
@@ -84,13 +80,9 @@ async function getGuest(api, id) {
         allowPartner
         isPresent
         isVegetarian
+        isDrinkingAlcohol
         partner {
           id
-        }
-        drinks {
-          id
-          name
-          price
         }
       }
     }

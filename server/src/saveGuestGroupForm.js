@@ -121,8 +121,8 @@ module.exports = async event => {
 
 async function updateGuest(api, guest) {
   const mutation = `
-    mutation UpdateGuest($id: ID!, $isPresent: Boolean!, $isVegetarian: Boolean!, $drinksIds: [ID!]) {
-      updateGuest(id: $id, isPresent: $isPresent, isVegetarian: $isVegetarian, drinksIds: $drinksIds) {
+    mutation UpdateGuest($id: ID!, $isPresent: Boolean!, $isVegetarian: Boolean!, $isDrinkingAlcohol: Boolean!) {
+      updateGuest(id: $id, isPresent: $isPresent, isVegetarian: $isVegetarian, isDrinkingAlcohol: $isDrinkingAlcohol) {
         id
       }
     }
@@ -132,7 +132,7 @@ async function updateGuest(api, guest) {
     id: guest.id,
     isPresent: guest.isPresent,
     isVegetarian: guest.isVegetarian,
-    drinksIds: guest.drinks.map(drink => drink.id),
+    isDrinkingAlcohol: guest.isDrinkingAlcohol,
   };
 
   return await api.request(mutation, variables);

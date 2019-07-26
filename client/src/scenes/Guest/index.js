@@ -69,7 +69,7 @@ export class Guest extends Component {
 
     return (
       <Query query={GET_GUEST_INITIAL_DATA} variables={{ id: guestGroupId }}>
-        {({ data: { GuestGroup: guestGroup, allDrinks }, loading, error }) => {
+        {({ data: { GuestGroup: guestGroup }, loading, error }) => {
           if (loading) {
             return <Loader />;
           }
@@ -90,13 +90,12 @@ export class Guest extends Component {
                 </IntroText>
               </Header>
               <Main>
-                <LocationInfo />
+                <LocationInfo
+                  weddingCeremony={guestGroup.wedding.weddingChurch}
+                  weddingParty={guestGroup.wedding.weddingParty}
+                />
                 <FormSection>
-                  <GuestForm
-                    guestGroup={guestGroup}
-                    drinks={allDrinks}
-                    history={history}
-                  />
+                  <GuestForm guestGroup={guestGroup} history={history} />
                 </FormSection>
               </Main>
             </Layout>

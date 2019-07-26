@@ -20,6 +20,7 @@ export const GUEST_GROUP = gql`
       lastName
       isPresent
       isVegetarian
+      isDrinkingAlcohol
       allowPartner
       guestGroup {
         submissionDate
@@ -33,11 +34,6 @@ export const GUEST_GROUP = gql`
         id
         firstName
         lastName
-      }
-      drinks {
-        id
-        name
-        price
       }
     }
   }

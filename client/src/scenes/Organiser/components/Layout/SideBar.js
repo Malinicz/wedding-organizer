@@ -1,4 +1,5 @@
 import React from 'react';
+import { Query } from 'react-apollo';
 import { withRouter, matchPath } from 'react-router';
 import { Link } from 'react-router-dom';
 import styled from 'styles';
@@ -8,6 +9,8 @@ import { Icon } from 'components';
 import logo from 'assets/logo.png';
 
 import { ORGANISER_WEDDING } from 'constants/routes';
+
+import { GET_SIDEBAR_DATA } from 'graphql/queries';
 
 const SIDEBAR_WIDTH = 290;
 
@@ -120,87 +123,112 @@ export const SideBar = withRouter(
     location: { pathname },
   }) => {
     return (
-      <SideBarHolder>
-        <FixedWrapper>
-          <SideBarHeader>
-            <Logo src={logo} />
-            <HeaderHeadingHolder>
-              <HeaderTitle>Witaj, Gościu!</HeaderTitle>
-              <HeaderSubtitle>Wesele Gosi i Artura</HeaderSubtitle>
-            </HeaderHeadingHolder>
-          </SideBarHeader>
-          <Navigation>
-            <NavGroup>
-              <NavGroupTitle>Wesele</NavGroupTitle>
-              <NavList>
-                <RouteLink to={`${ORGANISER_WEDDING}/${weddingId}/dodaj-gosci`}>
-                  <NavItem
-                    active={
-                      !!matchPath(
-                        pathname,
-                        `${ORGANISER_WEDDING}/${weddingId}/dodaj-gosci`
-                      )
-                    }
-                  >
-                    <NavItemIcon>
-                      <Icon name="addUser" size={30} />
-                    </NavItemIcon>
-                    <NavItemText>Dodaj Gości</NavItemText>
-                  </NavItem>
-                </RouteLink>
-                <RouteLink to={`${ORGANISER_WEDDING}/${weddingId}/lista-gosci`}>
-                  <NavItem
-                    active={
-                      !!matchPath(
-                        pathname,
-                        `${ORGANISER_WEDDING}/${weddingId}/lista-gosci`
-                      )
-                    }
-                  >
-                    <NavItemIcon>
-                      <Icon name="list" size={30} />
-                    </NavItemIcon>
-                    <NavItemText>Lista Gości</NavItemText>
-                  </NavItem>
-                </RouteLink>
-                <NavItem>
-                  <NavItemIcon>
-                    <Icon name="stats" size={30} />
-                  </NavItemIcon>
-                  <NavItemText>Statystyki</NavItemText>
-                </NavItem>
-                <NavItem>
-                  <NavItemIcon>
-                    <Icon name="configuration" size={30} />
-                  </NavItemIcon>
-                  <NavItemText>Konfiguracja</NavItemText>
-                </NavItem>
-              </NavList>
-            </NavGroup>
-            <NavGroup>
-              <NavGroupTitle>Konto</NavGroupTitle>
-              <NavList>
-                <NavItem>
-                  <NavItemIcon>
-                    <Icon name="accountSettings" size={30} />
-                  </NavItemIcon>
-                  <NavItemText>Ustawienia</NavItemText>
-                </NavItem>
-                <NavItem>
-                  <NavItemIcon>
-                    <Icon name="logOut" size={30} />
-                  </NavItemIcon>
-                  <NavItemText>Wyloguj</NavItemText>
-                </NavItem>
-              </NavList>
-            </NavGroup>
-          </Navigation>
-          <LoggedUserInfo>
-            <LoggedUserTitle>Zalogowany jako</LoggedUserTitle>
-            <LoggedUserName>Artur Malinowski</LoggedUserName>
-          </LoggedUserInfo>
-        </FixedWrapper>
-      </SideBarHolder>
+      <Query query={GET_SIDEBAR_DATA} variables={{ id: weddingId }}>
+        {({ data: { Wedding: wedding }, loading }) => {
+          const loggedInUser =
+            wedding &&
+            wedding.user &&
+            wedding.user.firstName &&
+            wedding.user.lastName
+              ? `${wedding.user.firstName} ${wedding.user.lastName}`
+              : wedding && wedding.user && wedding.user.email;
+
+          const weddingName = wedding && wedding.name;
+
+          return (
+            <SideBarHolder>
+              <FixedWrapper>
+                <SideBarHeader>
+                  <Logo src={logo} />
+                  <HeaderHeadingHolder>
+                    <HeaderTitle>Witaj, Gościu!</HeaderTitle>
+
+                    <HeaderSubtitle>
+                      {loading ? '...' : weddingName}
+                    </HeaderSubtitle>
+                  </HeaderHeadingHolder>
+                </SideBarHeader>
+                <Navigation>
+                  <NavGroup>
+                    <NavGroupTitle>Wesele</NavGroupTitle>
+                    <NavList>
+                      <RouteLink
+                        to={`${ORGANISER_WEDDING}/${weddingId}/dodaj-gosci`}
+                      >
+                        <NavItem
+                          active={
+                            !!matchPath(
+                              pathname,
+                              `${ORGANISER_WEDDING}/${weddingId}/dodaj-gosci`
+                            )
+                          }
+                        >
+                          <NavItemIcon>
+                            <Icon name="addUser" size={30} />
+                          </NavItemIcon>
+                          <NavItemText>Dodaj Gości</NavItemText>
+                        </NavItem>
+                      </RouteLink>
+                      <RouteLink
+                        to={`${ORGANISER_WEDDING}/${weddingId}/lista-gosci`}
+                      >
+                        <NavItem
+                          active={
+                            !!matchPath(
+                              pathname,
+                              `${ORGANISER_WEDDING}/${weddingId}/lista-gosci`
+                            )
+                          }
+                        >
+                          <NavItemIcon>
+                            <Icon name="list" size={30} />
+                          </NavItemIcon>
+                          <NavItemText>Lista Gości</NavItemText>
+                        </NavItem>
+                      </RouteLink>
+                      <NavItem>
+                        <NavItemIcon>
+                          <Icon name="stats" size={30} />
+                        </NavItemIcon>
+                        <NavItemText>Statystyki</NavItemText>
+                      </NavItem>
+                      <NavItem>
+                        <NavItemIcon>
+                          <Icon name="configuration" size={30} />
+                        </NavItemIcon>
+                        <NavItemText>Konfiguracja</NavItemText>
+                      </NavItem>
+                    </NavList>
+                  </NavGroup>
+                  <NavGroup>
+                    <NavGroupTitle>Konto</NavGroupTitle>
+                    <NavList>
+                      <NavItem>
+                        <NavItemIcon>
+                          <Icon name="accountSettings" size={30} />
+                        </NavItemIcon>
+                        <NavItemText>Ustawienia</NavItemText>
+                      </NavItem>
+                      <NavItem>
+                        <NavItemIcon>
+                          <Icon name="logOut" size={30} />
+                        </NavItemIcon>
+                        <NavItemText>Wyloguj</NavItemText>
+                      </NavItem>
+                    </NavList>
+                  </NavGroup>
+                </Navigation>
+                <LoggedUserInfo>
+                  <LoggedUserTitle>Zalogowany jako</LoggedUserTitle>
+                  <LoggedUserName>
+                    {loading ? '...' : loggedInUser}
+                  </LoggedUserName>
+                </LoggedUserInfo>
+              </FixedWrapper>
+            </SideBarHolder>
+          );
+        }}
+      </Query>
     );
   }
 );

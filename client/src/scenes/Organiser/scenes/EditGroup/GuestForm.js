@@ -13,7 +13,6 @@ import { toBoolean } from 'utils/helpers';
 
 import { RETRY_MESSAGE } from 'constants/errorMessages';
 
-import { pl } from 'languages';
 import {
   GuestCard,
   RADIO_INPUT_TRUE_FALSE_OPTIONS,
@@ -43,6 +42,7 @@ const GuestGroupQuestions = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 450px;
+  width: 100%;
   text-align: center;
   margin-bottom: 50px;
 `;
@@ -87,9 +87,8 @@ class GuestFormComp extends Component {
         allowPartner: guest.allowPartner,
         isPresent: guest.isPresent,
         isVegetarian: guest.isVegetarian,
-        isDrinkingAlcohol: true,
+        isDrinkingAlcohol: guest.isDrinkingAlcohol,
         partner: guest.partner,
-        drinks: guest.drinks,
       })),
     };
   };
@@ -98,36 +97,6 @@ class GuestFormComp extends Component {
     const { guests } = this.state.form;
     const updatedGuests = guests.map(guest =>
       guestId === guest.id ? { ...guest, [name]: toBoolean(value) } : guest
-    );
-    this.setState({ form: { ...this.state.form, guests: updatedGuests } });
-  };
-
-  onIsDrinkingAlcoholChange = (value, guestId) => {
-    const { guests } = this.state.form;
-    const booleanValue = toBoolean(value);
-
-    const updatedGuests = guests.map(guest =>
-      guestId === guest.id
-        ? { ...guest, isDrinkingAlcohol: booleanValue, drinks: [] }
-        : guest
-    );
-    this.setState({ form: { ...this.state.form, guests: updatedGuests } });
-  };
-
-  onDrinksChange = (drinkId, guestId) => {
-    const { guests } = this.state.form;
-    const { drinks } = this.props;
-    const selectedDrink = drinks.find(drink => drink.id === drinkId);
-
-    const updatedGuests = guests.map(guest =>
-      guestId === guest.id
-        ? {
-            ...guest,
-            drinks: guest.drinks.some(drink => drink.id === drinkId)
-              ? guest.drinks.filter(drink => drink.id !== drinkId)
-              : guest.drinks.concat(selectedDrink),
-          }
-        : guest
     );
     this.setState({ form: { ...this.state.form, guests: updatedGuests } });
   };
@@ -162,7 +131,7 @@ class GuestFormComp extends Component {
               ? { ...guest, partner: { id: partner.id } }
               : guest
           )
-          .concat({ ...partner, isDrinkingAlcohol: true }),
+          .concat(partner),
       },
     });
   };
@@ -215,14 +184,12 @@ class GuestFormComp extends Component {
       activeGuest,
       form: { guests, id: guestGroupId },
     } = this.state;
-    const { drinks, guestGroup, history } = this.props;
-
-    const drinkOptions = drinks.map(drink => ({
-      value: drink.id,
-      label: pl.drinks[drink.name],
-    }));
+    const { guestGroup, history } = this.props;
 
     const isGuestGroupPresent = guests.some(guest => guest.isPresent);
+
+    const user = JSON.parse(localStorage.getItem('user'));
+    const weddingId = user.weddings[0].id;
 
     return (
       <Mutation
@@ -231,7 +198,7 @@ class GuestFormComp extends Component {
         refetchQueries={[
           {
             query: GET_WEDDING_INITIAL_DATA,
-            variables: { id: 'cjrozvol54wsd0167b2ecf9a0' },
+            variables: { id: weddingId },
           },
         ]}
         onCompleted={() => history.goBack()}
@@ -249,7 +216,6 @@ class GuestFormComp extends Component {
                   return (
                     <GuestCard
                       key={guest.id}
-                      drinkOptions={drinkOptions}
                       guest={guest}
                       guestGroupId={guestGroupId}
                       handleAddPartnerModalOpen={this.onAddPartnerModalOpen}
@@ -257,10 +223,6 @@ class GuestFormComp extends Component {
                         this.onDeletePartnerModalOpen
                       }
                       handleRadioInputChange={this.onGuestRadioInputChange}
-                      handleDrinksChange={this.onDrinksChange}
-                      handleIsDrinkingAlcoholChange={
-                        this.onIsDrinkingAlcoholChange
-                      }
                       animationDelay={index / 8}
                     />
                   );
@@ -268,7 +230,7 @@ class GuestFormComp extends Component {
               </GuestCards>
               <GuestGroupQuestions>
                 <RadioInputGroup
-                  label="Transport spod kościoła na miejsce wesela"
+                  label="Transport"
                   name="transport"
                   activeValue={form.transport}
                   options={RADIO_INPUT_TRUE_FALSE_OPTIONS}

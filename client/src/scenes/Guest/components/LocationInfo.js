@@ -40,22 +40,19 @@ const ShowLocationButton = styled.a`
   color: ${({ theme }) => theme.colors.primaryDarkest};
 `;
 
-export const LocationInfo = () => {
+export const LocationInfo = ({ weddingCeremony, weddingParty }) => {
   return (
     <LocationInfoHolder>
       <Location>
         <LocationDetailsHolder>
           <LocationDetailsTitle>Miejsce ślubu</LocationDetailsTitle>
-          <LocationDetailsText>
-            Kościół Rzymskokatolicki pw Najświętszego Serca Pana Jezusa
-          </LocationDetailsText>
+          <LocationDetailsText>{weddingCeremony.name}</LocationDetailsText>
 
-          <LocationDetailsText>ul. Saska 2, Kraków</LocationDetailsText>
+          <LocationDetailsText>
+            {weddingCeremony.street}, {weddingCeremony.city}
+          </LocationDetailsText>
         </LocationDetailsHolder>
-        <ShowLocationButton
-          href="https://www.google.pl/maps/place/Ko%C5%9Bci%C3%B3%C5%82+Sercan%C3%B3w+Saska/@50.0441991,19.9819559,17z/data=!3m1!4b1!4m5!3m4!1s0x4716454e7588f9b1:0x30d4c874216ee0ca!8m2!3d50.0441991!4d19.9841446?hl=pl"
-          target="_blank"
-        >
+        <ShowLocationButton href={weddingCeremony.locationUrl} target="_blank">
           <Icon name="location" size={18} marginRight={5} />
           Zobacz na mapie
         </ShowLocationButton>
@@ -63,16 +60,13 @@ export const LocationInfo = () => {
       <Location>
         <LocationDetailsHolder>
           <LocationDetailsTitle>Miejsce wesela</LocationDetailsTitle>
-          <LocationDetailsText>Brzoskwinia Ogród</LocationDetailsText>
+          <LocationDetailsText>{weddingParty.name}</LocationDetailsText>
 
           <LocationDetailsText>
-            Brzoskwinia 249, Brzoskwinia
+            {weddingParty.street}, {weddingParty.city}
           </LocationDetailsText>
         </LocationDetailsHolder>
-        <ShowLocationButton
-          href="https://www.google.pl/maps/place/Brzoskwinia+Ogr%C3%B3d/@50.0953434,19.7310951,17z/data=!4m5!3m4!1s0x4716f63c6062059d:0xfdd43e2e485acd9a!8m2!3d50.09534!4d19.7332838?hl=pl"
-          target="_blank"
-        >
+        <ShowLocationButton href={weddingParty.locationUrl} target="_blank">
           <Icon name="location" size={18} marginRight={5} />
           Zobacz na mapie
         </ShowLocationButton>

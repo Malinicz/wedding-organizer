@@ -2,12 +2,7 @@ import React, { Component } from 'react';
 import styled, { keyframes } from 'styles';
 
 import { Card, RoundButton, H2 } from 'components/base';
-import {
-  RadioInputGroup,
-  CheckboxGroup,
-  Icon,
-  FloatingButton,
-} from 'components';
+import { RadioInputGroup, Icon, FloatingButton } from 'components';
 
 export const RADIO_INPUT_TRUE_FALSE_OPTIONS = [
   { value: true, label: 'Tak' },
@@ -75,10 +70,7 @@ export class GuestCard extends Component {
   render() {
     const {
       guest,
-      drinkOptions,
       handleRadioInputChange,
-      handleDrinksChange,
-      handleIsDrinkingAlcoholChange,
       handleAddPartnerModalOpen,
       handleDeletePartnerModalOpen,
       animationDelay,
@@ -116,16 +108,12 @@ export class GuestCard extends Component {
             options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
             disabled={!guest.isPresent}
             handleChange={e =>
-              handleIsDrinkingAlcoholChange(e.target.value, guest.id)
+              handleRadioInputChange(
+                e.target.value,
+                guest.id,
+                'isDrinkingAlcohol'
+              )
             }
-          />
-          <CheckboxGroup
-            label="Czego się napijesz?"
-            columns={3}
-            disabled={!guest.isDrinkingAlcohol || !guest.isPresent}
-            activeValues={guest.drinks.map(drink => drink.id)}
-            options={drinkOptions}
-            handleChange={e => handleDrinksChange(e.target.value, guest.id)}
           />
           {guest.isPresent && guest.allowPartner && !guest.partner && (
             <AddPartnerHolder>

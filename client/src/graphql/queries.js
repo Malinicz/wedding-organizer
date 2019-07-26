@@ -38,6 +38,22 @@ export const GET_GUEST_INITIAL_DATA = gql`
       wedding {
         id
         name
+        weddingChurch {
+          id
+          name
+          street
+          city
+          locationUrl
+          startTime
+        }
+        weddingParty {
+          id
+          name
+          street
+          city
+          locationUrl
+          startTime
+        }
       }
       guests {
         id
@@ -45,21 +61,12 @@ export const GET_GUEST_INITIAL_DATA = gql`
         lastName
         isPresent
         isVegetarian
+        isDrinkingAlcohol
         allowPartner
         partner {
           id
         }
-        drinks {
-          id
-          name
-          price
-        }
       }
-    }
-    allDrinks {
-      id
-      name
-      price
     }
   }
 `;
@@ -93,4 +100,19 @@ export const GET_WEDDING_INITIAL_DATA = gql`
     }
   }
   ${GUEST_GROUP}
+`;
+
+export const GET_SIDEBAR_DATA = gql`
+  query GetSidebarData($id: ID!) {
+    Wedding(id: $id) {
+      id
+      name
+      user {
+        id
+        email
+        firstName
+        lastName
+      }
+    }
+  }
 `;

@@ -14,6 +14,7 @@ type Guest @model {
   id: ID! @isUnique
   isPresent: Boolean!
   isVegetarian: Boolean!
+  isDrinkingAlcohol: Boolean! @defaultValue(value: true)
   allowPartner: Boolean! @defaultValue(value: false)
   firstName: String!
   lastName: String!
@@ -41,6 +42,8 @@ type GuestGroup @model {
 type User @model {
   createdAt: DateTime!
   email: String! @isUnique
+  firstName: String
+  lastName: String
   id: ID! @isUnique
   password: String!
   privacyPolicyConsent: DateTime
