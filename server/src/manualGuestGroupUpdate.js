@@ -6,6 +6,13 @@ module.exports = async event => {
     const api = graphcool.api('simple/v1');
 
     const {
+      data,
+      context: { auth },
+    } = event;
+
+    if (!auth) return { error: 'Brak dostępu' };
+
+    const {
       id,
       guests,
       transport,
@@ -13,7 +20,7 @@ module.exports = async event => {
       comments,
       contactEmail,
       isDraft,
-    } = event.data;
+    } = data;
 
     for (let i = 0, len = guests.length; i < len; i++) {
       await updateGuest(api, guests[i]);

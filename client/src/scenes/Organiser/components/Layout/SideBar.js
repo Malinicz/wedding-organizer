@@ -3,14 +3,15 @@ import { Query } from 'react-apollo';
 import { withRouter, matchPath } from 'react-router';
 import { Link } from 'react-router-dom';
 import styled from 'styles';
+import { client as apolloClient } from 'App';
 
 import { Icon } from 'components';
 
 import logo from 'assets/logo.png';
 
-import { ORGANISER_WEDDING } from 'constants/routes';
+import { ORGANISER_WEDDING, SIGN_IN } from 'constants/routes';
 
-import { GET_SIDEBAR_DATA } from 'graphql/queries';
+import { GET_AUTH_USER } from 'graphql/queries';
 
 const SIDEBAR_WIDTH = 290;
 
@@ -121,19 +122,23 @@ export const SideBar = withRouter(
       params: { id: weddingId },
     },
     location: { pathname },
+    history,
   }) => {
-    return (
-      <Query query={GET_SIDEBAR_DATA} variables={{ id: weddingId }}>
-        {({ data: { Wedding: wedding }, loading }) => {
-          const loggedInUser =
-            wedding &&
-            wedding.user &&
-            wedding.user.firstName &&
-            wedding.user.lastName
-              ? `${wedding.user.firstName} ${wedding.user.lastName}`
-              : wedding && wedding.user && wedding.user.email;
+    const onLogOut = () => {
+      apolloClient.resetStore();
+      window.localStorage.removeItem('token');
+      history.push(SIGN_IN);
+    };
 
-          const weddingName = wedding && wedding.name;
+    return (
+      <Query query={GET_AUTH_USER}>
+        {({ data: { user }, loading }) => {
+          const loggedInUser =
+            user.firstName && user.lastName
+              ? `${user.firstName} ${user.lastName}`
+              : user.email;
+
+          const weddingName = user.weddings[0].name;
 
           return (
             <SideBarHolder>
@@ -209,7 +214,7 @@ export const SideBar = withRouter(
                         </NavItemIcon>
                         <NavItemText>Ustawienia</NavItemText>
                       </NavItem>
-                      <NavItem>
+                      <NavItem onClick={onLogOut}>
                         <NavItemIcon>
                           <Icon name="logOut" size={30} />
                         </NavItemIcon>

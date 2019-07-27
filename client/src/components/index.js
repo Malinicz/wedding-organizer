@@ -1,4 +1,5 @@
 export * from './PrivateRoute';
+export * from './GuestRoute';
 export * from './RadioInputGroup';
 export * from './CheckboxGroup';
 export * from './Layout';

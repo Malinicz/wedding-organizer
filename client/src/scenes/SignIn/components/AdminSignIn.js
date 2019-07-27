@@ -4,9 +4,7 @@ import { Mutation } from 'react-apollo';
 import { ActionButton } from 'components';
 import { Input, InputLabel, Form } from 'components/base';
 
-import { client as apolloClient } from 'App';
-
-import { SET_AUTH_USER_MUTATION, SIGN_IN_MUTATION } from 'graphql/mutations';
+import { SIGN_IN_MUTATION } from 'graphql/mutations';
 import { ORGANISER_WEDDING } from 'constants/routes';
 
 export class AdminSignIn extends Component {
@@ -30,11 +28,9 @@ export class AdminSignIn extends Component {
   onSubmitSuccess = async response => {
     const { authUser, token } = response.signInUser;
 
-    await apolloClient.mutate({
-      mutation: SET_AUTH_USER_MUTATION,
-      variables: { authUser, token },
-    });
+    window.localStorage.setItem('token', token);
 
+    // TODO redirect to /wesele
     const weddingId =
       authUser &&
       authUser.weddings &&

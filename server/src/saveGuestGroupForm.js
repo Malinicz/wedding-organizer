@@ -11,13 +11,20 @@ module.exports = async event => {
     const api = graphcool.api('simple/v1');
 
     const {
+      data,
+      context: { auth },
+    } = event;
+
+    if (!auth) return { error: 'Brak dostępu' };
+
+    const {
       id,
       guests,
       transport,
       accomodation,
       comments,
       contactEmail,
-    } = event.data;
+    } = data;
 
     for (let i = 0, len = guests.length; i < len; i++) {
       await updateGuest(api, guests[i]);
@@ -99,7 +106,8 @@ module.exports = async event => {
 
     const data = {
       from: 'powiadomienia@witajgosciu.pl',
-      to: `${guestGroup.wedding.user.email}, kobylarz.malgorzata@gmail.com`,
+      to: `${guestGroup.wedding.user.email}`,
+      cc: 'malinicz@gmail.com',
       subject: `Nowe powiadomienie od ${guestGroup.name}`,
       html: mailHtml,
     };

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Mutation } from 'react-apollo';
+import { Mutation, Query } from 'react-apollo';
 import { withRouter } from 'react-router';
 import styled from 'styles';
 
@@ -7,7 +7,7 @@ import { ActionButton, RadioInputGroup, Checkbox } from 'components';
 import { Form, InputGroupLabel, Input } from 'components/base';
 
 import { MANUAL_GUEST_GROUP_UPDATE } from 'graphql/mutations';
-import { GET_WEDDING_INITIAL_DATA } from 'graphql/queries';
+import { GET_WEDDING_INITIAL_DATA, GET_AUTH_USER } from 'graphql/queries';
 
 import { toBoolean } from 'utils/helpers';
 
@@ -188,121 +188,131 @@ class GuestFormComp extends Component {
 
     const isGuestGroupPresent = guests.some(guest => guest.isPresent);
 
-    const user = JSON.parse(localStorage.getItem('user'));
-    const weddingId = user.weddings[0].id;
-
     return (
-      <Mutation
-        mutation={MANUAL_GUEST_GROUP_UPDATE}
-        variables={form}
-        refetchQueries={[
-          {
-            query: GET_WEDDING_INITIAL_DATA,
-            variables: { id: weddingId },
-          },
-        ]}
-        onCompleted={() => history.goBack()}
-      >
-        {(manualGuestGroupUpdate, { loading, error }) => (
-          <>
-            <GuestFormHolder
-              onSubmit={e => {
-                e.preventDefault();
-                manualGuestGroupUpdate();
-              }}
+      <Query query={GET_AUTH_USER}>
+        {({ data: { user } }) => {
+          const weddingId = user && user.weddings[0].id;
+
+          return (
+            <Mutation
+              mutation={MANUAL_GUEST_GROUP_UPDATE}
+              variables={form}
+              refetchQueries={[
+                {
+                  query: GET_WEDDING_INITIAL_DATA,
+                  variables: { id: weddingId },
+                },
+              ]}
+              onCompleted={() => history.goBack()}
             >
-              <GuestCards>
-                {guests.map((guest, index) => {
-                  return (
-                    <GuestCard
-                      key={guest.id}
-                      guest={guest}
+              {(manualGuestGroupUpdate, { loading, error }) => (
+                <>
+                  <GuestFormHolder
+                    onSubmit={e => {
+                      e.preventDefault();
+                      manualGuestGroupUpdate();
+                    }}
+                  >
+                    <GuestCards>
+                      {guests.map((guest, index) => {
+                        return (
+                          <GuestCard
+                            key={guest.id}
+                            guest={guest}
+                            guestGroupId={guestGroupId}
+                            handleAddPartnerModalOpen={
+                              this.onAddPartnerModalOpen
+                            }
+                            handleDeletePartnerModalOpen={
+                              this.onDeletePartnerModalOpen
+                            }
+                            handleRadioInputChange={
+                              this.onGuestRadioInputChange
+                            }
+                            animationDelay={index / 8}
+                          />
+                        );
+                      })}
+                    </GuestCards>
+                    <GuestGroupQuestions>
+                      <RadioInputGroup
+                        label="Transport"
+                        name="transport"
+                        activeValue={form.transport}
+                        options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
+                        disabled={!isGuestGroupPresent}
+                        handleChange={e =>
+                          this.onGuestGroupRadioInputChange(
+                            e.target.value,
+                            'transport'
+                          )
+                        }
+                      />
+                      <br />
+                      {guestGroup.allowAccomodation && (
+                        <>
+                          <RadioInputGroup
+                            label="Nocleg"
+                            name="accomodation"
+                            activeValue={form.accomodation}
+                            options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
+                            disabled={!isGuestGroupPresent}
+                            handleChange={e =>
+                              this.onGuestGroupRadioInputChange(
+                                e.target.value,
+                                'accomodation'
+                              )
+                            }
+                          />
+                          <br />
+                        </>
+                      )}
+                      <InputGroupLabel>Email</InputGroupLabel>
+                      <Input
+                        type="text"
+                        value={form.contactEmail}
+                        placeholder="jan.nowak@gmail.com"
+                        onChange={e => this.onEmailChange(e.target.value)}
+                      />
+                      <Checkbox
+                        checked={form.isDraft}
+                        label="Wersja robocza"
+                        onChange={this.onSaveAsDraftChange}
+                      />
+                      <ActionButton
+                        loading={loading}
+                        error={error && RETRY_MESSAGE}
+                        type="submit"
+                        label={
+                          guestGroup.manualSubmissionDate ||
+                          guestGroup.submissionDate
+                            ? 'Zaktualizuj'
+                            : 'Zapisz'
+                        }
+                      />
+                    </GuestGroupQuestions>
+                  </GuestFormHolder>
+                  {isAddPartnerModalOpen && (
+                    <AddPartnerModal
+                      guestId={activeGuest.id}
+                      handleClose={this.onAddPartnerModalClose}
+                      handleAddPartnerSuccess={this.onAddPartnerSuccess}
                       guestGroupId={guestGroupId}
-                      handleAddPartnerModalOpen={this.onAddPartnerModalOpen}
-                      handleDeletePartnerModalOpen={
-                        this.onDeletePartnerModalOpen
-                      }
-                      handleRadioInputChange={this.onGuestRadioInputChange}
-                      animationDelay={index / 8}
                     />
-                  );
-                })}
-              </GuestCards>
-              <GuestGroupQuestions>
-                <RadioInputGroup
-                  label="Transport"
-                  name="transport"
-                  activeValue={form.transport}
-                  options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
-                  disabled={!isGuestGroupPresent}
-                  handleChange={e =>
-                    this.onGuestGroupRadioInputChange(
-                      e.target.value,
-                      'transport'
-                    )
-                  }
-                />
-                <br />
-                {guestGroup.allowAccomodation && (
-                  <>
-                    <RadioInputGroup
-                      label="Nocleg"
-                      name="accomodation"
-                      activeValue={form.accomodation}
-                      options={RADIO_INPUT_TRUE_FALSE_OPTIONS}
-                      disabled={!isGuestGroupPresent}
-                      handleChange={e =>
-                        this.onGuestGroupRadioInputChange(
-                          e.target.value,
-                          'accomodation'
-                        )
-                      }
+                  )}
+                  {isDeletePartnerModalOpen && (
+                    <DeletePartnerModal
+                      guest={activeGuest}
+                      handleClose={this.onDeletePartnerModalClose}
+                      handleDeletePartnerSuccess={this.onDeletePartnerSuccess}
                     />
-                    <br />
-                  </>
-                )}
-                <InputGroupLabel>Email</InputGroupLabel>
-                <Input
-                  type="text"
-                  value={form.contactEmail}
-                  placeholder="jan.nowak@gmail.com"
-                  onChange={e => this.onEmailChange(e.target.value)}
-                />
-                <Checkbox
-                  checked={form.isDraft}
-                  label="Wersja robocza"
-                  onChange={this.onSaveAsDraftChange}
-                />
-                <ActionButton
-                  loading={loading}
-                  error={error && RETRY_MESSAGE}
-                  type="submit"
-                  label={
-                    guestGroup.manualSubmissionDate || guestGroup.submissionDate
-                      ? 'Zaktualizuj'
-                      : 'Zapisz'
-                  }
-                />
-              </GuestGroupQuestions>
-            </GuestFormHolder>
-            {isAddPartnerModalOpen && (
-              <AddPartnerModal
-                guestId={activeGuest.id}
-                handleClose={this.onAddPartnerModalClose}
-                handleAddPartnerSuccess={this.onAddPartnerSuccess}
-                guestGroupId={guestGroupId}
-              />
-            )}
-            {isDeletePartnerModalOpen && (
-              <DeletePartnerModal
-                guest={activeGuest}
-                handleClose={this.onDeletePartnerModalClose}
-                handleDeletePartnerSuccess={this.onDeletePartnerSuccess}
-              />
-            )}
-          </>
-        )}
-      </Mutation>
+                  )}
+                </>
+              )}
+            </Mutation>
+          );
+        }}
+      </Query>
     );
   }
 }

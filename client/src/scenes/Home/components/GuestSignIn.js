@@ -4,12 +4,7 @@ import { Mutation } from 'react-apollo';
 import { ActionButton } from 'components';
 import { Input, InputLabel, Form } from 'components/base';
 
-import { client as apolloClient } from 'App';
-
-import {
-  GUEST_SIGN_IN_MUTATION,
-  SET_AUTH_USER_MUTATION,
-} from 'graphql/mutations';
+import { GUEST_SIGN_IN_MUTATION } from 'graphql/mutations';
 
 import { GUEST } from 'constants/routes';
 import { RETRY_MESSAGE } from 'constants/errorMessages';
@@ -53,11 +48,7 @@ export class GuestSignIn extends Component {
 
   onSubmitSuccess = async response => {
     const { authUser, token } = response.signInGuest;
-
-    await apolloClient.mutate({
-      mutation: SET_AUTH_USER_MUTATION,
-      variables: { authUser, token },
-    });
+    window.localStorage.setItem('token', token);
 
     this.props.history.replace(`${GUEST}/${authUser.id}`);
   };

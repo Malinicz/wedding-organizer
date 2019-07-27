@@ -5,9 +5,7 @@ import { Mutation } from 'react-apollo';
 import { Layout, Main, ActionButton } from 'components';
 import { Input, InputLabel, Section, H1, Form } from 'components/base';
 
-import { SIGN_UP_MUTATION, SET_AUTH_USER_MUTATION } from 'graphql/mutations';
-
-import { client as apolloClient } from 'App';
+import { SIGN_UP_MUTATION } from 'graphql/mutations';
 
 const SignUpHolder = styled(Section)`
   display: flex;
@@ -41,12 +39,8 @@ export class SignUp extends Component {
   };
 
   onSubmitSuccess = async response => {
-    const { authUser, token } = response.signUpUser;
-
-    await apolloClient.mutate({
-      mutation: SET_AUTH_USER_MUTATION,
-      variables: { authUser, token },
-    });
+    const { token } = response.signUpUser;
+    window.localStorage.setItem('token', token);
 
     this.props.history.replace('/');
   };

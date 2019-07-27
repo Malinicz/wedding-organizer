@@ -5,7 +5,14 @@ module.exports = async event => {
     const graphcool = fromEvent(event);
     const api = graphcool.api('simple/v1');
 
-    const { guestGroupId, guestId, firstName, lastName } = event.data;
+    const {
+      data,
+      context: { auth },
+    } = event;
+
+    if (!auth) return { error: 'Brak dostępu' };
+
+    const { guestGroupId, guestId, firstName, lastName } = data;
 
     const { Guest: guest } = await getGuest(api, guestId);
 

@@ -3,11 +3,16 @@ import { GUEST_GROUP } from './fragments';
 
 export const GET_AUTH_USER = gql`
   {
-    authUser @client {
+    user {
       id
       email
-      token
       role
+      firstName
+      lastName
+      weddings {
+        id
+        name
+      }
     }
   }
 `;

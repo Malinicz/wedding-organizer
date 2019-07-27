@@ -11,17 +11,14 @@ import {
 
 import { defaults, resolvers } from './graphql';
 
-import { PrivateRoute, ScrollToTop } from 'components';
+import { PrivateRoute, GuestRoute, ScrollToTop } from 'components';
 import { SignIn, PageNotFound, Guest, Home, About, Organiser } from 'scenes';
 import { FormSubmissionSuccess } from 'scenes/Guest/scenes';
 import { SubscriberSubmissionSuccess } from 'scenes/About/scenes';
 
-import { SET_AUTH_USER_MUTATION } from 'graphql/mutations';
-
 import {
   SIGN_IN,
   GUEST,
-  ORGANISER,
   HOME,
   ABOUT,
   GUEST_FORM_SUBMISSION_SUCCESS,
@@ -37,8 +34,8 @@ export const client = new ApolloClient({
     defaults,
     resolvers,
   },
-  request: async operation => {
-    const token = await window.localStorage.getItem('token');
+  request: operation => {
+    const token = window.localStorage.getItem('token');
     operation.setContext({
       headers: {
         authorization: token ? `Bearer ${token}` : '',
@@ -48,27 +45,6 @@ export const client = new ApolloClient({
 });
 
 class App extends Component {
-  componentDidMount() {
-    this.setAuthUser();
-  }
-
-  setAuthUser = async () => {
-    const authUserFromStorage = window.localStorage.getItem('user');
-    const tokenFromStorage = window.localStorage.getItem('token');
-
-    if (
-      authUserFromStorage !== 'undefined' &&
-      tokenFromStorage !== 'undefined'
-    ) {
-      const authUser = JSON.parse(authUserFromStorage);
-
-      await client.mutate({
-        mutation: SET_AUTH_USER_MUTATION,
-        variables: { authUser, token: tokenFromStorage },
-      });
-    }
-  };
-
   render() {
     return (
       <StyledThemeProvider theme={styledTheme}>
@@ -84,12 +60,12 @@ class App extends Component {
                   component={SubscriberSubmissionSuccess}
                 />
                 <Route exact path={SIGN_IN} component={SignIn} />
-                <PrivateRoute
+                <GuestRoute
                   exact
                   path={GUEST_FORM_SUBMISSION_SUCCESS}
                   component={FormSubmissionSuccess}
                 />
-                <PrivateRoute exact path={`${GUEST}/:id`} component={Guest} />
+                <GuestRoute exact path={`${GUEST}/:id`} component={Guest} />
                 <PrivateRoute
                   path={`${ORGANISER_WEDDING}/:id`}
                   component={Organiser}
