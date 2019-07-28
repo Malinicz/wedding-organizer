@@ -135,7 +135,10 @@ export class AddGroup extends Component {
     return (
       <Mutation
         mutation={ADD_GUESTS}
-        onCompleted={() => this.setState(initialState)}
+        onCompleted={() => {
+          this.setState(initialState);
+          window.scrollTo(0, 0);
+        }}
         refetchQueries={[
           { query: GET_WEDDING_INITIAL_DATA, variables: { id: weddingId } },
         ]}
