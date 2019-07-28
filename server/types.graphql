@@ -24,7 +24,7 @@ type Guest @model {
 
 type GuestGroup @model {
   name: String!
-  code: String! @isUnique
+  code: String!
   accomodation: Boolean!
   allowAccomodation: Boolean! @defaultValue(value: false)
   comments: String

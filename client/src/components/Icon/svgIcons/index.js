@@ -13,3 +13,6 @@ export * from './ConfigurationIcon';
 export * from './AccountSettingsIcon';
 export * from './LogOutIcon';
 export * from './LocationIcon';
+export * from './GuestSingleIcon';
+export * from './GuestCoupleIcon';
+export * from './GuestGroupIcon';

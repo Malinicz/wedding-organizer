@@ -27,7 +27,6 @@ export function getErrorMessage(error) {
     error.graphQLErrors &&
     error.graphQLErrors.length &&
     error.graphQLErrors[0] &&
-    error.graphQLErrors[0].functionError &&
-    error.graphQLErrors[0].functionError.message
+    error.graphQLErrors[0].functionError
   );
 }

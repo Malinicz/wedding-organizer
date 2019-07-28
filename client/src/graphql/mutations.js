@@ -115,24 +115,20 @@ export const CREATE_SUBSCRIBER = gql`
   }
 `;
 
-export const ADD_NEW_GUEST = gql`
-  mutation AddNewGuest(
+export const ADD_GUESTS = gql`
+  mutation AddGuests(
     $weddingId: ID!
     $name: String!
-    $code: String!
-    $customGreeting: String!
+    $customGreeting: String
     $allowAccomodation: Boolean!
-    $guests: [GuestGroupguestsGuest!]
+    $guests: Json!
   ) {
-    createGuestGroup(
-      name: $name
-      accomodation: true
-      customGreeting: $customGreeting
-      allowAccomodation: $allowAccomodation
-      code: $code
-      transport: true
+    addGuests(
       weddingId: $weddingId
+      name: $name
+      allowAccomodation: $allowAccomodation
       guests: $guests
+      customGreeting: $customGreeting
     ) {
       id
     }

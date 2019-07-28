@@ -40,7 +40,7 @@ const SideBarHeader = styled.div`
 const HeaderHeadingHolder = styled.div``;
 
 const HeaderTitle = styled.h1`
-  font-size: 1.8em;
+  font-size: 1.4em;
   margin-bottom: 7px;
 `;
 
@@ -146,7 +146,9 @@ export const SideBar = withRouter(
                 <SideBarHeader>
                   <Logo src={logo} />
                   <HeaderHeadingHolder>
-                    <HeaderTitle>Witaj, Gościu!</HeaderTitle>
+                    <HeaderTitle>
+                      Witaj, {user.firstName ? user.firstName : 'Gościu'}!
+                    </HeaderTitle>
 
                     <HeaderSubtitle>
                       {loading ? '...' : weddingName}

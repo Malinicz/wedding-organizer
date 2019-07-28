@@ -1,0 +1,13 @@
+type AddGuestsPayload {
+  id: ID!
+}
+
+extend type Mutation {
+  addGuests(
+    weddingId: ID!
+    name: String!
+    allowAccomodation: Boolean!
+    guests: Json!
+    customGreeting: String
+  ): AddGuestsPayload
+}

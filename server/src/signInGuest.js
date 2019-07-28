@@ -13,10 +13,8 @@ module.exports = async event => {
 
     if (guestGroup.length !== 1) {
       return {
-        error: {
-          message:
-            'Wygląda na to, że taki login lub kod nie istnieje 😔. Sprawdź, czy poprawnie wprowadziłeś dane i spróbuj ponownie.',
-        },
+        error:
+          'Wygląda na to, że taki login lub kod nie istnieje 😔. Sprawdź, czy poprawnie wprowadziłeś dane i spróbuj ponownie.',
       };
     }
 

@@ -17,6 +17,9 @@ import {
   ConfigurationIcon,
   LogOutIcon,
   LocationIcon,
+  GuestSingleIcon,
+  GuestCoupleIcon,
+  GuestGroupIcon,
 } from './svgIcons';
 
 const icons = {
@@ -35,6 +38,9 @@ const icons = {
   configuration: <ConfigurationIcon />,
   logOut: <LogOutIcon />,
   location: <LocationIcon />,
+  guestSingle: <GuestSingleIcon />,
+  guestCouple: <GuestCoupleIcon />,
+  guestGroup: <GuestGroupIcon />,
 };
 
 const IconHolder = styled.div`

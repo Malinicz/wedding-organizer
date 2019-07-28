@@ -24,7 +24,7 @@ export class DeletePartnerModal extends Component {
                 onClick={deletePartner}
                 label="usuń"
                 loading={loading}
-                error={error && 'Ups! Coś poszło nie tak - spróbuj ponownie'}
+                error={error && 'Coś poszło nie tak - spróbuj ponownie'}
               />
             )}
           </Mutation>

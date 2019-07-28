@@ -39,6 +39,12 @@ functions:
         src: ./src/addPartner.js
     type: resolver
     schema: ./src/addPartner.graphql
+  addGuests:
+    handler:
+      code:
+        src: ./src/addGuests.js
+    type: resolver
+    schema: ./src/addGuests.graphql
 permissions:
   - operation: File.read
     authenticated: true
