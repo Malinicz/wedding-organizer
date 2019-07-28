@@ -2,16 +2,24 @@ import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import styled from 'styled-components';
 
-import { ActionButton, Checkbox } from 'components';
+import { ActionButton, Checkbox, Icon } from 'components';
 import {
   Form,
   InputLabel,
   Input,
-  Button,
   SectionSubtitle,
+  H3,
+  RoundButton,
 } from 'components/base';
 
 import { ADD_GUESTS } from 'graphql/mutations';
+import { GET_WEDDING_INITIAL_DATA } from 'graphql/queries';
+
+import { femaleOrdinalNumbers } from 'constants/ordinalNumbers';
+
+import { getErrorMessage } from 'utils/helpers';
+
+import { RETRY_MESSAGE } from 'constants/errorMessages';
 
 const AddGroupHolder = styled.div`
   display: flex;
@@ -21,19 +29,48 @@ const AddGroupHolder = styled.div`
 const SingleGuest = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
+  margin-bottom: ${({ theme }) => theme.baseSpacing * 2}px;
 `;
 
+const SingleGuestTitle = styled(H3)`
+  margin-top: 0;
+`;
+
+const AddGuestButton = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 450px;
+  padding: ${({ theme }) => theme.baseSpacing * 2}px;
+  margin-bottom: ${({ theme }) => theme.baseSpacing * 3}px;
+  color: ${({ theme }) => theme.colors.darkest};
+  border: ${({ theme }) => `1px dashed ${theme.colors.primaryDarker}`};
+  border-radius: 8px;
+  cursor: pointer;
+`;
+
+const initialGuest = {
+  firstName: '',
+  lastName: '',
+  allowPartner: false,
+};
+
+const initialGuestGroup = {
+  customGreeting: '',
+  allowAccomodation: true,
+};
+
+const initialState = {
+  guestGroup: initialGuestGroup,
+  guests: [
+    { ...initialGuest, id: 0 },
+    { ...initialGuest, id: 1 },
+    { ...initialGuest, id: 2 },
+  ],
+};
+
 export class AddGroup extends Component {
-  state = {
-    guestGroup: {
-      name: '',
-      code: '',
-      customGreeting: '',
-      allowAccomodation: true,
-    },
-    guests: [],
-  };
+  state = initialState;
 
   onFirstNameChange = (guestId, firstName) => {
     this.setState(prevState => {
@@ -53,45 +90,6 @@ export class AddGroup extends Component {
     });
   };
 
-  toggleAllowPartner = guestId => {
-    this.setState(prevState => {
-      const guests = prevState.guests.map(guest =>
-        guest.id === guestId
-          ? { ...guest, allowPartner: !guest.allowPartner }
-          : guest
-      );
-      return { guests };
-    });
-  };
-
-  onAddNewGuest = () => {
-    this.setState(prevState => ({
-      guests: [
-        ...prevState.guests,
-        {
-          id: prevState.guests.length + 1,
-          firstName: '',
-          lastName: '',
-          allowPartner: false,
-          isPresent: true,
-          isVegetarian: false,
-        },
-      ],
-    }));
-  };
-
-  onGuestGroupCodeChange = code => {
-    this.setState(prevState => ({
-      guestGroup: { ...prevState.guestGroup, code },
-    }));
-  };
-
-  onGuestGroupNameChange = name => {
-    this.setState(prevState => ({
-      guestGroup: { ...prevState.guestGroup, name },
-    }));
-  };
-
   onGuestGroupCustomGreetingChange = customGreeting => {
     this.setState(prevState => ({
       guestGroup: { ...prevState.guestGroup, customGreeting },
@@ -107,6 +105,29 @@ export class AddGroup extends Component {
     }));
   };
 
+  toggleAllowPartner = guestId => {
+    this.setState(prevState => {
+      const guests = prevState.guests.map(guest =>
+        guest.id === guestId
+          ? { ...guest, allowPartner: !guest.allowPartner }
+          : guest
+      );
+      return { guests };
+    });
+  };
+
+  onAddNewGuest = () => {
+    this.setState(prevState => {
+      const guests = [
+        ...prevState.guests,
+        { ...initialGuest, id: prevState.guests.length },
+      ];
+      return {
+        guests,
+      };
+    });
+  };
+
   render() {
     const { weddingId } = this.props;
     const { guests, guestGroup } = this.state;
@@ -114,18 +135,19 @@ export class AddGroup extends Component {
     return (
       <Mutation
         mutation={ADD_GUESTS}
+        onCompleted={() => this.setState(initialState)}
+        refetchQueries={[
+          { query: GET_WEDDING_INITIAL_DATA, variables: { id: weddingId } },
+        ]}
         variables={{
           weddingId: weddingId,
           name: guestGroup.name,
-          code: guestGroup.code,
           customGreeting: guestGroup.customGreeting,
           allowAccomodation: guestGroup.allowAccomodation,
           guests: guests.map(guest => ({
             firstName: guest.firstName,
             lastName: guest.lastName,
             allowPartner: guest.allowPartner,
-            isPresent: true,
-            isVegetarian: false,
           })),
         }}
       >
@@ -133,43 +155,13 @@ export class AddGroup extends Component {
           return (
             <AddGroupHolder>
               <SectionSubtitle>Grupa</SectionSubtitle>
-              <InputLabel forHtml="name">nazwa grupy</InputLabel>
-              <Input
-                name="name"
-                value={guestGroup.name}
-                type="text"
-                placeholder="Nowakowie"
-                onChange={e => this.onGuestGroupNameChange(e.target.value)}
-              />
-              <InputLabel forHtml="code">kod grupy</InputLabel>
-              <Input
-                name="code"
-                value={guestGroup.code}
-                type="text"
-                placeholder="J43KS"
-                onChange={e => this.onGuestGroupCodeChange(e.target.value)}
-              />
-              <InputLabel forHtml="code">przywitanie</InputLabel>
-              <Input
-                name="customGreeting"
-                value={guestGroup.customGreeting}
-                type="text"
-                placeholder="Elo, Ziomeczki!"
-                onChange={e =>
-                  this.onGuestGroupCustomGreetingChange(e.target.value)
-                }
-              />
-              <Checkbox
-                value="allowAccomodation"
-                label="Pozwól na dodanie opcji noclegu"
-                checked={guestGroup.allowAccomodation}
-                onChange={this.toggleAllowAccomodation}
-              />
-              <Button onClick={this.onAddNewGuest}>dodaj gościa</Button>
               <Form onSubmit={addNewGuest}>
-                {guests.map(guest => {
+                {guests.map((guest, index) => {
                   return (
                     <SingleGuest key={guest.id}>
+                      <SingleGuestTitle>
+                        {femaleOrdinalNumbers[index + 1]} osoba
+                      </SingleGuestTitle>
                       <InputLabel forHtml="firstName">imię</InputLabel>
                       <Input
                         name="firstName"
@@ -179,6 +171,7 @@ export class AddGroup extends Component {
                         onChange={e =>
                           this.onFirstNameChange(guest.id, e.target.value)
                         }
+                        dense
                       />
                       <InputLabel forHtml="lastName">nazwisko</InputLabel>
                       <Input
@@ -189,23 +182,50 @@ export class AddGroup extends Component {
                         onChange={e =>
                           this.onLastNameChange(guest.id, e.target.value)
                         }
+                        dense
                       />
                       <Checkbox
                         value="allowPartner"
                         label="Pozwól na dodanie Osoby Towarzyszącej"
                         checked={guest.allowPartner}
                         onChange={() => this.toggleAllowPartner(guest.id)}
+                        dense={false}
                       />
                     </SingleGuest>
                   );
                 })}
+                <AddGuestButton onClick={this.onAddNewGuest}>
+                  <RoundButton type="button">
+                    <Icon name="plus" />
+                  </RoundButton>
+                  <span style={{ marginLeft: 7 }}>Dodaj kolejną osobę</span>
+                </AddGuestButton>
+                <InputLabel forHtml="customGreeting">
+                  personalizowane przywitanie
+                </InputLabel>
+                <Input
+                  name="customGreeting"
+                  value={guestGroup.customGreeting}
+                  type="text"
+                  placeholder="Elo, Ziomeczki!"
+                  onChange={e =>
+                    this.onGuestGroupCustomGreetingChange(e.target.value)
+                  }
+                  dense
+                />
+                <Checkbox
+                  value="allowAccomodation"
+                  label="Pozwól na dodanie opcji noclegu"
+                  checked={guestGroup.allowAccomodation}
+                  onChange={this.toggleAllowAccomodation}
+                />
+                <br />
                 <ActionButton
                   type="button"
                   onClick={addNewGuest}
-                  style={{ marginTop: '5px' }}
-                  label="Zapisz"
+                  label="Dodaj gości"
                   loading={loading}
-                  error={error && 'coś nie tak'}
+                  error={error && (getErrorMessage(error) || RETRY_MESSAGE)}
                 />
               </Form>
             </AddGroupHolder>

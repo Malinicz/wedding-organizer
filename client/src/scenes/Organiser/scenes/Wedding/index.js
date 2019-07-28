@@ -29,7 +29,7 @@ const LeftSide = styled(Section)`
 const RightSide = styled(Section)`
   flex: 10;
   min-width: 400px;
-  border-left: ${({ theme }) => `2px dashed ${theme.colors.primaryDarker}`};
+  border-left: ${({ theme }) => `1px dashed ${theme.colors.primaryDarker}`};
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   transition: 0.3s ease opacity;

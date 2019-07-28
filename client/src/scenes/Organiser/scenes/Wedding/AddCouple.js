@@ -10,6 +10,10 @@ import { GET_WEDDING_INITIAL_DATA } from 'graphql/queries';
 
 import { femaleOrdinalNumbers } from 'constants/ordinalNumbers';
 
+import { getErrorMessage } from 'utils/helpers';
+
+import { RETRY_MESSAGE } from 'constants/errorMessages';
+
 const AddCoupleHolder = styled.div`
   display: flex;
   flex-direction: column;
@@ -18,7 +22,7 @@ const AddCoupleHolder = styled.div`
 const SingleGuest = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: ${({ theme }) => theme.baseSpacing}px;
+  margin-bottom: ${({ theme }) => theme.baseSpacing * 2}px;
 `;
 
 const SingleGuestTitle = styled(H3)`
@@ -158,10 +162,9 @@ export class AddCouple extends Component {
                 <ActionButton
                   type="button"
                   onClick={addNewGuest}
-                  style={{ marginTop: '5px' }}
-                  label="Zapisz"
+                  label="Dodaj gości"
                   loading={loading}
-                  error={error && 'coś nie tak'}
+                  error={error && (getErrorMessage(error) || RETRY_MESSAGE)}
                 />
               </Form>
             </AddCoupleHolder>

@@ -175,7 +175,10 @@ class GroupViewComp extends Component {
                           <TableCell>{index + 1}</TableCell>
                           <TableCell>
                             {guests.map(guest => (
-                              <div>
+                              <div
+                                key={guest.id}
+                                style={{ whiteSpace: 'nowrap' }}
+                              >
                                 {guest.firstName} {guest.lastName}
                               </div>
                             ))}

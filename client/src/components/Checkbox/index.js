@@ -54,6 +54,7 @@ const CheckboxText = styled.span`
 const CheckboxLabel = styled.label`
   display: block;
   padding: 5px 0;
+  margin-bottom: ${({ theme, dense }) => (dense ? 0 : theme.baseSpacing)}px;
   pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
   transition: color 0.15s;
   cursor: pointer;
@@ -76,10 +77,10 @@ export class Checkbox extends Component {
   }
 
   render() {
-    const { checked, label, style, disabled } = this.props;
+    const { checked, label, style, disabled, dense = true } = this.props;
 
     return (
-      <CheckboxLabel style={style} disabled={disabled}>
+      <CheckboxLabel style={style} disabled={disabled} dense={dense}>
         <CheckboxHolder>
           <HiddenCheckbox checked={checked} {...this.props} />
           <StyledCheckbox checked={checked} disabled={disabled}>

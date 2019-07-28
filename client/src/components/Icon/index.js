@@ -52,7 +52,13 @@ const IconHolder = styled.div`
   margin-left: ${({ marginLeft }) => marginLeft || 0}px;
 `;
 
-export const Icon = ({ name, size, marginRight, marginLeft, marginTop }) => {
+export const Icon = ({
+  name,
+  size = 25,
+  marginRight,
+  marginLeft,
+  marginTop,
+}) => {
   return (
     <IconHolder
       size={size}
