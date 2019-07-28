@@ -8,6 +8,7 @@ import { GuestTypes } from './GuestTypes';
 import { AddSingleGuest } from './AddSingleGuest';
 import { AddCouple } from './AddCouple';
 import { AddGroup } from './AddGroup';
+import { GuestsSummary } from './GuestsSummary';
 
 import { GET_AUTH_USER } from 'graphql/queries';
 
@@ -63,6 +64,7 @@ export class Wedding extends Component {
                   activeType={activeGuestType}
                   handleChange={this.onGuestTypeChange}
                 />
+                <GuestsSummary weddingId={weddingId} />
               </LeftSide>
               <RightSide isVisible={!!activeGuestType}>
                 {

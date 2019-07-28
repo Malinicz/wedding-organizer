@@ -16,3 +16,4 @@ export * from './LocationIcon';
 export * from './GuestSingleIcon';
 export * from './GuestCoupleIcon';
 export * from './GuestGroupIcon';
+export * from './LightBulbIcon';

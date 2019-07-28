@@ -20,6 +20,7 @@ import {
   GuestSingleIcon,
   GuestCoupleIcon,
   GuestGroupIcon,
+  LightBulbIcon,
 } from './svgIcons';
 
 const icons = {
@@ -41,6 +42,7 @@ const icons = {
   guestSingle: <GuestSingleIcon />,
   guestCouple: <GuestCoupleIcon />,
   guestGroup: <GuestGroupIcon />,
+  lightBulb: <LightBulbIcon />,
 };
 
 const IconHolder = styled.div`
