@@ -88,7 +88,7 @@ async function createGraphcoolUser(api, email, password) {
         id
         email
         role
-        userProfile: {
+        userProfile {
           id
         }
         weddings {
