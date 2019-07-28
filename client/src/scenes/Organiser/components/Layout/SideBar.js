@@ -25,6 +25,7 @@ const SideBarHolder = styled.aside`
 
 const FixedWrapper = styled.div`
   position: fixed;
+  z-index: 500;
   height: 100%;
   width: ${SIDEBAR_WIDTH}px;
   overflow-y: auto;

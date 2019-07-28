@@ -11,7 +11,6 @@ import { ORGANISER_WEDDING } from 'constants/routes';
 
 const GuestsSummaryHolder = styled.div`
   position: relative;
-  z-index: -1;
   padding-left: ${({ theme }) => theme.baseSpacing * 3.5}px;
   margin-top: 100px;
   font-size: 0.9em;
