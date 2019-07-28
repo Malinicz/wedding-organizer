@@ -140,6 +140,7 @@ class GroupViewComp extends Component {
                     <TableHeadCell>liczba obecnych</TableHeadCell>
                     <TableHeadCell>transport</TableHeadCell>
                     <TableHeadCell>komentarze</TableHeadCell>
+                    <TableHeadCell>edycja</TableHeadCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -163,15 +164,7 @@ class GroupViewComp extends Component {
                         submissionDate || manualSubmissionDate;
 
                       return (
-                        <TableRow
-                          key={groupId}
-                          isGrayedOut={!isConfirmed}
-                          onClick={() =>
-                            history.push(
-                              `${ORGANISER_WEDDING}/${weddingId}/grupa/${groupId}`
-                            )
-                          }
-                        >
+                        <TableRow key={groupId} isGrayedOut={!isConfirmed}>
                           <TableCell>{index + 1}</TableCell>
                           <TableCell>
                             {guests.map(guest => (
@@ -196,6 +189,21 @@ class GroupViewComp extends Component {
                           <TableCell>{transport ? 'Tak' : 'Nie'}</TableCell>
                           <TableCell title={comments}>
                             <Ellipsis>{comments}</Ellipsis>
+                          </TableCell>
+                          <TableCell>
+                            <div
+                              style={{
+                                textDecoration: 'underline',
+                                cursor: 'pointer',
+                              }}
+                              onClick={() =>
+                                history.push(
+                                  `${ORGANISER_WEDDING}/${weddingId}/grupa/${groupId}`
+                                )
+                              }
+                            >
+                              Edycja
+                            </div>
                           </TableCell>
                         </TableRow>
                       );
