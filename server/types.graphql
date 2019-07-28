@@ -18,7 +18,6 @@ type Guest @model {
   allowPartner: Boolean! @defaultValue(value: false)
   firstName: String!
   lastName: String!
-  drinks: [Drink!]! @relation(name: "DrinkOnGuest")
   partner: Guest @relation(name: "GuestOnGuest") @defaultValue(value: null)
 }
 
@@ -97,11 +96,4 @@ type WeddingParty @model {
   street: String
   wedding: Wedding @relation(name: "WeddingOnWeddingParty")
   locationUrl: String
-}
-
-type Drink @model {
-  id: ID! @isUnique
-  name: String!
-  price: Int
-  guest: [Guest!]! @relation(name: "DrinkOnGuest")
 }

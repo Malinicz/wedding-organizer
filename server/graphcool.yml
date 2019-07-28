@@ -97,13 +97,6 @@ permissions:
     authenticated: true
   - operation: WeddingParty.delete
     authenticated: true
-  - operation: Drink.read
-  - operation: Drink.create
-    authenticated: true
-  - operation: Drink.update
-    authenticated: true
-  - operation: Drink.delete
-    authenticated: true
   - operation: Subscriber.read
   - operation: Subscriber.create
   - operation: Subscriber.update

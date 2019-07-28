@@ -15,8 +15,6 @@ import { toBoolean } from 'utils/helpers';
 import { GUEST_FORM_SUBMISSION_SUCCESS } from 'constants/routes';
 import { RETRY_MESSAGE } from 'constants/errorMessages';
 
-import { pl } from 'languages';
-
 const GuestFormHolder = styled(Form)`
   display: flex;
   flex-direction: column;
