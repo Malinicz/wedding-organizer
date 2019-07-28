@@ -77,7 +77,6 @@ export class AddSingleGuest extends Component {
         ]}
         variables={{
           weddingId: weddingId,
-          name: `${guest.firstName} ${guest.lastName}`,
           code: guestGroup.code,
           customGreeting: guestGroup.customGreeting,
           allowAccomodation: guestGroup.allowAccomodation,
@@ -102,6 +101,7 @@ export class AddSingleGuest extends Component {
                   type="text"
                   placeholder="Jan"
                   onChange={e => this.onFirstNameChange(e.target.value)}
+                  dense
                 />
                 <InputLabel forHtml="lastName">nazwisko</InputLabel>
                 <Input
@@ -144,6 +144,7 @@ export class AddSingleGuest extends Component {
                   onChange={e =>
                     this.onGuestGroupCustomGreetingChange(e.target.value)
                   }
+                  dense
                 />
 
                 <ActionButton

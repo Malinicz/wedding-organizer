@@ -118,14 +118,12 @@ export const CREATE_SUBSCRIBER = gql`
 export const ADD_GUESTS = gql`
   mutation AddGuests(
     $weddingId: ID!
-    $name: String!
     $customGreeting: String
     $allowAccomodation: Boolean!
     $guests: Json!
   ) {
     addGuests(
       weddingId: $weddingId
-      name: $name
       allowAccomodation: $allowAccomodation
       guests: $guests
       customGreeting: $customGreeting

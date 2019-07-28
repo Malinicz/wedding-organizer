@@ -48,18 +48,16 @@ module.exports = async event => {
 
 async function createGuestGroup(
   api,
-  { weddingId, name, allowAccomodation, customGreeting, code }
+  { weddingId, allowAccomodation, customGreeting, code }
 ) {
   const mutation = `
     mutation AddGuests(
         $weddingId: ID!
-        $name: String!
         $allowAccomodation: Boolean!
         $customGreeting: String
         $code: String!
     ) {
         createGuestGroup(
-        name: $name
         accomodation: false
         customGreeting: $customGreeting
         allowAccomodation: $allowAccomodation
@@ -74,7 +72,6 @@ async function createGuestGroup(
 
   const variables = {
     weddingId,
-    name,
     allowAccomodation,
     customGreeting,
     code,

@@ -12,6 +12,7 @@ export const TableBody = styled.tbody``;
 
 export const TableCell = styled.td`
   padding: 8px;
+  font-size: 0.9em;
 `;
 
 export const TableHeadCell = styled(TableCell.withComponent('th'))`

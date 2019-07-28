@@ -72,9 +72,11 @@ module.exports = async event => {
             </div>
             <div style="padding: 15px; background-color: #fdf8f7;">
               <p style="margin-bottom: 30px; font-size: 18px;">
-                Grupa ${
-                  guestGroup.name
-                } właśnie wysłała nowe powiadomienie - ${introductionMessage}
+                Grupa ${guestGroup.guests
+                  .map(guest => `${guest.firstName} ${guest.lastName}`)
+                  .join(
+                    ', '
+                  )} właśnie odpowiedziała na Twoje zaproszenie - ${introductionMessage}
               </p>
               ${
                 isGroupPresent
@@ -108,7 +110,7 @@ module.exports = async event => {
       from: 'powiadomienia@witajgosciu.pl',
       to: `${guestGroup.wedding.user.email}`,
       cc: 'malinicz@gmail.com',
-      subject: `Nowe powiadomienie od ${guestGroup.name}`,
+      subject: 'Twój Gość właśnie odpowiedział na zaproszenie!',
       html: mailHtml,
     };
 

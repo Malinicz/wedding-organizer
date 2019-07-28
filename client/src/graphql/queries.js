@@ -106,18 +106,3 @@ export const GET_WEDDING_INITIAL_DATA = gql`
   }
   ${GUEST_GROUP}
 `;
-
-export const GET_SIDEBAR_DATA = gql`
-  query GetSidebarData($id: ID!) {
-    Wedding(id: $id) {
-      id
-      name
-      user {
-        id
-        email
-        firstName
-        lastName
-      }
-    }
-  }
-`;

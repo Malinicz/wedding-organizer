@@ -4,7 +4,8 @@ export const Input = styled.input`
   width: 100%;
   max-width: ${({ theme }) => theme.inputMaxWidth}px;
   height: 50px;
-  margin-bottom: 30px;
+  margin-bottom: ${({ theme, dense }) =>
+    dense ? theme.baseSpacing : theme.baseSpacing * 2}px;
   padding: 0 4px;
   font-size: 16px;
   border: none;

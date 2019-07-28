@@ -133,7 +133,7 @@ class GroupViewComp extends Component {
                 <TableHead>
                   <TableRow>
                     <TableHeadCell />
-                    <TableHeadCell>nazwa</TableHeadCell>
+                    <TableHeadCell>grupa</TableHeadCell>
                     <TableHeadCell>kod</TableHeadCell>
                     <TableHeadCell>email</TableHeadCell>
                     <TableHeadCell>zakwaterowanie</TableHeadCell>
@@ -147,7 +147,6 @@ class GroupViewComp extends Component {
                     (
                       {
                         id: groupId,
-                        name,
                         code,
                         contactEmail,
                         submissionDate,
@@ -174,7 +173,13 @@ class GroupViewComp extends Component {
                           }
                         >
                           <TableCell>{index + 1}</TableCell>
-                          <TableCell>{name}</TableCell>
+                          <TableCell>
+                            {guests.map(guest => (
+                              <div>
+                                {guest.firstName} {guest.lastName}
+                              </div>
+                            ))}
+                          </TableCell>
                           <TableCell>{code}</TableCell>
                           <TableCell>{contactEmail}</TableCell>
                           <TableCell>
