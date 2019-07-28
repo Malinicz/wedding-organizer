@@ -65,13 +65,14 @@ export class AddSingleGuest extends Component {
   };
 
   render() {
-    const { weddingId } = this.props;
+    const { weddingId, handleAddToActivityFeed } = this.props;
     const { guest, guestGroup } = this.state;
 
     return (
       <Mutation
         mutation={ADD_GUESTS}
         onCompleted={() => {
+          handleAddToActivityFeed(this.state);
           this.setState(initialState);
           window.scrollTo(0, 0);
         }}

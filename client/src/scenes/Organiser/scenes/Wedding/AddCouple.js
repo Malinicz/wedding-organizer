@@ -37,7 +37,7 @@ const initialGuest = {
 
 const initialGuestGroup = {
   customGreeting: '',
-  allowAccomodation: true,
+  allowAccomodation: false,
 };
 
 const initialState = {
@@ -82,13 +82,14 @@ export class AddCouple extends Component {
   };
 
   render() {
-    const { weddingId } = this.props;
+    const { weddingId, handleAddToActivityFeed } = this.props;
     const { guests, guestGroup } = this.state;
 
     return (
       <Mutation
         mutation={ADD_GUESTS}
         onCompleted={() => {
+          handleAddToActivityFeed(this.state);
           this.setState(initialState);
           window.scrollTo(0, 0);
         }}

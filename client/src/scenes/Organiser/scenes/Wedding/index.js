@@ -41,6 +41,7 @@ export class Wedding extends Component {
     super(props);
     this.state = {
       activeGuestType: '',
+      activityFeed: [],
     };
   }
 
@@ -48,8 +49,20 @@ export class Wedding extends Component {
     this.setState({ activeGuestType });
   };
 
+  onAddToActivityFeed = data => {
+    const guestNames = data.guest
+      ? `${data.guest.firstName} ${data.guest.lastName}`
+      : data.guests
+          .map(guest => `${guest.firstName} ${guest.lastName}`)
+          .join(', ');
+
+    this.setState(prevState => ({
+      activityFeed: [`Dodano ${guestNames}`, ...prevState.activityFeed],
+    }));
+  };
+
   render() {
-    const { activeGuestType } = this.state;
+    const { activeGuestType, activityFeed } = this.state;
 
     return (
       <Query query={GET_AUTH_USER}>
@@ -65,13 +78,42 @@ export class Wedding extends Component {
                   handleChange={this.onGuestTypeChange}
                 />
                 <GuestsSummary weddingId={weddingId} />
+                {activityFeed.length > 0 && (
+                  <>
+                    <div
+                      style={{ fontFamily: 'SofiaProBold', marginTop: '60px' }}
+                    >
+                      Dziennik aktywności
+                    </div>
+                    <ul>
+                      {activityFeed.map((item, index) => (
+                        <li key={index}>{item}</li>
+                      ))}
+                    </ul>
+                  </>
+                )}
               </LeftSide>
               <RightSide isVisible={!!activeGuestType}>
                 {
                   {
-                    guestSingle: <AddSingleGuest weddingId={weddingId} />,
-                    guestCouple: <AddCouple weddingId={weddingId} />,
-                    guestGroup: <AddGroup weddingId={weddingId} />,
+                    guestSingle: (
+                      <AddSingleGuest
+                        weddingId={weddingId}
+                        handleAddToActivityFeed={this.onAddToActivityFeed}
+                      />
+                    ),
+                    guestCouple: (
+                      <AddCouple
+                        weddingId={weddingId}
+                        handleAddToActivityFeed={this.onAddToActivityFeed}
+                      />
+                    ),
+                    guestGroup: (
+                      <AddGroup
+                        weddingId={weddingId}
+                        handleAddToActivityFeed={this.onAddToActivityFeed}
+                      />
+                    ),
                   }[activeGuestType]
                 }
               </RightSide>

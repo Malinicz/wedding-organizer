@@ -11,6 +11,7 @@ import { ORGANISER_WEDDING } from 'constants/routes';
 
 const GuestsSummaryHolder = styled.div`
   position: relative;
+  z-index: -1;
   padding-left: ${({ theme }) => theme.baseSpacing * 3.5}px;
   margin-top: 100px;
   font-size: 0.9em;
@@ -63,8 +64,8 @@ export class GuestsSummary extends Component {
               <Paragraph>
                 {guestsCount.all === 0 ? (
                   <span>
-                    Nie masz jeszcze żadnych Gości. Aby dodać Gości, kliknij
-                    jeden z przycisków na górze.
+                    Nie masz jeszcze żadnych Gości. Aby ich dodać, kliknij jeden
+                    z przycisków na górze.
                   </span>
                 ) : (
                   <span>

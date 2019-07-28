@@ -77,11 +77,12 @@ Icon.defaultProps = {
   marginLeft: 0,
   marginRight: 0,
   marginTop: 3,
+  size: 25,
 };
 
 Icon.propTypes = {
   name: string.isRequired,
-  size: number.isRequired,
+  size: number,
   marginRight: number,
   marginLeft: number,
   marginTop: number,
