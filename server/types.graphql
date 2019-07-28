@@ -51,6 +51,14 @@ type User @model {
   role: UserRoles!
   updatedAt: DateTime!
   weddings: [Wedding!]! @relation(name: "UserOnWedding")
+  userProfile: UserProfile @relation(name: "UserProfileOnUser")
+}
+
+type UserProfile @model {
+  id: ID! @isUnique
+  firstName: String
+  lastName: String
+  user: User @relation(name: "UserProfileOnUser")
 }
 
 type Subscriber @model {

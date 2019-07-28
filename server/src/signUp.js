@@ -82,11 +82,15 @@ async function createGraphcoolUser(api, email, password) {
         email: $email,
         password: $password
         role: Organiser
-		privacyPolicyConsent: $privacyPolicyConsent
+        privacyPolicyConsent: $privacyPolicyConsent
+        userProfile: {}
       ) {
         id
         email
         role
+        userProfile: {
+          id
+        }
         weddings {
           id
         }	
