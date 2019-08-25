@@ -1,6 +1,7 @@
 {
   "name": "wedding-organizer",
   "version": "1.0.0",
+  "author": "Artur Malinowski",
   "private": true,
   "description": "",
   "main": "index.js",
@@ -15,7 +16,6 @@
     "type": "git",
     "url": "git+https://github.com/Malinicz/wedding-organizer.git"
   },
-  "author": "Artur Malinowski",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Malinicz/wedding-organizer/issues"
