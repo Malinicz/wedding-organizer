@@ -60,6 +60,7 @@ export const Icon = ({
   marginRight,
   marginLeft,
   marginTop,
+  style,
 }) => {
   return (
     <IconHolder
@@ -67,6 +68,7 @@ export const Icon = ({
       marginLeft={marginLeft}
       marginRight={marginRight}
       marginTop={marginTop}
+      style={style}
     >
       {icons[name]}
     </IconHolder>

@@ -3,6 +3,7 @@ import { Query } from 'react-apollo';
 import styled from 'styles';
 
 import { SectionTitle } from 'components/base';
+import { ToastContext } from 'components';
 
 import { GuestTypes } from './GuestTypes';
 import { AddSingleGuest } from './AddSingleGuest';
@@ -49,7 +50,15 @@ export class Wedding extends Component {
     this.setState({ activeGuestType });
   };
 
-  onAddToActivityFeed = data => {
+  onAddSuccess = data => {
+    const {
+      actions: { showMessage },
+    } = this.context;
+    const message = data.guest
+      ? 'Dodano nowego Gościa!'
+      : 'Dodano nowych Gości!';
+    showMessage(message);
+
     const guestNames = data.guest
       ? `${data.guest.firstName} ${data.guest.lastName}`
       : data.guests
@@ -99,19 +108,19 @@ export class Wedding extends Component {
                     guestSingle: (
                       <AddSingleGuest
                         weddingId={weddingId}
-                        handleAddToActivityFeed={this.onAddToActivityFeed}
+                        handleAddSuccess={this.onAddSuccess}
                       />
                     ),
                     guestCouple: (
                       <AddCouple
                         weddingId={weddingId}
-                        handleAddToActivityFeed={this.onAddToActivityFeed}
+                        handleAddSuccess={this.onAddSuccess}
                       />
                     ),
                     guestGroup: (
                       <AddGroup
                         weddingId={weddingId}
-                        handleAddToActivityFeed={this.onAddToActivityFeed}
+                        handleAddSuccess={this.onAddSuccess}
                       />
                     ),
                   }[activeGuestType]
@@ -124,3 +133,5 @@ export class Wedding extends Component {
     );
   }
 }
+
+Wedding.contextType = ToastContext;

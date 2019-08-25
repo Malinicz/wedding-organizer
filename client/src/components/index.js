@@ -14,3 +14,4 @@ export * from './FloatingButton';
 export * from './ScrollToTop';
 export * from './InfoPage';
 export * from './SegmentedButton';
+export * from './Toast';

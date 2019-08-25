@@ -82,14 +82,14 @@ export class AddCouple extends Component {
   };
 
   render() {
-    const { weddingId, handleAddToActivityFeed } = this.props;
+    const { weddingId, handleAddSuccess } = this.props;
     const { guests, guestGroup } = this.state;
 
     return (
       <Mutation
         mutation={ADD_GUESTS}
         onCompleted={() => {
-          handleAddToActivityFeed(this.state);
+          handleAddSuccess(this.state);
           this.setState(initialState);
           window.scrollTo(0, 0);
         }}
