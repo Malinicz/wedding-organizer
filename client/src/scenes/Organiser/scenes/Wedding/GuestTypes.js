@@ -90,7 +90,7 @@ export class GuestTypes extends Component {
             <Icon name="guestGroup" size={35} />
           </AvatarHolder>
           <NameHolder>
-            <Title>Grupa</Title>
+            <Title>Para + dzieci</Title>
             <Subtitle>
               np. Wujek Gienek z Ciocią Janiną i synem Wojtkiem
             </Subtitle>

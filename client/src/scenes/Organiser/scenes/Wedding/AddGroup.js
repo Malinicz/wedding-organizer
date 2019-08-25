@@ -158,7 +158,7 @@ export class AddGroup extends Component {
         {(addNewGuest, { loading, error }) => {
           return (
             <AddGroupHolder>
-              <SectionSubtitle>Grupa</SectionSubtitle>
+              <SectionSubtitle>Para + dzieci</SectionSubtitle>
               <Form onSubmit={addNewGuest}>
                 {guests.map((guest, index) => {
                   return (

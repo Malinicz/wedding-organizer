@@ -7,7 +7,8 @@
   "scripts": {
     "start": "cd ./client && yarn start",
     "build": "cd ./client && yarn build",
-    "deploy:server": "cd ./server && graphcool deploy",
+    "deploy:server": "cd ./server && yarn deploy",
+    "deploy:server:prod": "cd ./server && yarn deploy:prod",
     "deploy:client": "yarn build && netlify deploy --prod"
   },
   "repository": {

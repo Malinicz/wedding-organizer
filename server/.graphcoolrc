@@ -1,3 +1,4 @@
 targets:
   prod: shared-eu-west-1/cjrowmmxv4z8s0149hsq3b46s
-  default: prod
+  dev: shared-eu-west-1/cjzqyk4521snl01741es56u7l
+  default: dev
