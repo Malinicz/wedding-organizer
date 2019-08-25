@@ -12,7 +12,15 @@ import {
 import { defaults, resolvers } from './graphql';
 
 import { PrivateRoute, GuestRoute, ScrollToTop } from 'components';
-import { SignIn, PageNotFound, Guest, Home, About, Organiser } from 'scenes';
+import {
+  SignIn,
+  SignUp,
+  PageNotFound,
+  Guest,
+  Home,
+  About,
+  Organiser,
+} from 'scenes';
 import { FormSubmissionSuccess } from 'scenes/Guest/scenes';
 import { SubscriberSubmissionSuccess } from 'scenes/About/scenes';
 
@@ -23,8 +31,9 @@ import {
   ABOUT,
   GUEST_FORM_SUBMISSION_SUCCESS,
   ABOUT_SUBSCRIBER_SUBMISSION_SUCCESS,
+  ORGANISER_WEDDING,
+  SIGN_UP,
 } from 'constants/routes';
-import { ORGANISER_WEDDING } from './constants/routes';
 
 const history = createBrowserHistory();
 
@@ -60,6 +69,7 @@ class App extends Component {
                   component={SubscriberSubmissionSuccess}
                 />
                 <Route exact path={SIGN_IN} component={SignIn} />
+                <Route exact path={SIGN_UP} component={SignUp} />
                 <GuestRoute
                   exact
                   path={GUEST_FORM_SUBMISSION_SUCCESS}

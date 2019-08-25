@@ -112,6 +112,7 @@ module.exports = async event => {
       cc: 'malinicz@gmail.com',
       subject: 'Twój Gość właśnie odpowiedział na zaproszenie!',
       html: mailHtml,
+      'o:tag': [process.env.MAILGUN_TAG],
     };
 
     mailgun.messages().send(data, function(error, body) {
