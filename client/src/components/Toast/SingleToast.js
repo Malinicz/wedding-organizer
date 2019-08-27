@@ -5,7 +5,7 @@ import flamingo from 'assets/flamingo.png';
 
 import { Icon } from '../Icon';
 
-const TIMEOUT = 3000;
+const TIMEOUT = 5000;
 const HEIGHT = 60;
 
 const toastAnimation = ({ index, theme }) => {
@@ -15,41 +15,41 @@ const toastAnimation = ({ index, theme }) => {
 
   return keyframes`
    0% { transform: translate3d(0, ${getYPosition(
-     index
-   )}, 0) scale(0); opacity: 0;}
+      index
+    )}, 0) scale(0); opacity: 0;}
+  3% { transform: translate3d(0, ${getYPosition(
+      index
+    )}, 0) scale(1); opacity: 1;}
   5% { transform: translate3d(0, ${getYPosition(
-    index
-  )}, 0) scale(1); opacity: 1;}
-  8% { transform: translate3d(0, ${getYPosition(
-    index
-  )}, 0) scale(1.02); opacity: 1;}
+      index
+    )}, 0) scale(1.02); opacity: 1;}
+  7% { transform: translate3d(0, ${getYPosition(
+      index
+    )}, 0) scale(0.98); opacity: 1;}
+  9% { transform: translate3d(0, ${getYPosition(
+      index
+    )}, 0) scale(1.01); opacity: 1;}
   11% { transform: translate3d(0, ${getYPosition(
-    index
-  )}, 0) scale(0.98); opacity: 1;}
-  13% { transform: translate3d(0, ${getYPosition(
-    index
-  )}, 0) scale(1.01); opacity: 1;}
-  15% { transform: translate3d(0, ${getYPosition(
-    index
-  )}, 0) scale(1); opacity: 1;}
-  84% { transform: translate3d(0, ${getYPosition(
-    index
-  )}, 0) scale(1); opacity: 1;}
-  88% { transform: translate3d(0, ${getYPosition(
-    index
-  )}, 0) scale(1.02); opacity: 1;}
+      index
+    )}, 0) scale(1); opacity: 1;}
   90% { transform: translate3d(0, ${getYPosition(
-    index
-  )}, 0) scale(1); opacity: 1;}
+      index
+    )}, 0) scale(1); opacity: 1;}
+  92% { transform: translate3d(0, ${getYPosition(
+      index
+    )}, 0) scale(1.02); opacity: 1;}
+  94% { transform: translate3d(0, ${getYPosition(
+      index
+    )}, 0) scale(1); opacity: 1;}
   100% { transform: translate3d(0, ${getYPosition(
-    index
-  )}, 0) scale(0); opacity: 0;}
+      index
+    )}, 0) scale(0); opacity: 0;}
 `;
 };
 
 const SingleToastHolder = styled.div`
   position: fixed;
-  z-index: 1000;
+  z-index: 250;
   right: 15px;
   display: flex;
   align-items: center;
@@ -69,7 +69,7 @@ const SingleToastHolder = styled.div`
 const MessageHolder = styled.div`
   padding: ${({ theme }) =>
     `${theme.baseSpacing}px ${theme.baseSpacing * 2}px  ${
-      theme.baseSpacing
+    theme.baseSpacing
     }px  ${theme.baseSpacing}px`};
   font-size: 0.9rem;
   white-space: nowrap;

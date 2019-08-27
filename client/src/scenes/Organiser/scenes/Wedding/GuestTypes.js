@@ -4,33 +4,32 @@ import styled from 'styles';
 import { Icon } from 'components';
 
 const GuestTypesHolder = styled.div`
-  max-width: 400px;
+  max-width: 450px;
 `;
 
 const AvatarHolder = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60px;
-  height: 60px;
-  border-radius: 60px;
+  width: 80px;
+  min-width: 80px;
+  height: 80px;
+  min-height: 80px;
+  border-radius: 80px;
+  background-color: ${({ theme }) => theme.colors.brightest};
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.1);
   transition: 0.3s ease all;
 `;
 
 const GuestType = styled.div`
   display: inline-flex;
-  margin-bottom: ${({ theme }) => theme.baseSpacing}px;
+  margin-bottom: ${({ theme }) => theme.baseSpacing * 1.5}px;
   cursor: pointer;
   &:hover ${AvatarHolder} {
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    background-color: ${({ theme }) => theme.colors.primaryDarker};
   }
   &:active {
     transform: scale(0.98);
-  }
-
-  ${AvatarHolder} {
-    background-color: ${({ theme, isActive }) =>
-      isActive ? theme.colors.primaryDarker : theme.colors.brightest};
   }
 `;
 
@@ -38,14 +37,17 @@ const NameHolder = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: ${({ theme }) => theme.baseSpacing / 2}px;
+  margin-left: ${({ theme }) => theme.baseSpacing}px;
 `;
 
-const Title = styled.div``;
+const Title = styled.div`
+  font-family: ${({ theme }) => theme.fontFamily.primary.bold};
+  font-size: 1.1rem;
+`;
 
 const Subtitle = styled.div`
   font-size: 0.8em;
-  color: ${({ theme }) => theme.colors.bright};
+  color: ${({ theme }) => theme.colors.dark};
 `;
 
 export class GuestTypes extends Component {
@@ -59,7 +61,7 @@ export class GuestTypes extends Component {
           onClick={() => handleChange('guestSingle')}
         >
           <AvatarHolder>
-            <Icon name="guestSingle" size={25} />
+            <Icon name="guestSingle" size={30} />
           </AvatarHolder>
           <NameHolder>
             <Title>Pojedynczy gość</Title>
@@ -73,7 +75,7 @@ export class GuestTypes extends Component {
           onClick={() => handleChange('guestCouple')}
         >
           <AvatarHolder>
-            <Icon name="guestCouple" size={35} />
+            <Icon name="guestCouple" size={41} />
           </AvatarHolder>
           <NameHolder>
             <Title>Para</Title>
@@ -87,7 +89,7 @@ export class GuestTypes extends Component {
           onClick={() => handleChange('guestGroup')}
         >
           <AvatarHolder>
-            <Icon name="guestGroup" size={35} />
+            <Icon name="guestGroup" size={43} />
           </AvatarHolder>
           <NameHolder>
             <Title>Para + dzieci</Title>

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { useState, useContext } from 'react';
 import { Query } from 'react-apollo';
 import styled from 'styles';
 
 import { SectionTitle } from 'components/base';
-import { ToastContext } from 'components';
+import { ToastContext, Modal } from 'components';
 
 import { GuestTypes } from './GuestTypes';
 import { AddSingleGuest } from './AddSingleGuest';
@@ -12,6 +12,13 @@ import { AddGroup } from './AddGroup';
 import { GuestsSummary } from './GuestsSummary';
 
 import { GET_AUTH_USER } from 'graphql/queries';
+import { ActivityLog } from './ActivityLog';
+
+const GUEST_TYPE_DISPLAY_NAMES = {
+  guestSingle: 'Pojedynczy Gość',
+  guestCouple: 'Para',
+  guestGroup: 'Para + Dzieci'
+}
 
 const AddGuestsHolder = styled.div`
   display: flex;
@@ -31,29 +38,23 @@ const LeftSide = styled(Section)`
 const RightSide = styled(Section)`
   flex: 10;
   min-width: 400px;
+  padding-top: 110px;
   border-left: ${({ theme }) => `1px dashed ${theme.colors.primaryDarker}`};
-  opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
-  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-  transition: 0.3s ease opacity;
 `;
 
-export class Wedding extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeGuestType: '',
-      activityFeed: [],
-    };
+export const Wedding = () => {
+  const [activityFeed, setActivityFeed] = useState([]);
+  const [activeGuestType, setActiveGuestType] = useState(undefined);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { actions: { showMessage } } = useContext(ToastContext);
+
+  const onGuestTypeClick = (activeGuestType) => {
+    setActiveGuestType(activeGuestType);
+    setIsModalOpen(true);
   }
 
-  onGuestTypeChange = activeGuestType => {
-    this.setState({ activeGuestType });
-  };
-
-  onAddSuccess = data => {
-    const {
-      actions: { showMessage },
-    } = this.context;
+  const onAddSuccess = data => {
+    onModalClose();
     const message = data.guest
       ? 'Dodano nowego Gościa!'
       : 'Dodano nowych Gości!';
@@ -62,76 +63,66 @@ export class Wedding extends Component {
     const guestNames = data.guest
       ? `${data.guest.firstName} ${data.guest.lastName}`
       : data.guests
-          .map(guest => `${guest.firstName} ${guest.lastName}`)
-          .join(', ');
+        .map(guest => `${guest.firstName} ${guest.lastName}`)
+        .join(', ');
 
-    this.setState(prevState => ({
-      activityFeed: [`Dodano ${guestNames}`, ...prevState.activityFeed],
-    }));
+    setActivityFeed([{ time: Date.now(), description: `Dodano ${guestNames}` }, ...activityFeed])
   };
 
-  render() {
-    const { activeGuestType, activityFeed } = this.state;
+  const onModalClose = () => {
+    setActiveGuestType(undefined);
+    setIsModalOpen(false);
+  }
 
-    return (
-      <Query query={GET_AUTH_USER}>
-        {({ data: { user } }) => {
-          const weddingId = user && user.weddings[0].id;
+  return (
+    <Query query={GET_AUTH_USER}>
+      {({ data: { user } }) => {
+        const weddingId = user && user.weddings[0].id;
 
-          return (
+        return (
+          <>
             <AddGuestsHolder>
               <LeftSide>
                 <SectionTitle>Dodaj gości</SectionTitle>
                 <GuestTypes
                   activeType={activeGuestType}
-                  handleChange={this.onGuestTypeChange}
+                  handleChange={onGuestTypeClick}
                 />
-                <GuestsSummary weddingId={weddingId} />
-                {activityFeed.length > 0 && (
-                  <>
-                    <div
-                      style={{ fontFamily: 'SofiaProBold', marginTop: '60px' }}
-                    >
-                      Dziennik aktywności
-                    </div>
-                    <ul>
-                      {activityFeed.map((item, index) => (
-                        <li key={index}>{item}</li>
-                      ))}
-                    </ul>
-                  </>
-                )}
               </LeftSide>
-              <RightSide isVisible={!!activeGuestType}>
+              <RightSide>
+                <GuestsSummary weddingId={weddingId} />
+                <ActivityLog list={activityFeed} />
+              </RightSide>
+            </AddGuestsHolder>
+            {isModalOpen && <Modal handleClose={onModalClose}>
+              <Modal.Title>{GUEST_TYPE_DISPLAY_NAMES[activeGuestType]}</Modal.Title>
+              <Modal.Content>
                 {
                   {
                     guestSingle: (
                       <AddSingleGuest
                         weddingId={weddingId}
-                        handleAddSuccess={this.onAddSuccess}
+                        handleAddSuccess={onAddSuccess}
                       />
                     ),
                     guestCouple: (
                       <AddCouple
                         weddingId={weddingId}
-                        handleAddSuccess={this.onAddSuccess}
+                        handleAddSuccess={onAddSuccess}
                       />
                     ),
                     guestGroup: (
                       <AddGroup
                         weddingId={weddingId}
-                        handleAddSuccess={this.onAddSuccess}
+                        handleAddSuccess={onAddSuccess}
                       />
                     ),
-                  }[activeGuestType]
-                }
-              </RightSide>
-            </AddGuestsHolder>
-          );
-        }}
-      </Query>
-    );
-  }
+                  }[activeGuestType]}
+              </Modal.Content>
+            </Modal>}
+          </>
+        );
+      }}
+    </Query>
+  );
 }
-
-Wedding.contextType = ToastContext;

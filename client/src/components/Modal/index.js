@@ -14,7 +14,7 @@ const Overlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 200;
+  z-index: 300;
   width: 100%;
   height: 100%;
   animation: ${overlayAnimation} 0.7s ease;

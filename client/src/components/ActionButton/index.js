@@ -30,7 +30,7 @@ const ButtonHolder = styled(Button)`
 
 const ButtonInside = styled.div.attrs(props => ({
   style: {
-    transform: props.loading ? 'translateY(-50px)' : 'translateY(0)',
+    transform: props.isLoading ? 'translateY(-50px)' : 'translateY(0)',
   },
 }))`
   position: absolute;
@@ -67,7 +67,7 @@ export const ActionButton = ({
     <ActionButtonHolder>
       <ErrorMessage error={error}>{error}</ErrorMessage>
       <ButtonHolder style={style} type={type || 'button'} {...props}>
-        <ButtonInside loading={loading}>
+        <ButtonInside isLoading={loading}>
           <ButtonLabel>{label}</ButtonLabel>
           <ButtonLoader>
             <Icon name="loader" size={50} marginTop={7} />

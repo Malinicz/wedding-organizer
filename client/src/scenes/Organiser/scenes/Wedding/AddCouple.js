@@ -3,7 +3,7 @@ import { Mutation } from 'react-apollo';
 import styled from 'styled-components';
 
 import { ActionButton, Checkbox } from 'components';
-import { Form, InputLabel, Input, SectionSubtitle, H3 } from 'components/base';
+import { Form, InputLabel, Input, H3 } from 'components/base';
 
 import { ADD_GUESTS } from 'graphql/mutations';
 import { GET_WEDDING_INITIAL_DATA } from 'graphql/queries';
@@ -111,7 +111,6 @@ export class AddCouple extends Component {
         {(addNewGuest, { loading, error }) => {
           return (
             <AddCoupleHolder>
-              <SectionSubtitle>Para</SectionSubtitle>
               <Form onSubmit={addNewGuest}>
                 {guests.map((guest, index) => {
                   return (

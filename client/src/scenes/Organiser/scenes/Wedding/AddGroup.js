@@ -7,7 +7,6 @@ import {
   Form,
   InputLabel,
   Input,
-  SectionSubtitle,
   H3,
   RoundButton,
 } from 'components/base';
@@ -158,7 +157,6 @@ export class AddGroup extends Component {
         {(addNewGuest, { loading, error }) => {
           return (
             <AddGroupHolder>
-              <SectionSubtitle>Para + dzieci</SectionSubtitle>
               <Form onSubmit={addNewGuest}>
                 {guests.map((guest, index) => {
                   return (

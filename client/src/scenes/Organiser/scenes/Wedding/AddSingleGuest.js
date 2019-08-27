@@ -96,7 +96,6 @@ export class AddSingleGuest extends Component {
         {(addNewGuest, { loading, error }) => {
           return (
             <AddSingleGuestHolder>
-              <SectionSubtitle>Pojedynczy gość</SectionSubtitle>
               <Form onSubmit={addNewGuest}>
                 <InputLabel forHtml="firstName">imię</InputLabel>
                 <Input
