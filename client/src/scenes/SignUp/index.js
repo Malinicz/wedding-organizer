@@ -42,7 +42,7 @@ export class SignUp extends Component {
     const { token } = response.signUpUser;
     window.localStorage.setItem('token', token);
 
-    this.props.history.replace('/');
+    this.props.history.replace('/zaloguj');
   };
 
   render() {

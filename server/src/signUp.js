@@ -84,6 +84,25 @@ async function createGraphcoolUser(api, email, password) {
         role: Organiser
         privacyPolicyConsent: $privacyPolicyConsent
         userProfile: {}
+        weddings: [
+          {
+            internalId: $email, 
+            slug: $email, 
+            name: "Testowe wesele"
+            weddingChurch: {
+              city: "Testowo", 
+              name:"Kościół pod wezwaniem Najświętszego Testu", 
+              street: "Testowa 1", 
+              startTime: "2019"
+            }
+            weddingParty: {
+              startTime: "2019", 
+              city: "Testowo", 
+              name: "Karczma Testówka", 
+              street: "Testowa 6"
+              }
+            }
+          ]
       ) {
         id
         email

@@ -65,8 +65,7 @@ export class GuestsSummary extends Component {
               <Paragraph>
                 {guestsCount.all === 0 ? (
                   <span>
-                    Nie masz jeszcze żadnych Gości. Aby ich dodać, kliknij jeden
-                    z przycisków na górze.
+                    Nie masz jeszcze żadnych Gości. Aby ich dodać, kliknij jeden z przycisków znajdujących się po lewej.
                   </span>
                 ) : (
                     <span>
