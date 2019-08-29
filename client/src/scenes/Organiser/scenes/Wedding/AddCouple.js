@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import styled from 'styled-components';
 
-import { ActionButton, Checkbox } from 'components';
-import { Form, InputLabel, Input, H3 } from 'components/base';
+import { ActionButton, Checkbox, Tooltip } from 'components';
+import { Form, InputLabel, Input, H3, MutedText } from 'components/base';
 
 import { ADD_GUESTS } from 'graphql/mutations';
 import { GET_WEDDING_INITIAL_DATA } from 'graphql/queries';
@@ -13,6 +13,8 @@ import { femaleOrdinalNumbers } from 'constants/ordinalNumbers';
 import { getErrorMessage } from 'utils/helpers';
 
 import { RETRY_MESSAGE } from 'constants/errorMessages';
+import { INFO_ACCOMODATION, INFO_CUSTOM_GREETING } from 'constants/helpMessages';
+
 
 const AddCoupleHolder = styled.div`
   display: flex;
@@ -143,7 +145,7 @@ export class AddCouple extends Component {
                   );
                 })}
                 <InputLabel forHtml="customGreeting">
-                  personalizowane przywitanie
+                  personalizowane przywitanie <MutedText>(opcjonalne)</MutedText><Tooltip text={INFO_CUSTOM_GREETING} />
                 </InputLabel>
                 <Input
                   name="customGreeting"
@@ -160,6 +162,7 @@ export class AddCouple extends Component {
                   label="Pozwól na dodanie opcji noclegu"
                   checked={guestGroup.allowAccomodation}
                   onChange={this.toggleAllowAccomodation}
+                  adornment={<Tooltip text={INFO_ACCOMODATION} />}
                 />
                 <br />
                 <ActionButton
@@ -168,6 +171,7 @@ export class AddCouple extends Component {
                   label="Dodaj gości"
                   loading={loading}
                   error={error && (getErrorMessage(error) || RETRY_MESSAGE)}
+                  dense
                 />
               </Form>
             </AddCoupleHolder>

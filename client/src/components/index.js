@@ -15,3 +15,4 @@ export * from './ScrollToTop';
 export * from './InfoPage';
 export * from './SegmentedButton';
 export * from './Toast';
+export * from './Tooltip';

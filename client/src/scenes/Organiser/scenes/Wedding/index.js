@@ -14,11 +14,7 @@ import { GuestsSummary } from './GuestsSummary';
 import { GET_AUTH_USER } from 'graphql/queries';
 import { ActivityLog } from './ActivityLog';
 
-const GUEST_TYPE_DISPLAY_NAMES = {
-  guestSingle: 'Pojedynczy Gość',
-  guestCouple: 'Para',
-  guestGroup: 'Para + Dzieci'
-}
+import { GUEST_TYPE_DISPLAY_NAMES } from './constants';
 
 const AddGuestsHolder = styled.div`
   display: flex;
@@ -60,13 +56,13 @@ export const Wedding = () => {
       : 'Dodano nowych Gości!';
     showMessage(message);
 
-    const guestNames = data.guest
-      ? `${data.guest.firstName} ${data.guest.lastName}`
+    const guestDescription = data.guest
+      ? `${data.guest.firstName} ${data.guest.lastName}${data.guest.allowPartner ? ` z Osobą Towarzyszącą` : ''}`
       : data.guests
-        .map(guest => `${guest.firstName} ${guest.lastName}`)
+        .map(guest => `${guest.firstName} ${guest.lastName}${guest.allowPartner ? ` z Osobą Towarzyszącą` : ''}`)
         .join(', ');
 
-    setActivityFeed([{ time: Date.now(), description: `Dodano ${guestNames}` }, ...activityFeed])
+    setActivityFeed([{ time: Date.now(), description: `Dodano ${guestDescription}` }, ...activityFeed])
   };
 
   const onModalClose = () => {

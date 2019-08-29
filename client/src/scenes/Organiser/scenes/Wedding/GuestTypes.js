@@ -3,6 +3,8 @@ import styled from 'styles';
 
 import { Icon } from 'components';
 
+import { GUEST_TYPE_DISPLAY_NAMES } from './constants';
+
 const GuestTypesHolder = styled.div`
   max-width: 450px;
 `;
@@ -64,7 +66,7 @@ export class GuestTypes extends Component {
             <Icon name="guestSingle" size={30} />
           </AvatarHolder>
           <NameHolder>
-            <Title>Pojedynczy gość</Title>
+            <Title>{GUEST_TYPE_DISPLAY_NAMES.guestSingle}</Title>
             <Subtitle>
               np. Maciek, który jeszcze nie wie z kim przyjdzie
             </Subtitle>
@@ -78,7 +80,7 @@ export class GuestTypes extends Component {
             <Icon name="guestCouple" size={41} />
           </AvatarHolder>
           <NameHolder>
-            <Title>Para</Title>
+            <Title>{GUEST_TYPE_DISPLAY_NAMES.guestCouple}</Title>
             <Subtitle>
               np. Zosia i Marek - małżeństwo, które znasz od liceum
             </Subtitle>
@@ -92,7 +94,7 @@ export class GuestTypes extends Component {
             <Icon name="guestGroup" size={43} />
           </AvatarHolder>
           <NameHolder>
-            <Title>Para + dzieci</Title>
+            <Title>{GUEST_TYPE_DISPLAY_NAMES.guestGroup}</Title>
             <Subtitle>
               np. Wujek Gienek z Ciocią Janiną i synem Wojtkiem
             </Subtitle>

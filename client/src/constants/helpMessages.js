@@ -1,0 +1,3 @@
+export const INFO_PARTNER = "Jeśli zaznaczysz tę opcję, Twój Gość po zalogowaniu do aplikacji będzie mógł dodać Partnera, z którym przyjdzie na wesele."
+export const INFO_ACCOMODATION = "Jeśli zaznaczysz tę opcję, Twój Gość po zalogowaniu do aplikacji będzie mógł wybrać, czy potrzebuje noclegu w dniu imprezy."
+export const INFO_CUSTOM_GREETING = "Przywitanie, które będzie widoczne dla Gościa po zalogowaniu do aplikacji. Domyślne przywitanie to 'Witaj!'."

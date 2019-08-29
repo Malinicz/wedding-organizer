@@ -2,23 +2,23 @@ import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import styled from 'styled-components';
 
-import { ActionButton, Checkbox, Icon } from 'components';
+import { ActionButton, Checkbox, Icon, Tooltip } from 'components';
 import {
   Form,
   InputLabel,
   Input,
   H3,
   RoundButton,
+  MutedText
 } from 'components/base';
 
 import { ADD_GUESTS } from 'graphql/mutations';
 import { GET_WEDDING_INITIAL_DATA } from 'graphql/queries';
 
-import { femaleOrdinalNumbers } from 'constants/ordinalNumbers';
-
 import { getErrorMessage } from 'utils/helpers';
 
 import { RETRY_MESSAGE } from 'constants/errorMessages';
+import { INFO_ACCOMODATION, INFO_PARTNER, INFO_CUSTOM_GREETING } from 'constants/helpMessages';
 
 const AddGroupHolder = styled.div`
   display: flex;
@@ -35,11 +35,16 @@ const SingleGuestTitle = styled(H3)`
   margin-top: 0;
 `;
 
+const AddGuestButtonHolder = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
 const AddGuestButton = styled.div`
   display: flex;
+  flex: 1;
   align-items: center;
-  width: 100%;
-  max-width: 450px;
+  max-width: 200px;
   padding: ${({ theme }) => theme.baseSpacing * 2}px;
   margin-bottom: ${({ theme }) => theme.baseSpacing * 3}px;
   color: ${({ theme }) => theme.colors.darkest};
@@ -52,6 +57,7 @@ const initialGuest = {
   firstName: '',
   lastName: '',
   allowPartner: false,
+  isChild: false
 };
 
 const initialGuestGroup = {
@@ -61,11 +67,7 @@ const initialGuestGroup = {
 
 const initialState = {
   guestGroup: initialGuestGroup,
-  guests: [
-    { ...initialGuest, id: 0 },
-    { ...initialGuest, id: 1 },
-    { ...initialGuest, id: 2 },
-  ],
+  guests: [],
 };
 
 export class AddGroup extends Component {
@@ -115,11 +117,11 @@ export class AddGroup extends Component {
     });
   };
 
-  onAddNewGuest = () => {
+  onAddNewGuest = ({ isChild }) => {
     this.setState(prevState => {
       const guests = [
         ...prevState.guests,
-        { ...initialGuest, id: prevState.guests.length },
+        { ...initialGuest, id: prevState.guests.length, isChild },
       ];
       return {
         guests,
@@ -130,6 +132,8 @@ export class AddGroup extends Component {
   render() {
     const { weddingId, handleAddSuccess } = this.props;
     const { guests, guestGroup } = this.state;
+
+    const hasGuests = guests.length > 0;
 
     return (
       <Mutation
@@ -162,7 +166,7 @@ export class AddGroup extends Component {
                   return (
                     <SingleGuest key={guest.id}>
                       <SingleGuestTitle>
-                        {femaleOrdinalNumbers[index + 1]} osoba
+                        {guest.isChild ? 'Dziecko' : 'Dorosły'}
                       </SingleGuestTitle>
                       <InputLabel forHtml="firstName">imię</InputLabel>
                       <Input
@@ -192,27 +196,37 @@ export class AddGroup extends Component {
                         checked={guest.allowPartner}
                         onChange={() => this.toggleAllowPartner(guest.id)}
                         dense={false}
+                        adornment={<Tooltip text={INFO_PARTNER} />}
                       />
                     </SingleGuest>
                   );
                 })}
-                <AddGuestButton onClick={this.onAddNewGuest}>
-                  <RoundButton type="button">
-                    <Icon name="plus" />
-                  </RoundButton>
-                  <span style={{ marginLeft: 7 }}>Dodaj kolejną osobę</span>
-                </AddGuestButton>
-                <InputLabel forHtml="customGreeting">
-                  personalizowane przywitanie
+                <AddGuestButtonHolder>
+                  <AddGuestButton onClick={() => this.onAddNewGuest({ isChild: false })}>
+                    <RoundButton type="button">
+                      <Icon name="plus" />
+                    </RoundButton>
+                    <span style={{ marginLeft: 7 }}>Dodaj dorosłego</span>
+                  </AddGuestButton>
+                  <AddGuestButton onClick={() => this.onAddNewGuest({ isChild: true })}>
+                    <RoundButton type="button">
+                      <Icon name="plus" />
+                    </RoundButton>
+                    <span style={{ marginLeft: 7 }}>Dodaj dziecko</span>
+                  </AddGuestButton>
+                </AddGuestButtonHolder>
+                <InputLabel forHtml="customGreeting" disabled={!hasGuests}>
+                  personalizowane przywitanie <MutedText>(opcjonalne)</MutedText>{hasGuests && <Tooltip text={INFO_CUSTOM_GREETING} />}
                 </InputLabel>
                 <Input
                   name="customGreeting"
                   value={guestGroup.customGreeting}
                   type="text"
-                  placeholder="Elo, Ziomeczki!"
+                  placeholder="Cześć, Rodzinko Kowalskich!"
                   onChange={e =>
                     this.onGuestGroupCustomGreetingChange(e.target.value)
                   }
+                  disabled={!hasGuests}
                   dense
                 />
                 <Checkbox
@@ -220,6 +234,8 @@ export class AddGroup extends Component {
                   label="Pozwól na dodanie opcji noclegu"
                   checked={guestGroup.allowAccomodation}
                   onChange={this.toggleAllowAccomodation}
+                  adornment={<Tooltip text={INFO_ACCOMODATION} />}
+                  disabled={!hasGuests}
                 />
                 <br />
                 <ActionButton
@@ -228,6 +244,8 @@ export class AddGroup extends Component {
                   label="Dodaj gości"
                   loading={loading}
                   error={error && (getErrorMessage(error) || RETRY_MESSAGE)}
+                  disabled={!hasGuests}
+                  dense
                 />
               </Form>
             </AddGroupHolder>

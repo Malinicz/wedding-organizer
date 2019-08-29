@@ -18,3 +18,4 @@ export * from './GuestCoupleIcon';
 export * from './GuestGroupIcon';
 export * from './LightBulbIcon';
 export * from './DiaryIcon';
+export * from './InfoIcon';

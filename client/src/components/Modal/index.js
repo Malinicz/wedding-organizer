@@ -17,15 +17,15 @@ const Overlay = styled.div`
   z-index: 300;
   width: 100%;
   height: 100%;
-  animation: ${overlayAnimation} 0.7s ease;
+  animation: ${overlayAnimation} 0.4s ease;
   animation-fill-mode: forwards;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 `;
 
 const modalAnimation = keyframes`
-  from { transform: translate(-50%, -700px);}
-  to { transform: translate(-50%, 0px);}
+  from { opacity: 0; }
+  to { opacity: 1; }
 `;
 
 const ModalHolder = styled(Card)`
@@ -34,6 +34,7 @@ const ModalHolder = styled(Card)`
   left: calc(50% - 15px);
   margin: 50px 15px;
   width: calc(100% - 30px);
+  transform: translate(-50%, 0px);
   box-sizing: border-box;
   z-index: 10;
   box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.3);
@@ -83,8 +84,8 @@ export class Modal extends React.Component {
             style={{
               top: '15px',
               right: '15px',
-              backgroundColor: styledTheme.colors.brightest,
-              color: styledTheme.colors.primaryDarker,
+              backgroundColor: styledTheme.colors.primaryDarkest,
+              color: styledTheme.colors.brightest,
             }}
           />
           {children}

@@ -11,3 +11,4 @@ export * from './Link';
 export * from './Paragraph';
 export * from './Ellipsis';
 export * from './Table';
+export * from './MutedText';

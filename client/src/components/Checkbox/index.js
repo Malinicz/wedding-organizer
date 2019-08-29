@@ -6,6 +6,8 @@ import checkmark from './checkmark.svg';
 const CheckboxHolder = styled.div`
   display: inline-block;
   vertical-align: middle;
+  // Depends on font
+  margin-top: -4px;
 `;
 
 const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
@@ -48,7 +50,11 @@ const StyledCheckbox = styled.div`
 `;
 
 const CheckboxText = styled.span`
-  margin: 0px 5px;
+  margin-left: 5px;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const CheckboxLabel = styled.label`
@@ -57,11 +63,8 @@ const CheckboxLabel = styled.label`
   margin-bottom: ${({ theme, dense }) => (dense ? 0 : theme.baseSpacing)}px;
   pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
   transition: color 0.15s;
+  color: ${({ theme, disabled }) => disabled ? theme.colors.brighter : 'inherit'};
   cursor: pointer;
-
-  &:hover {
-    opacity: 0.8;
-  }
 
   &:active ${StyledCheckbox} {
     transform: scale(0.9);
@@ -77,7 +80,7 @@ export class Checkbox extends Component {
   }
 
   render() {
-    const { checked, label, style, disabled, dense = true } = this.props;
+    const { checked, label, style, disabled, dense = true, adornment } = this.props;
 
     return (
       <CheckboxLabel style={style} disabled={disabled} dense={dense}>
@@ -88,6 +91,7 @@ export class Checkbox extends Component {
           </StyledCheckbox>
         </CheckboxHolder>
         <CheckboxText>{label}</CheckboxText>
+        {disabled ? null : adornment}
       </CheckboxLabel>
     );
   }

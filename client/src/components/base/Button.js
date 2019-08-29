@@ -9,14 +9,14 @@ export const Button = styled(ButtonBase)`
   font-family: ${({ theme }) => theme.fontFamily.secondary.regular};
   color: ${({ theme }) => theme.colors.brightest};
   font-size: 1.7em;
-  background-color: ${({ theme }) => theme.colors.primaryDarker};
+  background-color: ${({ theme }) => theme.colors.primaryDarkest};
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
   border-bottom: 0;
   cursor: pointer;
 
   &:hover {
-    opacity: 0.9;
+    opacity: 0.8;
   }
 
   &:active {
@@ -31,7 +31,9 @@ export const Button = styled(ButtonBase)`
 
 export const RoundButton = styled(Button)`
   width: 50px;
+  min-width: 50px;
   height: 50px;
+  min-height: 50px;
   border-radius: 50px;
   margin-bottom: 0;
 

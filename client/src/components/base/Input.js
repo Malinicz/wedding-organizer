@@ -22,6 +22,10 @@ export const Input = styled.input`
   &::placeholder {
     color: ${({ theme }) => theme.colors.brighter};
   }
+
+  &:disabled {
+     border-bottom: ${({ theme }) => `2px solid ${theme.colors.brighter}`};
+  }
 `;
 
 export const InputLabel = styled.label`
@@ -30,6 +34,7 @@ export const InputLabel = styled.label`
   font-weight: bold;
   margin-bottom: 4px;
   margin-left: 4px;
+  color: ${({ theme, disabled }) => disabled ? theme.colors.brighter : 'inherit'};
 `;
 
 export const InputGroupLabel = styled.div`
