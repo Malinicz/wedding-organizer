@@ -3,7 +3,7 @@ import { Query } from 'react-apollo';
 import { withRouter, matchPath } from 'react-router';
 import { Link } from 'react-router-dom';
 import styled from 'styles';
-import { client as apolloClient } from 'App';
+import { client as apolloClient } from 'graphql/client';
 
 import { Icon } from 'components';
 
