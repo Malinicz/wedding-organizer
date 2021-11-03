@@ -10,7 +10,7 @@
     "bcryptjs": "^2.4.3",
     "graphcool-lib": "^0.1.4",
     "mailgun-js": "^0.22.0",
-    "validator": "^10.11.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "dotenv": "^6.2.0"
